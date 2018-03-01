@@ -1,3 +1,9 @@
 language: node_js
 node_js: node
-
+deploy:
+  provider: heroku
+  api_key:
+    secure: epPR3RhzKYuctmv1uLEyhxN4/KVnjPkyD9iL67Kj2V7bAGVc/xk0PwVfCpEca/HX8ym4UDRV41TjYNYsrP4MwFPxjicLq+p2JdAxgnLNci/boi8/W7pUkriB5SGEkY3j7PvDTGA1k1nZnhtJ1/1l3XnFuRtDe0UU8NVDIAyVGEcKHGPK2zl0H1msKLr5P8Xb1R7XNdY25BX7FpFfu4MI5OgJBHJd+wwITWzGBrTVYKot4AUQhBbJpX19+RPqq8dQgKmRBdw7iAOjrc6UunODJM/8eZWxDK8CdY2UMfxboo+huVQNm78qQVuGHIyJ96PKaf1H0+KftEmJdh+/FC8ot6tvqP7a672xnpM5wRoRDtDy0HQTu0je5uK5wlAAQPxmO56dyYWTpRAsjmxCkhGxKtxDtIxMwhFQuY2a+3rTjteDk2+IJsPJCgRpcGxxoqg3K10GuP7DmB9JskR5SkFAz20SKnabXZh0EkHpDiC+B9/+VSkv175seivDzhRBZN7p8WNj0wrwyKhbaLzL17WhAlGy+gwfcx0/b0oMyISv0t7CqcIKhU3IYiZx0mfi1U3q2BqiwDCtukZEX6/Moohsx1jAqjsxmnkr6e1yCCT/JmGbABkugWkj8mqFVL7fGc52eAG5GN2sN/GzJiQNWOTUQYZb7FQmBegg8YQPXHOhLEE=
+  app: murmuring-brushlands-38584
+  on:
+    repo: ike76/TravelSync
