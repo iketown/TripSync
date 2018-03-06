@@ -1,0 +1,15 @@
+a {
+	text-decoration: none;
+}
+
+.edit {
+	color: blue;
+}
+
+.delete {
+	color: red;
+}
+.listItem {
+	display: grid;
+	grid-template-columns: 50% 1fr 1fr;
+}

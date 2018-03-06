@@ -1,0 +1,38 @@
+label {
+	font-family: "Roboto", sans-serif;
+}
+
+.container{
+	margin: 20px 10px;
+}
+
+.travelerList {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr
+}
+
+.mainGrid {
+	display: grid;
+	grid-template-columns: 200px 2fr 3fr;
+	grid-gap: 4px;
+}
+
+.navDiv{
+	background-color: cornsilk;
+	grid-row: 1 / span 2;
+}
+.listDiv{
+	background-color: FloralWhite;
+	min-height: 80vh;
+}
+.editDiv{
+	background-color: gainsboro;
+}
+.footer {
+	background-color: honeydew;
+	grid-column: 2 / span 2;
+}
+
+ul {
+list-style: none;
+}
