@@ -1,3 +1,9 @@
+* {
+	box-sizing: border-box;
+	font-family: "Roboto", sans-serif;
+	border: 1px lightgrey dashed;
+}
+
 label {
 	font-family: "Roboto", sans-serif;
 }
@@ -32,7 +38,23 @@ label {
 	background-color: honeydew;
 	grid-column: 2 / span 2;
 }
-
 ul {
 list-style: none;
+padding: 0;
 }
+
+.listPeople{
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr
+}
+
+li.listPerson{
+	margin: 1em;
+	display: grid;
+	grid-template-columns: 1fr 30px;
+	min-width: 180px;
+}
+.listPerson i {
+	margin-left: 2em;
+}
+

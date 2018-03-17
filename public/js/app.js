@@ -1,0 +1,4 @@
+$(()=>{
+	renderUsers.dom()
+	attachListeners()
+})

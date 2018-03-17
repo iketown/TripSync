@@ -14,6 +14,15 @@ const UserSchema = Schema({
 	prefAirlines: Array
 })
 
+UserSchema.methods.serialize = function(){
+	return {
+		name: `${firstName} ${lastName}`,
+		username,
+		email,
+		phone
+	}
+}
+
 const User = mongoose.model('User', UserSchema);
 
 module.exports = { User }

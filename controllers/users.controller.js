@@ -6,9 +6,12 @@ const ObjectId = require('mongoose').Types.ObjectId
 exports.createUser = async (req,res) => {
 	const { admin, firstName, lastName, userName, email, 
 		phone, homeAirport, prefAirlines } = req.body
-	const user = await User.create(req.body)
-	res.json(user)
+		const user = await User.create({ admin, firstName, lastName, userName, email, 
+		phone, homeAirport, prefAirlines })
+		if(!user){return res.send('hey that did not work')}
+		res.json(user)
 }
+
 exports.getUsers = async (req,res)=>{
 	const users = await User.find()
 	res.json(users)

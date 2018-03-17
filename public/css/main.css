@@ -11,5 +11,56 @@ a {
 }
 .listItem {
 	display: grid;
-	grid-template-columns: 50% 1fr 1fr;
+	grid-template-columns: 70% 1fr 1fr 1fr;
+	padding: 0 10px;
+}
+.listItem p, .listItem input{
+	margin: 10px 0;
+	font-size: 18px;
+	width: 100%;
+}
+.icon {
+	align-self: center;
+	/*justify-self: center;*/
+	text-align: center;
+}
+.icon div{
+	font-size: 9px;
+}
+.disabled .icon, .disabled p {
+	color: #d0d0d0;
+}
+nav li {
+	margin: 10px;
+}
+input {
+	font-size: 20px;
+	margin: 0 5px 5px 0;
+}
+#addEditUser{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	
+	margin: 20px 10px;
+}
+.input{
+	display: grid;
+	grid-template-columns: 5px 1fr 5px;
+	grid-template-rows: 15px 1fr;
+}
+.input label{
+	/*align-self: center;*/
+	grid-column: 2;
+	font-size: 12px;
+	color: grey;
+}
+.input input{
+	grid-column: 2;
+}
+.input input[type=submit] {
+}
+.submit{
+	grid-column: 1 / -1;
+	align-self: center;
+    justify-self: center;
 }

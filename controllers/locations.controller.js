@@ -1,5 +1,5 @@
 const { Location } = require('../models/location.model')
-const mongoose - require('mongoose');
+const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId
 
 exports.createLocation = async (req,res)=>{
@@ -15,7 +15,7 @@ exports.getLocations = async (req,res)=>{
 	res.status(200).json(locations)
 }
 exports.updateLocation = async (req,res)=>{
-	if(req.body._id !== req.params.id){
+	if(req.body.id !== req.params.id){
 		return res.status(400).send('ids must match')
 	}
 	const update = req.body

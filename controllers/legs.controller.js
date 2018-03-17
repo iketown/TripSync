@@ -1,13 +1,30 @@
 const { Leg } = require('../models/leg.model')
 const { User } = require('../models/user.model');
-const moment = require('moment')
+const Moment = require('moment')
 const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
 
 exports.createLeg = async (req, res) => {
-	const {company, type, flightNum, start, end, users} = req.body
-	const leg = await  Leg.create({company, type, flightNum, start, end, users})
-		res.json(leg);
+	const leg = await new Leg()
+	leg._id = new ObjectId()
+	leg.company = req.body.company
+	leg.type = req.body.type
+	leg.flightNum = req.body.flightNum
+	leg.startLoc = ObjectId(req.body.startLocId);
+	leg.endLoc = ObjectId(req.body.endLocId);
+	leg.startTime = new Moment('2018-03-06')
+	leg.endTime = new Moment('2018-03-07')
+	const travelers = [];
+	for (i in req.body.travelerIds){
+		travelers.push(ObjectId(req.body.travelerIds[i]))
+	}
+	leg.travelers = travelers;
+	leg.save((err, leg)=>{
+		if (err) return console.log(err)
+			res.json(leg)
+	})
+
+
 	}
 
 exports.getLegs = async (req, res)=>{
@@ -15,7 +32,7 @@ exports.getLegs = async (req, res)=>{
 	res.json(legs)
 }
 exports.getLeg = async(req, res)=>{
-	const leg = await Leg.findById(req.params.id).populate('travelers')
+	const leg = await Leg.findById(req.params.id).populate('travelers').populate('startLoc').populate('endLoc')
 	res.json(leg)
 }
 exports.updateLeg = async (req, res)=>{
@@ -29,8 +46,11 @@ exports.updateLeg = async (req, res)=>{
 	for (i in req.body.travelerIds){
 		travelers.push(ObjectId(req.body.travelerIds[i]))
 	}
-	// const users = await User.find().where('_id').in(travelerObjIds)
-	leg.travelers = travelers;
+	if (req.body.startLocId) leg.startLoc = ObjectId(req.body.startLocId);
+	if (req.body.endLocId) leg.endLoc = ObjectId(req.body.endLocId);
+	if (travelers.length) leg.travelers = travelers;
+	if (req.body.startTimeString) leg.startTime = Moment(req.body.startTimeString)
+	if (req.body.endTimeString) leg.endTime = Moment(req.body.endTimeString)
 	leg.save()
 	
 	res.status(204).end();

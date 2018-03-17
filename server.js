@@ -32,7 +32,7 @@ app.use('/admin/trips', tripsRouter)
 
 // catch everything else 
 app.get('*', (req, res)=>{
-	res.sendFile(path.join(__dirname, '../public', 'index.html'))
+	res.sendFile(path.join(__dirname, './public', 'index.html'))
 })
 // connect the db and start the server
 mongoose.connect(DATABASE_URL, () => {

@@ -9,7 +9,7 @@
 	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 </head>
 <body>
-	<div class="ui container">
+	<div class="container">
 		<div class="mainGrid">
 			<nav class="navDiv">
 				<ul>
@@ -22,21 +22,187 @@
 				<h2>Groups</h2>
 				<ul>
 					<li class="listItem">
-						<h3>BAND</h3>
-						<a href="#!" class="edit">
+						<a href="#!"><p>BAND (group)</p></a>
+						<a href="#!" class="edit icon">
 							<i class="far fa-edit"></i>
+							<div>edit</div>
 						</a>
-						<a href="#!" class="delete">
+						<a href="#!" class="edit icon">
+							<i class="far fa-copy"></i>
+							<div>duplicate</div>
+						</a>
+						<a href="#!" class="delete icon">
 							<i class="far fa-trash-alt"></i>
+							<div>delete</div>
 						</a>
 					</li>
-					<li><h3>CREW</h3></li>
-					<li><h3>PRINCIPALS</h3></li>
-					<li><h3>* add new</h3></li>
+					<li class="listItem">
+						<a href="#!"><input type="text" value="CREW (editing)"></a>
+						<a href="#!" class="edit icon">
+							<i class="far fa-save"></i>
+							<div>save</div>
+						</a>
+						<div></div>
+						<a href="#!" class="delete icon">
+							<i class="far fa-trash-alt"></i>
+							<div>delete</div>
+						</a>
+					</li>
+					<li class="listItem disabled">
+						<a href="#!"><p>BAND (disabled)</p></a>
+						<a href="#!" class="edit icon">
+							<i class="far fa-edit"></i>
+							<div>edit</div>
+						</a>
+						<a href="#!" class="edit icon">
+							<i class="far fa-copy"></i>
+							<div>duplicate</div>
+						</a>
+						<a href="#!" class="delete icon">
+							<i class="far fa-trash-alt"></i>
+							<div>delete</div>
+						</a>
+					</li>
+
+					<li class=""><h3>* add new</h3></li>
 
 				</ul>
 			</section>
-			<section class="editDiv"></section>
+
+			
+
+
+			<section class="editDiv">
+				<!-- <ul class="listPeople">
+
+					<li class="listPerson">
+						<label class=" ">
+						  <input type="checkbox" checked="checked">
+						  <span>Fosq</span> 
+						</label>
+						  <a href="#!" class="edit icon">
+							<i class="far fa-edit"></i>
+							<div>edit</div>
+						</a>
+					</li>
+					<li class="listPerson">
+						<label class=" ">
+						  <input type="checkbox" checked="checked">
+						  <span>Fosq</span> 
+						</label>
+						  <a href="#!" class="edit icon">
+							<i class="far fa-edit"></i>
+							<div>edit</div>
+						</a>
+					</li>
+					<li class="listPerson">
+						<label class=" ">
+						  <input type="checkbox" checked="checked">
+						  <span>Fosq</span> 
+						</label>
+						  <a href="#!" class="edit icon">
+							<i class="far fa-edit"></i>
+							<div>edit</div>
+						</a>
+					</li>
+					<li class="listPerson">
+						<label class=" ">
+						  <input type="checkbox" checked="checked">
+						  <a href="#!"><span>IKE</span></a>
+						</label>
+					</li>
+					<li class="listPerson">
+						<label class=" ">
+						  <input type="checkbox" checked="checked">
+						  <a href="#!"><span>Timmy</span></a>
+						</label>
+					</li>
+					<li class="listPerson">
+						<label class=" ">
+						  <input type="checkbox" checked="checked">
+						  <a href="#!"><span>Scotty T</span></a>
+						</label>
+					</li>
+					<li class="listPerson">
+						<label class=" ">
+						  <input type="checkbox" checked="checked">
+						  <a href="#!"><span>Fosq</span></a>
+						</label>
+					</li>
+					<li class="listPerson">
+						<label class=" ">
+						  <input type="checkbox" checked="checked">
+						  <a href="#!"><span>IKE</span></a>
+						</label>
+					</li>
+					<li class="listPerson">
+						<label class=" ">
+						  <input type="checkbox" checked="checked">
+						  <a href="#!"><span>Timmy</span></a>
+						</label>
+					</li>
+					<li class="listPerson">
+						<label class=" ">
+						  <input type="checkbox" checked="checked">
+						  <a href="#!"><span>Scotty T</span></a>
+						</label>
+					</li>
+					<li class="listPerson">
+						<label class=" ">
+						  <input type="checkbox" checked="checked">
+						  <a href="#!"><span>Fosq</span></a>
+						</label>
+					</li>
+					<li class="listPerson">
+						<label class=" ">
+						  <input type="checkbox" checked="checked">
+						  <a href="#!"><span>IKE</span></a>
+						</label>
+					</li>
+					<li class="listPerson">
+						<label class=" ">
+						  <input type="checkbox" checked="checked">
+						  <a href="#!"><span>Timmy</span></a>
+						</label>
+					</li>
+					<li class="listPerson">
+						<label class=" ">
+						  <input type="checkbox" checked="checked">
+						  <a href="#!"><span>Scotty T</span></a>
+						</label>
+					</li>
+					<li class="listPerson">
+						<label class=" ">
+						  <input type="checkbox" checked="checked">
+						  <a href="#!"><span>Fosq</span></a>
+						</label>
+					</li>
+					<li class="listPerson">
+						<label class=" ">
+						  <input type="checkbox" checked="checked">
+						  <a href="#!"><span>IKE</span></a>
+						</label>
+					</li>
+					<li class="listPerson">
+						<label class=" ">
+						  <input type="checkbox" checked="checked">
+						  <a href="#!"><span>Timmy</span></a>
+						</label>
+					</li>
+				</ul> -->
+				<form action="#!" id="addEditUser">
+
+					<div class="input"><label for="firstName">FIRST NAME</label><input type="text" id="firstName"></div>
+					<div  class="input"><label for="firstName">LAST NAME</label><input type="text" id="firstName"></div>
+					<div  class="input"><label for="firstName">USER NAME</label><input type="text" id="firstName"></div>
+					<div  class="input"><label for="firstName">EMAIL</label><input type="text" id="firstName"></div>
+					<div  class="input"><label for="firstName">PHONE</label><input type="text" id="firstName"></div>
+					<div  class="input"><label for="firstName">HOME AIRPORT</label><input type="text" id="firstName"></div>
+					<div class="submit">
+						<input type="submit" value="submit">
+					</div>
+				</form>
+			</section>
 			<footer class="footer">footer</footer>
 		</div>
 	</div>

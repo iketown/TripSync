@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-const Schema = mongoose.Schema
+require('mongoose-moment')(mongoose);
+
+const Schema = mongoose.Schema;
+const moment = require('moment')
 // const id = mongoose.Types.ObjectId('string')
 
 
@@ -15,20 +18,10 @@ const LegSchema = Schema({
 	},
 	type: { type: String, required: true },
 	flightNum: String,
-	start: {
-		// locationId: ObjectId,
-		lat: Number,
-		lng: Number,
-		shortName: String,
-		longName: String,
-	},
-	end: {
-		// locationId: ObjectId,
-		lat: Number,
-		lng: Number,
-		shortName: String,
-		longName: String,
-	},
+	startLoc: {type: Schema.Types.ObjectId, ref: "Location"},
+	endLoc: {type: Schema.Types.ObjectId, ref: "Location"},
+	startTime: 'Moment',
+	endTime: 'Moment',
 	travelers: [{type: Schema.Types.ObjectId, ref: 'User'}]
 });
 
