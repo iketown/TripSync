@@ -1,0 +1,11 @@
+extends layout
+include mixins/_locEdit
+include mixins/_locList
+
+block listDiv
+	h1 All Locations
+	+locList(locations)
+
+
+block editDiv
+	+locEdit(location)

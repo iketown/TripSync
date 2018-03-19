@@ -9,7 +9,7 @@ a {
 .delete {
 	color: red;
 }
-.listItem {
+/*.listItem {
 	display: grid;
 	grid-template-columns: 70% 1fr 1fr 1fr;
 	padding: 0 10px;
@@ -18,7 +18,7 @@ a {
 	margin: 10px 0;
 	font-size: 18px;
 	width: 100%;
-}
+}*/
 .icon {
 	align-self: center;
 	/*justify-self: center;*/
@@ -37,7 +37,74 @@ input {
 	font-size: 20px;
 	margin: 0 5px 5px 0;
 }
-#addEditUser{
+.form{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 5px;
+}
+label{
+	justify-self: end;
+}
+input{
+	margin-left: 5px;
+	width: 225px;
+}
+.listItem {
+	display: grid;
+	grid-template-columns: 1fr 30px 30px;
+	margin: 5px;
+	border-bottom: 1px lightgrey solid;
+}
+.list{
+	margin: 0 20px;
+}
+.userCard{
+	width: 500px;
+
+	margin: 20px auto;
+    padding: 10px;
+    background: white;
+    border-radius: 10px;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: 200px 1fr;
+    /*grid-template-rows: repeat(9, 1fr);*/
+    grid-template-areas: 
+    'photo fullName'
+    'photo email'
+    'photo phone'
+    'photo userName'
+    'photo homeAirport' ;
+}
+.userCard p {
+	margin: 0;
+}
+.userCard .photo {
+	grid-area: photo;
+	border-radius: 10px;
+	justify-self: center;
+}
+.userCard .fullName {
+	grid-area: fullName;
+}
+.userCard .email {
+	grid-area: email;
+}
+.userCard .phone {
+	grid-area: phone;
+}
+.userCard .userName {
+	grid-area: userName;
+}
+.userCard .homeAirport {
+	grid-area: homeAirport;
+}
+.legCompanyImage{
+	width: 30px;
+    margin-right: 10px;
+}
+
+/*#addEditUser{
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	
@@ -49,7 +116,7 @@ input {
 	grid-template-rows: 15px 1fr;
 }
 .input label{
-	/*align-self: center;*/
+	align-self: center;
 	grid-column: 2;
 	font-size: 12px;
 	color: grey;
@@ -63,4 +130,4 @@ input {
 	grid-column: 1 / -1;
 	align-self: center;
     justify-self: center;
-}
+}*/

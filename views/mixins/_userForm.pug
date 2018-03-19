@@ -1,0 +1,15 @@
+mixin userForm(user = {})
+	form.form(action=`/admin/users/${ user._id || ''}`, method='POST')
+		label(for='firstName') First Name
+			input(type='text', name='firstName', id='firstName', value=(user && user.firstName) , required)
+		label(for='lastName') Last Name
+			input(type='text', name='lastName', id='lastName', value=(user && user.lastName) , required)
+		label(for='userName') User Name
+			input(type='text', name='userName', id='userName', value=(user && user.userName) , required)
+		label(for='email') Email
+			input(type='email', name='email', id='email', value=(user && user.email) , required)
+		label(for='phone') Phone
+			input(type='phone', name='phone', id='phone', value=(user && user.phone) )
+		label(for='homeAirport') Home Airport
+			input(type='text', name='homeAirport', id='homeAirport', value=(user && user.homeAirport) )
+		input(type='submit', value='submit')

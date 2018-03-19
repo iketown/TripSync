@@ -1,4 +1,16 @@
 $(()=>{
-	renderUsers.dom()
-	attachListeners()
+	// renderUsers.dom()
+	// attachListeners()
+	console.log('appjs called')
+
+
+
+
+
+
+
+
+
+
+
 })

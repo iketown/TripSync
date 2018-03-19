@@ -1,0 +1,13 @@
+mixin locList(locations = {})
+	// pre= h.dump(locations)
+	ul.list.locList
+		each loc in locations
+			li.listItem.locListItem
+				a(href=`/admin/locations/${loc._id}`) #{loc.name}
+				a(href=`/admin/locations/${loc._id}/edit`) 
+					i.far.fa-edit
+				a(href=`/admin/locations/${loc._id}/delete`)
+					i.far.fa-trash-alt
+				hr
+		li.locListItem
+			a(href='/admin/locations/new') * New Location *

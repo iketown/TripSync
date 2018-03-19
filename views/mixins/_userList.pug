@@ -1,0 +1,12 @@
+mixin userList(users = {})
+	ul.userList.list
+		each user in users
+			li.userListItem.listItem
+				a(href=`/admin/users/${user._id}`) #{user.firstName} #{user.lastName}
+				a(href=`/admin/users/${user._id}/edit`) 
+					i.far.fa-edit
+				a(href=`/admin/users/${user._id}/delete`)
+					i.far.fa-trash-alt
+				hr
+		li
+			a(href='/admin/users/new') * New User *

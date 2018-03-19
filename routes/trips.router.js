@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router()
 const tripsController = (require('../controllers/trips.controller'))
+const {catchErrors} = require('../handlers/errorHandlers')
 
-router.post('/', tripsController.createTrip)
-router.get('/', tripsController.getTrips)
-router.get('/:id', tripsController.getTrip)
-router.put('/:id', tripsController.updateTrip)
-router.delete('/:id', tripsController.deleteTrip)
+router.post('/', catchErrors(tripsController.createTrip))
+router.post('/:id', catchErrors(tripsController.updateTrip))
+router.get('/', catchErrors(tripsController.getTrips)) // get all
+router.get('/new', catchErrors(tripsController.newTrip) )  // display form for new one
+router.get('/:id', catchErrors(tripsController.showTrip)) // get one
+router.get('/:id/edit', tripsController.editTrip)
 
 
 

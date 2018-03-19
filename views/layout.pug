@@ -1,0 +1,38 @@
+doctype html
+html
+	head
+		title= `${title}`
+		link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto')
+		link(rel='stylesheet', href='/css/layout.css')
+		link(rel='stylesheet', href='/css/main.css')
+		script(defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js")
+	body
+
+		.mainGrid
+			.navDiv
+				block nav
+					nav.nav
+						- const links = ['Users', 'Locations', 'Trips', 'Events']
+						ul
+							each link in links
+								li
+									a(href=`/admin/${link}`) #{link}
+			.listDiv
+				block listDiv
+					h2 List Div
+			.editDiv
+				block editDiv
+					h2 Edit Div
+			.footer
+				block footer
+					h2 Footer
+			block header
+				header
+					nav.nav
+	block scripts
+		script(src=`https://maps.googleapis.com/maps/api/js?key=AIzaSyAsSzHfWD8qHbBhdF2S0fX5pzo1YAN6rEQ&libraries=places`)
+		script(src='https://code.jquery.com/jquery-3.3.1.min.js')
+		script(src='/js/app.js')
+	
+
+

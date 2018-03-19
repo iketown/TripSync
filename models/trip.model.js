@@ -6,7 +6,8 @@ const moment = require('moment')
 
 const TripSchema = Schema({
 	name: {type: String, required: true},
-	tripLegs: [{type: Schema.Types.ObjectId, ref: 'Leg'}]
+	tripLegs: [{type: Schema.Types.ObjectId, ref: 'Leg'}],
+	tripEvents: [{type: Schema.Types.ObjectId, ref: 'Event'}],
 })
 
 // sort legs by start time and get the earliest start Date.

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema
+const gravatar = require('gravatar');
 
 const UserSchema = Schema({
 	// _id: Schema.Types.ObjectId,
@@ -12,6 +13,14 @@ const UserSchema = Schema({
 	phone: String,
 	homeAirport: String,
 	prefAirlines: Array
+})
+
+UserSchema.virtual('fullName').get( function(){
+	return this.firstName +' ' + this.lastName
+})
+
+UserSchema.virtual('gravatarUrl').get(function(){
+	return gravatar.url(this.email, {s: '200'})
 })
 
 UserSchema.methods.serialize = function(){

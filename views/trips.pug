@@ -1,0 +1,26 @@
+extends layout
+include mixins/_tripDisplay
+
+block listDiv
+	ul
+		each trip in trips
+			li
+				// pre= h.dump(trip)
+				+tripDisplay(trip)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

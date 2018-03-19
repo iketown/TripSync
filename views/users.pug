@@ -1,0 +1,7 @@
+extends layout
+include mixins/_userList
+
+block listDiv
+	h1= title
+	// pre= h.dump(users)
+	+userList(users)

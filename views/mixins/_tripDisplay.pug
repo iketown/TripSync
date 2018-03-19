@@ -1,0 +1,12 @@
+mixin tripDisplay(trip)
+	h1
+		a(href=`/admin/trips/${trip._id}/edit`) #{trip.name}
+	ul
+		each leg in trip.tripLegs
+			li
+				img.legCompanyImage(src=leg.company.logoUrl)
+				strong #{leg.company.name} 
+				span #{leg.type} 
+				span #{leg.flightNum} 
+
+	// pre= h.dump(trip)

@@ -1,20 +1,11 @@
 const { Trip } = require('../models/trip.model')
+const { Leg } = require('../models/leg.model')
 const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
 
 exports.createTrip = async(req, res)=>{
 	const trip = await Trip.create(req.body)
 	res.status(201).json(trip)
-}
-
-exports.getTrips = async(req, res)=> {
-	const allTrips = await Trip.find()
-	res.status(201).json(allTrips)
-}
-
-exports.getTrip = async (req, res)=> {
-	const trip = await Trip.findById(req.params.id).populate({path: 'tripLegs', select: "company flightNum"})
-	res.json(trip);
 }
 
 exports.updateTrip = async(req, res)=> {
@@ -37,7 +28,17 @@ exports.updateTrip = async(req, res)=> {
 		}
 		)
 }
+exports.getTrips = async(req, res)=> {
+	const trips = await Trip.find().populate('tripLegs')
+	res.render('trips', {trips, title: 'All Trips' })
+}
 
-exports.deleteTrip = async(req, res)=> {
+exports.newTrip = ()=>{
+	
+}
+exports.showTrip = ()=>{
+	
+}
+exports.editTrip = ()=>{
 
 }
