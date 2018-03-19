@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-require('mongoose-moment')(mongoose)
+// require('mongoose-moment')(mongoose)
 const Schema = mongoose.Schema
 const moment = require('moment')
 
@@ -10,3 +10,7 @@ const eventSchema = Schema({
 	startDateTime: 'Moment',
 	endDateTime: 'Moment'
 })
+
+const Event = mongoose.model('Event', eventSchema)
+
+module.exports = { Event }

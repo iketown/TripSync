@@ -33,14 +33,18 @@ a {
 nav li {
 	margin: 10px;
 }
-input {
+input, select {
 	font-size: 20px;
 	margin: 0 5px 5px 0;
 }
 .form{
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-gap: 5px;
+	display: flex;
+	flex-direction: column;
+	/*grid-template-columns: 1fr 1fr;
+	grid-gap: 5px;*/
+}
+.form label {
+	margin: 5px;
 }
 label{
 	justify-self: end;

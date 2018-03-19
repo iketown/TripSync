@@ -1,0 +1,8 @@
+extends layout
+include mixins/_eventMixins
+
+block listDiv
+	+eventList(events)
+
+block editDiv
+	+eventCard(event)

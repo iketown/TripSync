@@ -1,0 +1,36 @@
+mixin eventList(events)
+	h1 All Events
+	ul.list
+		each event in events
+			li.listItem
+				a(href=`/admin/events/${event._id}`) #{event.name}
+				a(href=`/admin/events/${event._id}/edit`) 
+					i.far.fa-edit
+				a(href=`/admin/events/${event._id}/delete`)
+					i.far.fa-trash-alt
+		li.listItem
+			a(href='/admin/events/new') * Add Event *
+
+
+
+mixin eventEdit(event = {}, locations)
+	- const headline = event.name ? `Editing ${event.name}` : 'New Event'
+	h2= headline
+	pre= h.dump(event)
+	form.form(action=`/admin/events/${event._id || '' }`, method='POST')
+		label(for='name') Name
+			input(type='text' id='name', value=event.name, name='name')
+		label(for='startDate') Start
+			input(type='date' value=h.moment().format('YYYY-MM-DD'), name='startDate')
+			input(type='time' value='20:00', name='startTime')
+		label(for='location') Location 
+			select(name='locationId' id='location')
+				//- option *New Location*
+				each loc in locations
+					option(value=loc._id, selected=(event.location && loc._id.toString() === event.location._id.toString())) #{loc.name} - #{loc.address}
+		//- input(type='text' id='newLocation')
+		input(type='submit', value=(event._id ? 'Update Event' : 'Create Event'))
+
+
+mixin eventCard(event)
+	h2 #{event.name}

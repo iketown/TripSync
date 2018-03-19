@@ -1,0 +1,8 @@
+extends layout
+include mixins/_eventMixins
+include mixins/_googleMaps
+block listDiv
+	+eventList(events)
+block editDiv
+	h2 google map with star on each event
+	+googleMap(events)
