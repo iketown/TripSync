@@ -36,8 +36,13 @@ exports.getTrips = async(req, res)=> {
 exports.newTrip = ()=>{
 	
 }
-exports.showTrip = ()=>{
-	
+exports.showTrip = async (req, res)=>{
+	const trip = await Trip.findById(req.params.id).populate('tripLegs')
+	const trips = await Trip.find().populate('tripLegs');
+	res.render('showTrip', {trip, trips})
+}
+exports.addLegToTrip = () => {
+
 }
 exports.editTrip = ()=>{
 

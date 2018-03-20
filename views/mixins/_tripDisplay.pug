@@ -1,6 +1,6 @@
 mixin tripDisplay(trip)
 	h1
-		a(href=`/admin/trips/${trip._id}/edit`) #{trip.name}
+		a(href=`/admin/trips/${trip._id}`) #{trip.name}
 	ul
 		each leg in trip.tripLegs
 			li

@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const app = express();
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -20,6 +21,8 @@ const helpers = require('./helpers')
 const errorHandlers = require('./handlers/errorHandlers')
 const {DATABASE_URL} = require('./config')
 const flash = require('connect-flash')
+
+
 require('dotenv').config({ path: 'variables.env' });
 // set up view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -51,7 +54,10 @@ app.use((req, res, next)=>{
 	next();
 })
 
-app.use('/admin/legs', legsRouter)
+// const travelerRouter = require()
+
+// app.use('/admin/legs', isAdmin,  legsRouter)
+app.use('/admin/legs',   legsRouter)
 app.use('/admin/locations', locationsRouter)
 app.use('/admin/users', usersRouter)
 app.use('/admin/groups', groupsRouter)

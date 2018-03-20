@@ -5,9 +5,16 @@ block listDiv
 	ul
 		each trip in trips
 			li
-				// pre= h.dump(trip)
 				+tripDisplay(trip)
 
+block editDiv
+	h1 Legs
+	
+	form.form#testForm
+		label(for='testInput') Test
+			input(type='text', id='testInput')
+		textarea(id='textArea' rows='10')
+		input.button(type='submit', value='go')
 
 
 

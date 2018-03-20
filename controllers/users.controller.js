@@ -5,7 +5,6 @@ const ObjectId = require('mongoose').Types.ObjectId
 
 exports.createUser = async (req,res) => {
 		const user = await User.create(req.body)
-		if(!user){return res.send('hey that did not work')}
 		const users = await User.find()
 		res.render('users', {users, title: 'Users'})
 }
@@ -45,4 +44,12 @@ exports.deleteUser = async (req,res)=>{
 	await User.findByIdAndRemove(req.params.id)
 	const users = await User.find();
 	res.render('users', {users, title: 'Users'})
+}
+
+
+exports.sign_in = function(req,res){
+	
+}
+exports.loginRequired = function(req,res){
+
 }

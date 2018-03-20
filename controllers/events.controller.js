@@ -53,3 +53,8 @@ exports.deleteEvent = async (req, res)=>{
 	const events = await Event.find()
 	res.redirect('/admin/events')
 }
+
+exports.fillStore = async (req, res)=>{
+	const events = await Event.find()
+	res.json(events)
+}

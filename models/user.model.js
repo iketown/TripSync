@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema
+const bcrypt = require('bcrypt')
 const gravatar = require('gravatar');
 
 const UserSchema = Schema({
@@ -9,11 +10,19 @@ const UserSchema = Schema({
 	firstName: String,
 	lastName: String,
 	userName: String,
-	email: {type: String, required: true, unique: true, index: true},
+	email: {type: String, lowercase: true, required: true, unique: true, index: true},
+	hash_password: {
+		type: String,
+		required: true
+	}
 	phone: String,
 	homeAirport: String,
 	prefAirlines: Array
 })
+
+UserSchema.methods.comparePassword = function(password){
+	return bcrypt.compareSync(password, this.hash_password)
+}
 
 UserSchema.virtual('fullName').get( function(){
 	return this.firstName +' ' + this.lastName

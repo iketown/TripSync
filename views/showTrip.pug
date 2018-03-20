@@ -1,0 +1,12 @@
+extends layout
+include mixins/_tripDisplay
+
+block listDiv
+	each trip in trips
+		+tripDisplay(trip)
+block editDiv
+	h2 Editing #{trip.name}
+	ul.legsList
+		li.legItem
+			
+	pre= h.dump(trip)

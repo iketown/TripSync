@@ -1,14 +1,13 @@
-const store =(()=>{
 
-	
+	const store = (()=>{
+
+		function getEventsOnLoad(events){
+			this.events = events
+		}
 
 
-
-	return {
-		users,
-		groups,
-		trips,
-		
-	}
-
-})()
+		return {
+			getEventsOnLoad,
+			
+		}
+	})()
