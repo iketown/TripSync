@@ -13,7 +13,7 @@
   "dependencies": {
     "@google/maps": "^0.4.5",
     "axios": "^0.18.0",
-    "bcrypt": "^1.0.3",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
