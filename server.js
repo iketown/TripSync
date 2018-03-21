@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
+const {localStrategy, jwtStrategy} = require('./auth')
 const app = express();
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -44,8 +44,8 @@ app.use(session({
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
-app.use(passport.initialize() )
-app.use(passport.session())
+app.use( passport.initialize() )
+// app.use(passport.session())
 app.use(flash());
 
 app.use((req, res, next)=>{
@@ -55,9 +55,9 @@ app.use((req, res, next)=>{
 	next();
 })
 
-// const travelerRouter = require()
+passport.use(localStrategy);
+passport.use(jwtStrategy);
 
-// app.use('/admin/legs', isAdmin,  legsRouter)
 app.use('/auth', authRouter)
 app.use('/admin/legs',   legsRouter)
 app.use('/admin/locations', locationsRouter)

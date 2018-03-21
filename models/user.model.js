@@ -20,8 +20,11 @@ const UserSchema = Schema({
 	prefAirlines: Array
 })
 
-UserSchema.methods.comparePassword = function(password){
-	// return bcrypt.compareSync(password, this.hash_password)
+UserSchema.methods.validatePassword = function(password){
+	return bcrypt.compare(password, this.hashedPassword)
+}
+UserSchema.statics.hashPassword = function(password){
+	return bcrypt.hash(password, 10);
 }
 
 UserSchema.virtual('fullName').get( function(){
