@@ -1,55 +1,58 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const { User } = require('../models/user.model')
-const {JWT_SECRET} = require('../config')
-const jwt = require('jsonwebtoken');
+const { getAll } = require('./home.controller')
+const {JWT_SECRET, JWT_EXPIRY} = require('../config')
+const JWT = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-
 // const router = express.Router();
 // router.use(bodyParser.urlencoded({extended: false}));
 // router.use(bodyParser.json());
 // const config = require('../config')
 
-exports.register = async (req, res)=>{
-	const hashedPassword = bcrypt.hashSync(req.body.password, 8);
-	const newUser = new User(req.body)
-	newUser.hashedPassword = hashedPassword
-	await newUser.save()
-	const payload = {id: newUser._id, email: newUser.email}
+const signToken = (user)=>{
+	return JWT.sign({
+		iss: 'iketown',
+		sub: user.id,
+		iat: new Date().getTime(),
+		expiresIn: JWT_EXPIRY  // exp in 24 hrs.
 
-	const token = jwt.sign(payload, JWT_SECRET, {
-		expiresIn: 86400 // expires in 24 hrs
-	})
-	res.status(200).send({auth: true, token: token})
+	}, JWT_SECRET)
 }
 
-// exports.decode = (req, res)=>{
-// 	const token = req.headers['x-access-token'];
-// 	if(!token) return res.status(401).send({auth: false, message: 'no token provided'});
+exports.signUp = async(req, res)=>{
+	const {email, password} = req.value.body;
+	// check that the email isn't already taken
+	const foundUser = await User.findOne({email});
+	if(foundUser) return res.status(403).json({error: 'email already registered'})
+	// create user in database
+	const newUser = new User({email, password})
+	await newUser.save()
 
-// 	jwt.verify(token, process.env.SECRET, function(err, decoded){
-// 		if(err) return res.status(500).send({auth: false, message: 'Failed to authenticate token'})
-// 		res.status(200).send(decoded)
-// 	})
-// }
+	// return token
+	const token = signToken(newUser)
+	res.cookie('jwt-auth', token); 
+	res.render('adminHome', {user: newUser})
+}
 
-exports.getToken = async (req,res)=>{
-	if (req.body.email && req.body.password) {
-		const {email, password} = req.body
-		const user = await User.findOne({email: email})
-		if (!user) return res.status(401).send('never heard of them.')
+exports.signIn = async (req, res)=>{
+	// validation is handled by passport local strategy
+	// req.user will already have the user on it by now.
+	const token = signToken(req.user)
+	res.cookie('jwt-auth', token)
+	const s = await getAll()
+	res.redirect('/home')
+}
 
-		const validated = await user.validatePassword(password)
-			console.log('user validated?', validated)
-		if(!validated) return res.status(401).send('invalid user/password combo')
-		const payload = {id: user._id, email: user.email}
-		const token = jwt.sign(payload, JWT_SECRET, {expiresIn: 86400});
-		res.json({auth: true, token: token})
-	} else {
-		res.status(401).send('needs email and password')
-	}
+exports.signOut = (req, res)=>{
+	res.clearCookie("jwt-auth");
+	res.render('home')
 }
 
 exports.loginPage = (req, res)=>{
-	res.render('login')  // add attempted page to this somehow so it can redirect??
+	console.log('req.path',req.path)
+	res.render('login', {attemptedPath: req.path})
+}
+exports.signUpPage = async (req, res)=>{
+	res.render('signUp')
 }

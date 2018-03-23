@@ -1,41 +1,76 @@
+include mixins/_navMixins
+
 doctype html
 html
 	head
 		title= `${title}`
 		link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto')
-		link(rel='stylesheet', href='/css/layout.css')
+		//- link(rel='stylesheet', href='/css/layout.css')
+		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous")
+		link(rel='stylesheet', href='/css/bs_flatly.css')
 		link(rel='stylesheet', href='/css/main.css')
 		script(defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js")
 	body
 
-		.mainGrid
+		block nav
 			.navDiv
-				block nav
-					nav.nav
-						- const links = ['Users', 'Locations', 'Trips', 'Events']
-						ul
-							each link in links
-								li
-									a(href=`/admin/${link}`) #{link}
+				if user
+					+navSignedIn
+				else 
+					+navStranger
+				
+			//- block nav
+			//- 	nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
+			//- 		- const links = [ 'Users', 'Locations', 'Trips', 'Events']
+			//- 		a.navbar-brand(href='/home') TripSync
+			//- 		.collapse.navbar-collapse#nav01
+			//- 			ul.navbar-nav.ml-auto
+			//- 				each link in links
+			//- 					li.nav-item(class= (currentPath === `/admin/${link}`) ? 'active' : '')
+			//- 						a.nav-link(href=`/admin/${link}`) #{link} 
+			//- 				li.nav-item
+			//- 					form.form-inline.js-login
+			//- 						.form-group
+			//- 							label.ml-2.text-white(for='emailInput') Email
+			//- 								input.form-control( type='email' id='emailInput')
+			//- 							label.ml-2.text-white(for='passwordInput') Password
+			//- 								input.form-control( type='password' id='passwordInput')
+			//- 							input.btn-success.mb-1.ml-2(type='submit', value='Login')
+		.container.mt-4
+			block mainStuff
+			.row
+				.col-lg-4.col-md-6#4left
+					block 4left
+				.col-lg-4.col-md-6#4middle
+					block 4middle
+				.col-lg-4.col-md-6#4right
+					block 4right
+				.col-sm-8
+					block 8right
 			.listDiv
 				block listDiv
-					h2 List Div
+					//- h2 List Div
 			.editDiv
 				block editDiv
-					h2 Edit Div
+					//- h2 Edit Div
 			.footer
 				block footer
-					h2 Footer
-			block header
-				header
-					nav.nav
-	block scripts
-		script(src=`https://maps.googleapis.com/maps/api/js?key=AIzaSyAsSzHfWD8qHbBhdF2S0fX5pzo1YAN6rEQ&libraries=places`)
-		script(src=`https://unpkg.com/axios/dist/axios.min.js`)
-		script(src='https://code.jquery.com/jquery-3.3.1.min.js')
-		script(src='/js/api.js')
-		script(src='/js/store.js')
-		script(src='/js/app.js')
-		script(src='/js/viewsJS/eventsViews.js')
+					//- h2 Footer
+			
+		block scripts
+			script(src=`https://maps.googleapis.com/maps/api/js?key=AIzaSyAsSzHfWD8qHbBhdF2S0fX5pzo1YAN6rEQ&libraries=places`)
+			script(src=`https://unpkg.com/axios/dist/axios.min.js`)
+			script(src='https://code.jquery.com/jquery-3.3.1.min.js')
+			script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous")
+			script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous")
 
+			script(src='/js/api.js')
+			script(src='/js/store.js')
+			script(src='/js/app.js')
+			script(src='/js/viewsJS/eventsViews.js')
+			script(src='/js/viewsJS/tripViews.js')
 
+//- 
+//- 
+//- 
+	

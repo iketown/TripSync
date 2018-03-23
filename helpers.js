@@ -19,3 +19,5 @@ exports.autoComplete = function (input, latInput, lngInput) {
 		if (e.keyCode === 13) e.preventDefault();
 	});
 }
+
+// exports.store = store.data

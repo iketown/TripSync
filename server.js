@@ -17,6 +17,7 @@ const groupsRouter = require('./routes/groups.router')
 const tripsRouter = require('./routes/trips.router')
 const eventsRouter = require('./routes/events.router')
 const authRouter = require('./routes/auth.router')
+const homeRouter = require('./routes/home.router')
 const expressValidator = require('express-validator')
 const helpers = require('./helpers')
 const errorHandlers = require('./handlers/errorHandlers')
@@ -52,24 +53,30 @@ app.use((req, res, next)=>{
 	res.locals.h = helpers;
 	res.locals.flashes = req.flash();
 	res.locals.currentPath = req.path;
+  // res.locals.user = req.user
 	next();
 })
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);
+const jwtAuth = passport.authenticate('jwt', {
+  session: false,
+  failureRedirect: '/auth/login'
+})
 
 app.use('/auth', authRouter)
-app.use('/admin/legs',   legsRouter)
-app.use('/admin/locations', locationsRouter)
-app.use('/admin/users', usersRouter)
-app.use('/admin/groups', groupsRouter)
-app.use('/admin/trips', tripsRouter)
-app.use('/admin/events', eventsRouter)
+app.use('/admin/legs', jwtAuth,  legsRouter)
+app.use('/admin/locations',jwtAuth, locationsRouter)
+app.use('/admin/users', jwtAuth, usersRouter)
+app.use('/admin/groups',jwtAuth, groupsRouter)
+app.use('/admin/trips',jwtAuth, tripsRouter)
+app.use('/admin/events',jwtAuth, eventsRouter)
+app.use('/home', homeRouter)
 
 // catch everything else 
-app.get('*', (req, res)=>{
-	res.sendFile(path.join(__dirname, './public', 'index.html'))
-})
+// app.get('*', (req, res)=>{
+// 	res.sendFile(path.join(__dirname, './public', 'index.html'))
+// })
 
 app.use(errorHandlers.notFound)
 app.use(errorHandlers.flashValidationErrors);
@@ -81,7 +88,8 @@ if (app.get('env') === 'development') {
 app.use(errorHandlers.productionErrors)
 // connect the db and start the server
 mongoose.connect(DATABASE_URL, () => {
-  app.listen(process.env.PORT || 8080, () => console.log('listening'))
+  const PORT = process.env.PORT || 8080
+  app.listen(PORT, () => console.log(`listening on port ${PORT}`))
 })
 
 

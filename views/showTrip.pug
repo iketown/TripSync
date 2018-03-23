@@ -1,12 +1,14 @@
 extends layout
 include mixins/_tripDisplay
 
-block listDiv
-	each trip in trips
-		+tripDisplay(trip)
-block editDiv
-	h2 Editing #{trip.name}
-	ul.legsList
-		li.legItem
-			
-	pre= h.dump(trip)
+block mainStuff
+	h1= trip.name
+	h3 Events
+	+listEvents
+	pre=h.dump(trip)
+
+mixin listEvents
+	ul
+		each event in trip.tripEvents
+			li= event.name
+		a(href='/admin/events/new') * New Event

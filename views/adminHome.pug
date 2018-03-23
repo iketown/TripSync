@@ -1,0 +1,58 @@
+extends layout
+
+block mainStuff
+	h1 Admin Home Page
+
+block 4left
+	.card
+		.card-header 
+			h4 Your Trips
+		.card-body
+			.list-group.list-group-flush
+				.list-group-item.list-group-item-action.active
+						//- get dates from events / legs
+						small.float-right.mt-0 Jan 0 - Dec 35
+						a(href='#!') Bahamas etc 
+				each trip in s.trips
+					+tripListItem(trip)
+
+block 4right
+	- const trip = s.trips[1]
+	h3 practice
+	+practiceShowTrip(trip)
+	
+
+mixin tripListItem(trip)
+	.list-group-item.list-group-item-action.clearfix
+		small.float-right.mt-0 Jan 0 - Dec 35
+		a.tripListLink(href='#!', id=trip.id) #{trip.name}
+
+mixin practiceShowTrip(trip)
+	button.ml-3.btn.btn-success(data-toggle='collapse', href='#usersDiv', role="button" aria-expanded="false" aria-controls="usersDiv") Travelers
+	button.ml-3.btn.btn-success(data-toggle='collapse', href='#legsDiv', role="button" aria-expanded="false" aria-controls="legsDiv") Legs
+	button.ml-3.btn.btn-success(data-toggle='collapse', href='#eventsDiv', role="button" aria-expanded="false" aria-controls="eventsDiv") Events
+	//- users DIV
+	.collapse#usersDiv
+		.card.mt-4
+			ul.list-group.list-group-flush
+				each user in s.users
+					.list-group-item
+						p.float-left #{user.firstName} #{user.lastName}
+						.float-right
+							input(type='checkbox' checked=false data-toggle='toggle')
+	.collapse#legsDiv
+		.card.card-body 
+			ul.list-group.list-group-flush
+				each leg in trip.tripLegs
+					.list-group-item.d-flex.flex-row.justify-content-between
+						img.rounded(src=leg.company.logoUrl, style="height: 30px;")
+						p 
+							strong #{leg.company.name}
+							span  #{leg.flightNum}
+	.collapse#eventsDiv
+		.card.card-body
+			.float-right
+				a(data-toggle='collapse', href='#eventsDiv', role='button', aria-expanded='false', aria-controls='eventsDiv') X
+			p here goes the EVENTS information
+
+	pre= h.dump(trip)

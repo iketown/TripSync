@@ -10,9 +10,9 @@ const { JWT_SECRET } = require('../config')
 const localStrategy = new LocalStrategy({
   usernameField: 'email' // sign in w email, not username
 },
-(username, password, done) => {
+(email, password, done) => {
   let user;
-  User.findOne({ email: username })
+  User.findOne({ email })
     .then(userFromPromise => {
       user = userFromPromise;
       if (!user) {
@@ -41,17 +41,25 @@ const localStrategy = new LocalStrategy({
 });
 
 
+  const cookieExtractor = function(req){
+    var token = null;
+    if (req && req.cookies)
+    {
+        token = req.cookies['jwt-auth'];
+    }
+    return token;
+  };
+  
 const jwtStrategy = new JwtStrategy(
   {
     secretOrKey: JWT_SECRET,
-    // Look for the JWT as a Bearer auth header
-    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
+    jwtFromRequest: cookieExtractor || headerfromt,
     // Only allow HS256 tokens - the same as the ones we issue
     algorithms: ['HS256']
   },
-  (payload, done) => {
-    console.log('payload user', payload.user)
-    done(null, payload.user);
+  async (payload, done) => {
+    const user = await User.findById(payload.sub)
+    done(null, user);
   }
 );
 

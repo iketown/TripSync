@@ -1,5 +1,7 @@
 const { Trip } = require('../models/trip.model')
 const { Leg } = require('../models/leg.model')
+const { getAll } = require('./home.controller')
+
 const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
 
@@ -7,7 +9,10 @@ exports.createTrip = async(req, res)=>{
 	const trip = await Trip.create(req.body)
 	res.status(201).json(trip)
 }
-
+exports.fillStore = async(req, res)=>{
+	const trips = await Trip.find().populate('tripLegs').populate('tripEvents')
+	res.json(trips)
+}
 exports.updateTrip = async(req, res)=> {
 	if ( req.body.id !== req.params.id ){
 		return res.status(400).send('id in url and body must match')
@@ -37,9 +42,18 @@ exports.newTrip = ()=>{
 	
 }
 exports.showTrip = async (req, res)=>{
+	const trip = await Trip.findById(req.params.id)
+		.populate({path: 'tripEvents', populate: {path: 'users'}})
+		.populate({path: 'tripLegs', populate: {path: 'travelers'}})
+		.populate({path: 'tripLegs', populate: {path: 'startLoc'}})
+		.populate({path: 'tripLegs', populate: {path: 'endLoc'}})
+	const s = await getAll()
+	res.render('showTrip', {trip, user: req.user, s})
+}
+exports.getTrip = async(req,res)=>{
 	const trip = await Trip.findById(req.params.id).populate('tripLegs')
-	const trips = await Trip.find().populate('tripLegs');
-	res.render('showTrip', {trip, trips})
+	console.log(trip)
+	res.json(trip)
 }
 exports.addLegToTrip = () => {
 

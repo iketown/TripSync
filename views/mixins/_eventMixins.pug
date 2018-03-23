@@ -1,9 +1,20 @@
+
 mixin eventList(events)
+	h1 All Events
+	.row
+		each event in events
+			+eventCard(event)
+		.card.sm-4.m-3(style='width: 18rem;')
+			h5.card-header * Add Event *
+			.card-body
+				.btn-success.btn Add Event
+
+mixin eventListOLD(events)
 	h1 All Events
 	ul.list
 		each event in events
 			li.listItem
-				a(href=`/admin/events/${event._id}`) #{event.name}
+				a(href=`/admin/events/${event._id}`) #{event.name} 
 				a(href=`/admin/events/${event._id}/edit`) 
 					i.far.fa-edit
 				a(href=`/admin/events/${event._id}/delete`)
@@ -33,4 +44,12 @@ mixin eventEdit(event = {}, locations)
 
 
 mixin eventCard(event)
-	h2 #{event.name}
+	.card.sm-4.m-3(style='width: 18rem;')
+		h5.card-header= event.name
+		.card-body
+			a.card-link(href=`/admin/events/${event._id}`) #{event.name} 
+			a.card-link(href=`/admin/events/${event._id}/edit`) 
+				i.far.fa-edit
+			a.card-link(href=`/admin/events/${event._id}/delete`)
+				i.far.fa-trash-alt
+

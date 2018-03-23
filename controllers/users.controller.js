@@ -11,7 +11,7 @@ exports.createUser = async (req,res) => {
 
 exports.getUsers = async (req,res)=>{
 	const users = await User.find()
-	res.render('users', {users, title: 'Users'})
+	res.render('users', {users, title: 'Users', user: req.user})
 }
 exports.newUser = async (req, res)=>{
 	const users = await User.find()

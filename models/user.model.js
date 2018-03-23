@@ -11,21 +11,37 @@ const UserSchema = Schema({
 	lastName: String,
 	userName: String,
 	email: {type: String, lowercase: true, required: true, unique: true, index: true},
-	hashedPassword: {
+	password: {
 		type: String,
 		required: true
 	},
 	phone: String,
 	homeAirport: String,
-	prefAirlines: Array
+	prefAirlines: Array,
+	travelers: [{type: Schema.Types.ObjectId, ref: 'User'}]
 })
 
-UserSchema.methods.validatePassword = function(password){
-	return bcrypt.compare(password, this.hashedPassword)
+// automatically hash the password before saving
+UserSchema.pre('save', async function(next){
+	try {
+		const salt = await bcrypt.genSalt(10)
+		const passwordHash = await bcrypt.hash(this.password, salt)
+		this.password = passwordHash;
+		next();
+	} catch(e) {
+		next(e)
+		console.log(e)
+	}
+})
+
+UserSchema.methods.validatePassword = async function(password){
+	try {
+		return await bcrypt.compare(password, this.password) // returns a boolean
+	} catch(e) {
+		throw new Error(e)
+	}
 }
-UserSchema.statics.hashPassword = function(password){
-	return bcrypt.hash(password, 10);
-}
+
 
 UserSchema.virtual('fullName').get( function(){
 	return this.firstName +' ' + this.lastName

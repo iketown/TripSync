@@ -50,8 +50,8 @@ label{
 	justify-self: end;
 }
 input{
-	margin-left: 5px;
-	width: 225px;
+	/*margin-left: 5px;*/
+	/*width: 225px;*/
 }
 .listItem {
 	display: grid;

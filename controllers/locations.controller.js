@@ -5,34 +5,34 @@ const ObjectId = mongoose.Types.ObjectId
 exports.createLocation = async (req,res)=>{
 	const location = await Location.create(req.body)
 	const locations = await Location.find()
-	res.render('locations', {locations} )
+	res.render('locations', {locations, user: req.user} )
 }
 
 exports.newLocation = async (req, res) => {
 	const locations = await Location.find()
-	res.render('editLocation', {locations, title: 'New Location'})
+	res.render('editLocation', {locations, title: 'New Location', user: req.user})
 }
 exports.editLocation = async (req, res)=>{
 	const location = await Location.findById(req.params.id)
 	const locations = await Location.find()
 	// const [location, locations] = await Promise.all([locationPromise, locationsPromise])
 	console.log('location', location)
-	res.render('editLocation', {location, locations})
+	res.render('editLocation', {location, locations, user: req.user})
 }
 exports.showLocation = async (req,res)=>{
 	const locationPromise = Location.findById(req.params.id)
 	const locationsPromise = Location.find()
 	const [location, locations] = await Promise.all([locationPromise, locationsPromise])
-	res.render('showLocation', {locations, location, title: location.name})
+	res.render('showLocation', {locations, location, title: location.name, user: req.user})
 }
 exports.getLocations = async (req,res)=>{
 	const locations = await Location.find()
-	res.render('locations', { locations })
+	res.render('locations', { locations, user: req.user })
 }
 exports.updateLocation = async (req,res)=>{
 	const location = await  Location.findByIdAndUpdate(req.params.id, req.body, {new: true})
 	const locations = await Location.find()
-	res.render('showLocation', {location, locations})
+	res.render('showLocation', {location, locations, user: req.user})
 	// if(req.body.id !== req.params.id){
 	// 	return res.status(400).send('ids must match')
 	// }
