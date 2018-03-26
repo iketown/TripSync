@@ -7,56 +7,61 @@ block tripList
 block leftSide
 	h1 left side
 block rightSide
-	h1 Update Leg
-	form(action='/admin/legs/', method='POST')
-		.row
-			.col-8
-				.form-group
-					label(for='type') Type
-					select.form-control(id="type", name='type')
-						option Flight
-						option Ground
-						option Other
-			.col-4
-				.typeIcon
-		-  const airlines = [{name: "Alaska", logoUrl: '', abbr: ''}, {name: "Allegiant", logoUrl: '', abbr: ''}, {name: "American", logoUrl: '', abbr: ''}, {name: "Delta", logoUrl: '', abbr: ''}, {name: "Frontier", logoUrl: '', abbr: ''}, {name: "Hawaiian", logoUrl: '', abbr: ''}, {name: "JetBlue", logoUrl: '', abbr: ''}, {name: "Southwest", logoUrl: '', abbr: ''}, {name: "Spirit", logoUrl: '', abbr: ''}, {name: "United", logoUrl: '', abbr: ''}, {name: "Other", logoUrl: '', abbr: ''}]
-		.row
-			.col
-				.form-group
-					label(for='company') Company
-					select.form-control(id="company", name='company')
-						each airline in airlines
-							option(value=airline) #{airline.name}
-			.col
-				.form-group
-					label(for='flightNum') Number
-					input.form-control(type='text', id='flightNum', name='flightNum')
-		.row
-			.col
-				.form-group
-					label(for='startDate') Departure Date
-					input.form-control(type='date', id='startDate', name='startDate')
-			.col
-				.form-group
-					label(for='startTime') Departure Time
-					input.form-control(type='time', id='startTime', name='startTime')
-		.row
-			.col
-				.form-group
-					label(for='endDate') Arrival Date
-					input.form-control(type='date', id='endDate', name='endDate')
-			.col
-				.form-group
-					label(for='endTime') Arrival Time
-					input.form-control(type='time', id='endTime', name='endTime')
-		h3 Travelers
-		each user in s.users
-			.form-check
-				input.form-check-input(type='checkbox' id=user.id value=user.id)
-				label.form-check-label(for=user.id) #{user.firstName} #{user.lastName}
-		.row
-			.col
-				input.btn.btn-success(type='submit' value='save leg')
-			.col 
-				input.btn.btn-danger.deleteLeg(type='submit' value='delete')
+	//- h1 Update Leg
+	//- form(action='/admin/legs/', method='POST')
+	//- 	.row
+	//- 		.col-8
+	//- 			.form-group
+	//- 				label(for='type') Type
+	//- 				select.form-control(id="type", name='type')
+	//- 					option Flight
+	//- 					option Ground
+	//- 					option Other
+	//- 		.col-4
+	//- 			.typeIcon
+	//- 	-  const airlines = [{name: "Alaska", logoUrl: '', abbr: ''}, {name: "Allegiant", logoUrl: '', abbr: ''}, {name: "American", logoUrl: '', abbr: ''}, {name: "Delta", logoUrl: '', abbr: ''}, {name: "Frontier", logoUrl: '', abbr: ''}, {name: "Hawaiian", logoUrl: '', abbr: ''}, {name: "JetBlue", logoUrl: '', abbr: ''}, {name: "Southwest", logoUrl: '', abbr: ''}, {name: "Spirit", logoUrl: '', abbr: ''}, {name: "United", logoUrl: '', abbr: ''}, {name: "Other", logoUrl: '', abbr: ''}]
+	//- 	.row
+	//- 		.col
+	//- 			.form-group
+	//- 				label(for='company') Company
+	//- 				select.form-control(id="company", name='company')
+	//- 					each airline in airlines
+	//- 						option(value=airline) #{airline.name}
+	//- 		.col
+	//- 			.form-group
+	//- 				label(for='flightNum') Number
+	//- 				input.form-control(type='text', id='flightNum', name='flightNum')
+	//- 	.row
+	//- 		.col
+	//- 			.form-group
+	//- 				label(for='startDate') Departure Date
+	//- 				input.form-control(type='date', id='startDate', name='startDate')
+	//- 		.col
+	//- 			.form-group
+	//- 				label(for='startTime') Departure Time
+	//- 				input.form-control(type='time', id='startTime', name='startTime')
+	//- 	.row
+	//- 		.col
+	//- 			.form-group
+	//- 				label(for='endDate') Arrival Date
+	//- 				input.form-control(type='date', id='endDate', name='endDate')
+	//- 		.col
+	//- 			.form-group
+	//- 				label(for='endTime') Arrival Time
+	//- 				input.form-control(type='time', id='endTime', name='endTime')
+	//- 	h3 Travelers
+	//- 	each user in s.users
+	//- 		.form-check
+	//- 			input.form-check-input(type='checkbox' id=user.id value=user.id)
+	//- 			label.form-check-label(for=user.id) #{user.firstName} #{user.lastName}
+	//- 	.row
+	//- 		.col
+	//- 			input.btn.btn-success(type='submit' value='save leg')
+	//- 		.col 
+	//- 			input.btn.btn-danger.deleteLeg(type='submit' value='delete')
 
+block otherScripts
+			script(src='/js/trips/app.js')
+			script(src='/js/trips/handlers.js')
+			script(src='/js/trips/listeners.js')
+			script(src='/js/trips/render.js')

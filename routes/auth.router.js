@@ -7,7 +7,7 @@ const {validateBody, schemas} = require('../helpers/routerHelpers')
 
 
 router.get('/signup', authController.signUpPage)
-router.post('/signup', validateBody(schemas.authSchema), authController.signUp)
+router.post('/signup', authController.signUp)
 router.post('/signin', validateBody(schemas.authSchema), passport.authenticate('local', {session: false}), authController.signIn)
 router.get('/login', authController.loginPage)
 router.get('/signout', authController.signOut)

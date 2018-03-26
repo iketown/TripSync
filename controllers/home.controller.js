@@ -16,9 +16,13 @@ const getAll = async ()=>{
 }
 
 exports.home = async (req, res)=>{
-	const s = await getAll()
-	const user = req.user
-	res.render('adminHome', {user, s})
+	if (req.user){
+		const s = await getAll()
+		const user = req.user
+		res.render('adminHome', {user, s})
+	} else {
+		res.render('home')
+	}
 }
 
 exports.jshome = async(req, res)=>{

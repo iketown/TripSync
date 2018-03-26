@@ -21,7 +21,8 @@ const signToken = (user)=>{
 }
 
 exports.signUp = async(req, res)=>{
-	const {email, password} = req.value.body;
+	console.log('hi from signup')
+	const {email, password} = req.body;
 	// check that the email isn't already taken
 	const foundUser = await User.findOne({email});
 	if(foundUser) return res.status(403).json({error: 'email already registered'})
@@ -40,7 +41,7 @@ exports.signIn = async (req, res)=>{
 	// req.user will already have the user on it by now.
 	const token = signToken(req.user)
 	res.cookie('jwt-auth', token)
-	res.redirect('/home')
+	res.render('adminHome', {user: req.user})
 }
 
 exports.signOut = (req, res)=>{

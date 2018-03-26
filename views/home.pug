@@ -1,6 +1,37 @@
 extends layout
 
-block mainStuff
+block leftSide
 	h2 Welcome to TripSync
-	p Please sign in above, or 
-		a(href='/auth/signup') CLICK HERE to sign up
+	p Please sign in above, or  
+		button.btn.btn-success.btn-sm(data-toggle='modal', data-target='signUpModal') CLICK HERE 
+		span  to sign up
+
+block rightSide
+	h1 Sign Up
+	form(action='/auth/signup', method='POST')
+		.form-group
+			label(for='email') Email
+			input.form-control(type='email', id='email', name='email')
+		.form-group
+			label(for='password') Password
+			input.form-control(id='password', type='password', name='password')
+		input.btn.btn-success.btn-sm(type='submit', value='submit')
+
+
+
+
+	//- //- modal
+	//- .modal#signUpModal(tabindex='-1', role='dialog')
+	//- 	.modal-dialog(role='document')
+	//- 		.modal-content
+	//- 			.modal-header
+	//- 				h5.modal-title#signUpModalLabel Sign Up
+	//- 				button.close(type='button', data-dismiss='modal', aria-label='Close')
+	//- 					span(aria-hidden=true) X
+
+	//- 			.modal-body
+	//- 				p sign up stuff here
+	//- 			.modal-footer
+	//- 				button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+	//- 				button.btn.btn-primary(type='button', href='#!') Sign Up
+

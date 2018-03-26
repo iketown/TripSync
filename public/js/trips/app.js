@@ -35,7 +35,6 @@ $( function(){
 	})
 
 	// $('.topRow').html('<h2>My Trips</h2>')
-	$('.leftSide').text('hey whats up left side')
 	// $('.rightSide').text('hey whats up right side')
 	
 

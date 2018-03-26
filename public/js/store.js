@@ -4,7 +4,9 @@
 		const trips = []
 
 		const sortTrips = function(){
+			console.log('sorting trips')
 			this.trips.forEach(trip => trip.tripLegs.sort( (a,b)=> a.startTime - b.startTime ) )
+			this.trips.sort((a,b) => a.timeRange.startTime - b.timeRange.startTime )
 		}
 
 		const setTimeRanges = function(){
@@ -14,15 +16,15 @@
 					timeArr.push(leg.startTime)
 					timeArr.push(leg.endTime)
 				})
-				trip.timeRange = {start: Math.min(...timeArr), end: Math.max(...timeArr)}
+				trip.timeRange = {startTime: Math.min(...timeArr), endTime: Math.max(...timeArr)}
 			})
+			this.sortTrips()
 		}
 
 		function getEventsOnLoad(events){
 			axios.get('/admin/trips/')
 				.then(results => {
 					this.trips = results.data
-					this.sortTrips()
 					this.setTimeRanges()
 					this.trips.maxIndex = 1
 					render.trips()

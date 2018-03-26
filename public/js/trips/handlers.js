@@ -7,8 +7,9 @@ const handlers = (()=>{
 		 $form.find('#type').val(store.legTypes[Math.floor(Math.random()*3)])
 		 $form.find('#company').val(store.airlines[Math.floor(Math.random() * store.airlines.length)].name)
 		 $form.find('#flightNum').val( Math.floor(Math.random() * 10000) )
-		 $form.find('#startDate').val(moment(faker.date.future()).format('YYYY-MM-DD'))
-		 $form.find('#endDate').val(moment(faker.date.future()).format('YYYY-MM-DD'))
+		 const startDate = moment(faker.date.future())
+		 $form.find('#startDate').val(startDate.format('YYYY-MM-DD'))
+		 $form.find('#endDate').val(startDate.add(7,'days').format('YYYY-MM-DD'))
 		 $form.find('#startTime').val(moment(faker.date.future()).format('HH:MM'))
 		 $form.find('#endTime').val(moment(faker.date.future()).format('HH:MM'))
 		return 'ok'

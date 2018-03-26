@@ -8,11 +8,12 @@ const render = (function(){
 									</h5>
 									<div class="card-body">
 										<h6 class="card-subtitle mb-2 text-muted">`
-			if(trip.timeRange.start < Infinity && trip.timeRange.end > -Infinity ) {
-				html += `${moment(trip.timeRange.start).format('MMM Do')} - ${moment(trip.timeRange.end).format('MMM Do')}</h6>`
+			if(trip.timeRange.startTime < Infinity && trip.timeRange.endTime > -Infinity ) {
+				html += `${moment(trip.timeRange.startTime).format('MMM Do')} - ${moment(trip.timeRange.endTime).format('MMM Do')}</h6>`
 			}  
 										html += `
 										<div class="list">`
+								if (!trip.tripLegs.length){html+= `<span class="list-inline-item"> no dates yet </span>` }
 								trip.tripLegs.forEach((leg, i)=> {
 									html +=	`<span class="list-inline-item">${leg.endLoc.city || leg.endLoc.cityLong || leg.endLoc.state }</span>`
 									if (i < trip.tripLegs.length - 1) html += `<span class="list-inline-item">	・</span>`

@@ -2,7 +2,6 @@ extends layout
 include mixins/_userList
 
 block listDiv
-	h1= title
-	h2 (temporary protected home page)
+
 	pre= h.dump(user)
 	+userList(users)
