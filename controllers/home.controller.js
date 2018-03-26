@@ -17,7 +17,8 @@ const getAll = async ()=>{
 
 exports.home = async (req, res)=>{
 	const s = await getAll()
-	res.render('adminHome', {user: req.user, s})
+	const user = req.user
+	res.render('adminHome', {user, s})
 }
 
 exports.jshome = async(req, res)=>{

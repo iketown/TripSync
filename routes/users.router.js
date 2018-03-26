@@ -18,6 +18,7 @@ const loginAuth = passport.authenticate('local', {
 router.post('/', catchErrors(usersController.createUser))
 router.post('/:id',  catchErrors(usersController.updateUser))
 router.get('/new', catchErrors(usersController.newUser))
+router.get('/store', jwtAuth, catchErrors(usersController.fillStore))
 router.get('/', jwtAuth, catchErrors(usersController.getUsers))
 router.get('/:id/edit', catchErrors(usersController.editUser))
 router.get('/:id/delete', catchErrors(usersController.deleteUser))

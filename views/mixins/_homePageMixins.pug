@@ -1,0 +1,37 @@
+mixin tripList(user)
+	.d-flex.flex-row.justify-content-around
+
+
+		.card(style='max-width: 18rem;')
+			.card-title.card-header 
+				input.form-control(type='text', id='tripName', name='name', placeholder='New Trip Name')
+			.card-body
+				button.btn.btn-success#newTripButton(type='submit') Create New Trip
+				
+					
+		.card(style='max-width: 18rem;')
+			h5.card-title.card-header 
+				.float-left Trip Name
+
+			.card-body
+				h6.card-subtitle.mb-2.text-muted Aug 21 - Aug 30
+				.list
+					span.list-inline-item Miami 
+					span.list-inline-item ・
+					span.list-inline-item Palm Beach
+					span.list-inline-item ・
+					span.list-inline-item Vero Beach
+
+		.card(style='max-width: 18rem;')
+			h5.card-title.card-header 
+				.float-left Trip Name
+
+			.card-body
+				h6.card-subtitle.mb-2.text-muted Aug 21 - Aug 30
+				.list
+					span.list-inline-item Miami 
+					span.list-inline-item ・
+					span.list-inline-item Palm Beach
+					span.list-inline-item ・
+					span.list-inline-item Vero Beach
+		

@@ -40,6 +40,7 @@
     "path": "^0.12.7",
     "pug": "^2.0.1",
     "semantic-ui": "^2.3.0",
+    "slick-carousel": "^1.8.1",
     "toastr": "^2.1.4"
   }
 }

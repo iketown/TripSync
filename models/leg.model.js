@@ -11,18 +11,16 @@ const moment = require('moment')
 
 const LegSchema = Schema({
 	_id: Schema.Types.ObjectId,
-	company: {
-		logoUrl: String,
-		name: String,
-		abbr: String
-	},
-	type: { type: String, required: true },
+	company: String,
+	type: String,
 	flightNum: String,
 	startLoc: {type: Schema.Types.ObjectId, ref: "Location"},
 	endLoc: {type: Schema.Types.ObjectId, ref: "Location"},
 	startTime: 'Moment',
 	endTime: 'Moment',
-	travelers: [{type: Schema.Types.ObjectId, ref: 'User'}]
+	travelers: [{type: Schema.Types.ObjectId, ref: 'User'}],
+	adminId: {type: Schema.Types.ObjectId, ref: 'User'},
+	tripId: {type: Schema.Types.ObjectId, ref: 'Trip'}
 });
 
 const Leg = mongoose.model('Leg', LegSchema);

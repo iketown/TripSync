@@ -1,32 +1,64 @@
 const { Leg } = require('../models/leg.model')
 const { User } = require('../models/user.model');
+const { Location } = require('../models/location.model');
+const { Trip } = require('../models/trip.model');
 const Moment = require('moment')
 const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
 
+exports.addLegToTrip =  async (req, res) => {
+	// return res.send('no bueno')
+	try {
+		const startLoc = new Location(req.body.startLoc)
+		startLoc._id = ObjectId()
+		const endLoc = new Location(req.body.endLoc)
+		endLoc._id = ObjectId()
+	console.log('startLoc', startLoc)
+		const leg = new Leg()
+		const { company, flightNum, type, startDate, startTime, endDate, endTime } = req.body
+		leg._id = ObjectId()
+		leg.company = company
+		leg.flightNum = flightNum
+		leg.type = type
+		leg.adminId = ObjectId(req.user._id)
+		leg.startTime = Moment(startDate+"-"+startTime, "YYYY-MM-DD-HH:mm")
+		leg.endTime = Moment(endDate+"-"+endTime, "YYYY-MM-DD-HH:mm")
+		leg.travelers = req.body.travelerIds.map(id=> ObjectId(id))
+		leg.startLoc = ObjectId(startLoc._id)
+		leg.endLoc = ObjectId(endLoc._id)
+		leg.tripId = ObjectId(req.params.tripId)
+		const [startLocUpdate, endLocUpdate, legUpdate, tripUpdate] = await Promise.all([
+			startLoc.save(),
+			endLoc.save(),
+			leg.save(),
+			Trip.findByIdAndUpdate(req.params.tripId, {$push: {tripLegs: leg._id}}, {new: true})
+				.populate({path: 'tripEvents', populate: {path: 'users'}})
+				.populate({path: 'tripLegs', populate: {path: 'travelers'}})
+				.populate({path: 'tripLegs', populate: {path: 'startLoc'}})
+				.populate({path: 'tripLegs', populate: {path: 'endLoc'}})
+			])
+		res.status(200).json(tripUpdate)
+
+	} catch(e) {
+		console.log(e);
+	}
+
+}
+exports.updateLeg = async (req, res)=>{
+
+}
 exports.createLeg = async (req, res) => {
-	const leg = await new Leg()
-	leg._id = new ObjectId()
-	leg.company = req.body.company
-	leg.type = req.body.type
-	leg.flightNum = req.body.flightNum
-	leg.startLoc = ObjectId(req.body.startLocId);
-	leg.endLoc = ObjectId(req.body.endLocId);
-	leg.startTime = new Moment('2018-03-06')
-	leg.endTime = new Moment('2018-03-07')
-	const travelers = [];
-	for (i in req.body.travelerIds){
-		travelers.push(ObjectId(req.body.travelerIds[i]))
+	console.log('req.body', req.body)
+	let leg = new Leg()
+	const {type, flightNum, company, startDate, startTime, endDate, endTime } = req.body
+	leg.type = type
+	leg.flightNum = flightNum
+	leg.company = company
+	leg.adminId = ObjectId(req.user._id)
+	leg.startTime = Moment(startDate+"-"+startTime, "YYYY-MM-DD-HH:mm")
+	leg.endTime = Moment(endDate+"-"+endTime, "YYYY-MM-DD-HH:mm")
+	// res.status(200).send('a-ok')
 	}
-	leg.travelers = travelers;
-	leg.save((err, leg)=>{
-		if (err) return console.log(err)
-			res.json(leg)
-	})
-
-
-	}
-
 exports.getLegs = async (req, res)=>{
 	const legs = await Leg.find()
 	res.json(legs)
@@ -34,27 +66,6 @@ exports.getLegs = async (req, res)=>{
 exports.getLeg = async(req, res)=>{
 	const leg = await Leg.findById(req.params.id).populate('travelers').populate('startLoc').populate('endLoc')
 	res.json(leg)
-}
-exports.updateLeg = async (req, res)=>{
-	if(req.body._id !== req.params.id){
-		return res.status(400).send('ids must match')
-	}
-	// const updatableFields = []
-	
-	const leg = await Leg.findById(req.params.id)
-	let travelers = []
-	for (i in req.body.travelerIds){
-		travelers.push(ObjectId(req.body.travelerIds[i]))
-	}
-	if (req.body.startLocId) leg.startLoc = ObjectId(req.body.startLocId);
-	if (req.body.endLocId) leg.endLoc = ObjectId(req.body.endLocId);
-	if (travelers.length) leg.travelers = travelers;
-	if (req.body.startTimeString) leg.startTime = Moment(req.body.startTimeString)
-	if (req.body.endTimeString) leg.endTime = Moment(req.body.endTimeString)
-	leg.save()
-	
-	res.status(204).end();
-
 }
 exports.deleteLeg = (req, res)=>{
 	res.send('hi from delete LEG')

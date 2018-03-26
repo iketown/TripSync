@@ -1,4 +1,5 @@
 const { User } = require('../models/user.model')
+const { Trip } = require('../models/trip.model')
 const { Group } = require('../models/group.model')
 const { Leg } = require('../models/leg.model')
 const ObjectId = require('mongoose').Types.ObjectId
@@ -45,7 +46,16 @@ exports.deleteUser = async (req,res)=>{
 	const users = await User.find();
 	res.render('users', {users, title: 'Users'})
 }
+exports.fillStore = async function(req,res){
+	console.log('hi from fillStore')
+	const meProm =  User.findById(req.user._id)
+		.populate('travelers')
+	const myTripsProm =  Trip.find({adminId: req.user._id})
+	const [me, myTrips] = await Promise.all([meProm, myTripsProm])
+	me.password = ''
+	res.status(200).json({me, myTrips});
 
+}
 
 exports.sign_in = function(req,res){
 	

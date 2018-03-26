@@ -5,9 +5,26 @@ const { getAll } = require('./home.controller')
 const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
 
-exports.createTrip = async(req, res)=>{
-	const trip = await Trip.create(req.body)
-	res.status(201).json(trip)
+
+exports.getMyTrips = async(req, res)=>{
+	const trips = await Trip.find( {adminId: req.user.id} )
+		.populate({path: 'tripEvents', populate: {path: 'users'}})
+		.populate({path: 'tripLegs', populate: {path: 'travelers'}})
+		.populate({path: 'tripLegs', populate: {path: 'startLoc'}})
+		.populate({path: 'tripLegs', populate: {path: 'endLoc'}})
+
+	res.json(trips)
+}
+exports.newTrip = ()=>{
+	
+}
+exports.createTrip = async (req, res)=>{
+	trip = new Trip(req.body)
+	console.log('user id', req.user.id)
+	trip.adminId = ObjectId(req.user.id)
+	await trip.save()
+	res.status(200).json(trip)
+	
 }
 exports.fillStore = async(req, res)=>{
 	const trips = await Trip.find().populate('tripLegs').populate('tripEvents')
@@ -38,9 +55,6 @@ exports.getTrips = async(req, res)=> {
 	res.render('trips', {trips, title: 'All Trips' })
 }
 
-exports.newTrip = ()=>{
-	
-}
 exports.showTrip = async (req, res)=>{
 	const trip = await Trip.findById(req.params.id)
 		.populate({path: 'tripEvents', populate: {path: 'users'}})

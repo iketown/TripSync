@@ -16,18 +16,15 @@ mixin navStranger
 
 mixin navSignedIn
 	nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
-		- const links = [ 'Users', 'Locations', 'Events']
+		
 		a.navbar-brand(href='/home') TripSync
 		.collapse.navbar-collapse#nav01
 			ul.navbar-nav.ml-auto
-				each link in links
-					li.nav-item(class= (currentPath === `/admin/${link}`) ? 'active' : '')
-						a.nav-link(href=`/admin/${link}`) #{link}
-				li.nav-item.dropdown
-					a.nav-link(href='/admin/trips', data-toggle='dropdown', role='button', aria-haspopup=true, aria-expanded=false) Trips
-					.dropdown-menu
-						a.dropdown-item(href='/admin/trips') All Trips
-						each trip in s.trips
-							a.dropdown-item(href=`/admin/trips/${trip.id}/show`) #{trip.name}
+				li.nav-item(class= (currentPath === `/admin/travelers`) ? 'active' : '')
+					a.nav-link(href=`/admin/travelers`) My Travelers
+				li.nav-item(class= (currentPath === `/home`) ? 'active' : '')
+					a.nav-link(href=`/home`) My Trips
 				li.nav-item
 					a.nav-link(href='/auth/signout') Sign Out
+				li.nav-idem
+					p.nav-link(disabled) #{user.email}

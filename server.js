@@ -64,12 +64,14 @@ const jwtAuth = passport.authenticate('jwt', {
   failureRedirect: '/auth/login'
 })
 
+app.use('/', homeRouter)
 app.use('/auth', authRouter)
-app.use('/admin/legs', jwtAuth,  legsRouter)
+app.use('/admin/legs',  legsRouter)
 app.use('/admin/locations',jwtAuth, locationsRouter)
+app.use('/admin/travelers', jwtAuth, usersRouter)
 app.use('/admin/users', jwtAuth, usersRouter)
 app.use('/admin/groups',jwtAuth, groupsRouter)
-app.use('/admin/trips',jwtAuth, tripsRouter)
+app.use('/admin/trips', jwtAuth, tripsRouter)
 app.use('/admin/events',jwtAuth, eventsRouter)
 app.use('/home', homeRouter)
 

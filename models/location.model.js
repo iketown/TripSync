@@ -12,6 +12,8 @@ const LocationSchema = Schema({
 	state: String,
 	zip: String,
 	phone: String,
+	place_id: String,
+	utcOffset: Number,
 	contact1: {
 		name: String,
 		phone: String,

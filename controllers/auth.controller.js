@@ -40,7 +40,6 @@ exports.signIn = async (req, res)=>{
 	// req.user will already have the user on it by now.
 	const token = signToken(req.user)
 	res.cookie('jwt-auth', token)
-	const s = await getAll()
 	res.redirect('/home')
 }
 

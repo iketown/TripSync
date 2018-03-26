@@ -1,4 +1,5 @@
 include mixins/_navMixins
+include mixins/_homePageMixins
 
 doctype html
 html
@@ -9,11 +10,13 @@ html
 		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous")
 		link(rel='stylesheet', href='/css/bs_flatly.css')
 		link(rel='stylesheet', href='/css/main.css')
+		//- link(rel='stylesheet', href='/css/vendor/slick.css')
+		//- link(rel='stylesheet', href='/css/vendor/slick-theme.css')
 		script(defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js")
 	body
 
-		block nav
-			.navDiv
+		.navDiv
+			block nav
 				if user
 					+navSignedIn
 				else 
@@ -37,7 +40,17 @@ html
 			//- 								input.form-control( type='password' id='passwordInput')
 			//- 							input.btn-success.mb-1.ml-2(type='submit', value='Login')
 		.container.mt-4
-			block mainStuff
+			.row
+				.col.border.topRow
+					block tripList
+			.row
+				.col.border.leftSide
+					block leftSide
+				.col.border.rightSide
+					block rightSide
+
+
+
 			.row
 				.col-lg-4.col-md-6#4left
 					block 4left
@@ -63,10 +76,14 @@ html
 			script(src='https://code.jquery.com/jquery-3.3.1.min.js')
 			script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous")
 			script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous")
-
-			script(src='/js/api.js')
+			//- script(src='/js/vendor/slick.js')
+			script(src='https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js')
+			script(src='/js/vendor/moment.min.js')
 			script(src='/js/store.js')
 			script(src='/js/app.js')
+			script(src='/js/handlers.js')
+			script(src='/js/listeners.js')
+			script(src='/js/viewsJS/render.js')
 			script(src='/js/viewsJS/eventsViews.js')
 			script(src='/js/viewsJS/tripViews.js')
 

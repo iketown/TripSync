@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const moment = require('moment')
 
 const TripSchema = Schema({
-	name: {type: String, required: true},
+	name: {type: String},
 	tripLegs: [{type: Schema.Types.ObjectId, ref: 'Leg'}],
 	tripEvents: [{type: Schema.Types.ObjectId, ref: 'Event'}],
 	adminId: {type: Schema.Types.ObjectId, ref: 'User'}

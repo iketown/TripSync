@@ -1,58 +1,62 @@
 extends layout
+include mixins/_homePageMixins
 
-block mainStuff
-	h1 Admin Home Page
+block tripList
+	+tripList(user)
 
-block 4left
-	.card
-		.card-header 
-			h4 Your Trips
-		.card-body
-			.list-group.list-group-flush
-				.list-group-item.list-group-item-action.active
-						//- get dates from events / legs
-						small.float-right.mt-0 Jan 0 - Dec 35
-						a(href='#!') Bahamas etc 
-				each trip in s.trips
-					+tripListItem(trip)
+block leftSide
+	h1 left side
+block rightSide
+	h1 Update Leg
+	form(action='/admin/legs/', method='POST')
+		.row
+			.col-8
+				.form-group
+					label(for='type') Type
+					select.form-control(id="type", name='type')
+						option Flight
+						option Ground
+						option Other
+			.col-4
+				.typeIcon
+		-  const airlines = [{name: "Alaska", logoUrl: '', abbr: ''}, {name: "Allegiant", logoUrl: '', abbr: ''}, {name: "American", logoUrl: '', abbr: ''}, {name: "Delta", logoUrl: '', abbr: ''}, {name: "Frontier", logoUrl: '', abbr: ''}, {name: "Hawaiian", logoUrl: '', abbr: ''}, {name: "JetBlue", logoUrl: '', abbr: ''}, {name: "Southwest", logoUrl: '', abbr: ''}, {name: "Spirit", logoUrl: '', abbr: ''}, {name: "United", logoUrl: '', abbr: ''}, {name: "Other", logoUrl: '', abbr: ''}]
+		.row
+			.col
+				.form-group
+					label(for='company') Company
+					select.form-control(id="company", name='company')
+						each airline in airlines
+							option(value=airline) #{airline.name}
+			.col
+				.form-group
+					label(for='flightNum') Number
+					input.form-control(type='text', id='flightNum', name='flightNum')
+		.row
+			.col
+				.form-group
+					label(for='startDate') Departure Date
+					input.form-control(type='date', id='startDate', name='startDate')
+			.col
+				.form-group
+					label(for='startTime') Departure Time
+					input.form-control(type='time', id='startTime', name='startTime')
+		.row
+			.col
+				.form-group
+					label(for='endDate') Arrival Date
+					input.form-control(type='date', id='endDate', name='endDate')
+			.col
+				.form-group
+					label(for='endTime') Arrival Time
+					input.form-control(type='time', id='endTime', name='endTime')
+		h3 Travelers
+		each user in s.users
+			.form-check
+				input.form-check-input(type='checkbox' id=user.id value=user.id)
+				label.form-check-label(for=user.id) #{user.firstName} #{user.lastName}
+		.row
+			.col
+				input.btn.btn-success(type='submit' value='save leg')
+			.col 
+				input.btn.btn-danger.deleteLeg(type='submit' value='delete')
 
-block 4right
-	- const trip = s.trips[1]
-	h3 practice
-	+practiceShowTrip(trip)
-	
-
-mixin tripListItem(trip)
-	.list-group-item.list-group-item-action.clearfix
-		small.float-right.mt-0 Jan 0 - Dec 35
-		a.tripListLink(href='#!', id=trip.id) #{trip.name}
-
-mixin practiceShowTrip(trip)
-	button.ml-3.btn.btn-success(data-toggle='collapse', href='#usersDiv', role="button" aria-expanded="false" aria-controls="usersDiv") Travelers
-	button.ml-3.btn.btn-success(data-toggle='collapse', href='#legsDiv', role="button" aria-expanded="false" aria-controls="legsDiv") Legs
-	button.ml-3.btn.btn-success(data-toggle='collapse', href='#eventsDiv', role="button" aria-expanded="false" aria-controls="eventsDiv") Events
-	//- users DIV
-	.collapse#usersDiv
-		.card.mt-4
-			ul.list-group.list-group-flush
-				each user in s.users
-					.list-group-item
-						p.float-left #{user.firstName} #{user.lastName}
-						.float-right
-							input(type='checkbox' checked=false data-toggle='toggle')
-	.collapse#legsDiv
-		.card.card-body 
-			ul.list-group.list-group-flush
-				each leg in trip.tripLegs
-					.list-group-item.d-flex.flex-row.justify-content-between
-						img.rounded(src=leg.company.logoUrl, style="height: 30px;")
-						p 
-							strong #{leg.company.name}
-							span  #{leg.flightNum}
-	.collapse#eventsDiv
-		.card.card-body
-			.float-right
-				a(data-toggle='collapse', href='#eventsDiv', role='button', aria-expanded='false', aria-controls='eventsDiv') X
-			p here goes the EVENTS information
-
-	pre= h.dump(trip)
