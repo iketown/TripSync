@@ -3,11 +3,47 @@ a {
 }
 
 .edit {
-	color: blue;
+	color: darkblue;
 }
 
 .delete {
-	color: red;
+	color: darkred;
+}
+.viewLegButton{
+	float: right;
+}
+.viewLegButton , .viewLegButton {
+}
+.legListItem .edit, .legListItem .delete{
+	position: absolute;
+	right: 5px;
+}
+h5.tripName{
+	margin-bottom: 0px;
+	font-weight: bold;
+}
+p.tripDates{
+	margin-bottom: 0px;
+	color: #afafaf;
+	font-size: small;
+}
+.legListItem {
+	position: relative;
+}
+.legListItem .fa-arrow-right {
+	color: #bdbdbd;
+	margin: 0 5px;
+}
+.legListItem .legLogo {
+	color: #777;
+}
+.legListItem .date {
+
+}
+#googleMap{
+	background-color: lightblue;
+	width: 100%;
+	height: 500px;
 }
 /*.listItem {
 	display: grid;
@@ -107,6 +143,7 @@ input{
 	width: 30px;
     margin-right: 10px;
 }
+
 
 /*#addEditUser{
 	display: grid;

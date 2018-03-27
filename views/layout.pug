@@ -8,10 +8,11 @@ html
 		link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto')
 		//- link(rel='stylesheet', href='/css/layout.css')
 		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous")
+		link(rel='stylesheet', href='/css/vendor/demo.css')
+		link(rel='stylesheet', href='/css/vendor/jquery.accordion.css')
+		link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css')
 		link(rel='stylesheet', href='/css/bs_flatly.css')
 		link(rel='stylesheet', href='/css/main.css')
-		//- link(rel='stylesheet', href='/css/vendor/slick.css')
-		//- link(rel='stylesheet', href='/css/vendor/slick-theme.css')
 		script(defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js")
 	body
 
@@ -72,6 +73,7 @@ html
 		
 
 		block scripts
+			script(src='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js')
 			script(src=`https://maps.googleapis.com/maps/api/js?key=AIzaSyAsSzHfWD8qHbBhdF2S0fX5pzo1YAN6rEQ&libraries=places`)
 			script(src=`https://unpkg.com/axios/dist/axios.min.js`)
 			script(src='https://code.jquery.com/jquery-3.3.1.min.js')
@@ -80,10 +82,12 @@ html
 			//- script(src='/js/vendor/slick.js')
 			script(src='https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js')
 			script(src='/js/vendor/moment.min.js')
+			script(src='/js/vendor/twix.min.js')
+			script(src='/js/vendor/jquery.accordion.js')
 			script(src='/js/store.js')
+			script(src='/js/trips/tripView.js')
+			script(src='/js/trips/triplist.js')
 
-			script(src='/js/viewsJS/eventsViews.js')
-			script(src='/js/viewsJS/tripViews.js')
 		block otherScripts
 
 //- 

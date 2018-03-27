@@ -18,6 +18,8 @@ const tripsRouter = require('./routes/trips.router')
 const eventsRouter = require('./routes/events.router')
 const authRouter = require('./routes/auth.router')
 const homeRouter = require('./routes/home.router')
+const adminRouter = require('./routes/admin.router')
+
 const expressValidator = require('express-validator')
 const helpers = require('./helpers')
 const errorHandlers = require('./handlers/errorHandlers')
@@ -64,13 +66,14 @@ const jwtAuth = passport.authenticate('jwt', {
   failureRedirect: '/auth/login'
 })
 
+//
 app.use('/', homeRouter)
 app.use('/auth', authRouter)
+app.use('/admin', jwtAuth,  adminRouter)
 app.use('/admin/legs',  legsRouter)
 app.use('/admin/locations',jwtAuth, locationsRouter)
 app.use('/admin/travelers', jwtAuth, usersRouter)
 app.use('/admin/users', jwtAuth, usersRouter)
-app.use('/admin/groups',jwtAuth, groupsRouter)
 app.use('/admin/trips', jwtAuth, tripsRouter)
 app.use('/admin/events',jwtAuth, eventsRouter)
 app.use('/home', homeRouter)

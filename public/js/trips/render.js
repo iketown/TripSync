@@ -1,5 +1,6 @@
 const render = (function(){
 
+
 	function displayTrip(trip){
 		if (trip) {  console.log('trip is' , trip) 
 			let html =  `<div class="card" style="max-width: 18rem;">
@@ -45,21 +46,36 @@ const render = (function(){
 		}
 		else return `<input class="form-control" type="text" id="${side}Loc" name="${side}Loc">`
 	}
-	const legForm = (legId)=>{
-		const leg = store.trips.current.tripLegs.find(tripLeg => tripLeg._id === legId) || {}
-		console.log('current leg->', leg)
+
+	const legForm = ()=>{
+		const handler = {
+			get: function(target, name) {
+			return target.hasOwnProperty(name) ? target[name] : ''}
+		};
+		const currentLeg = store.trips.currentLeg || {}
+		const leg = new Proxy(currentLeg, handler);
+		if (leg.startLoc){
+			leg.startName = leg.startLoc.city || leg.startLoc.cityLong || leg.startLoc.state || 'origin city'
+			leg.endName = leg.endLoc.city || leg.endLoc.cityLong || leg.endLoc.state || 'arrival city'
+		}
+		const _airlines = store.airlines.map(airline=> {
+			return `<option value="${airline.name}" ${leg.company === airline.name ? 'selected' : ''}>${airline.name}</option>`
+		})
+		const _legTypes = store.legTypes.map(opt=>{
+        	return `<option value='${opt}' ${leg.type === opt ? 'selected' : ''}> ${opt} </option>`
+        })
+
+
 		let html = `
-		<h1>Add Leg</h1>
+		<h4 text-center font-weight-bold>${leg.startLoc ? "Editing " +leg.startName + ' <i class="fas fa-arrow-right"></i> ' + leg.endName : 'New Leg' }</h4>
 			<form action="#" method="POST" id="addLegForm">
 			    <div class="row">
 			        <div class="col-8">
 			            <div class="form-group">
 			                <label for="type">Type</label>
-			                <select class="form-control" id="type" name="type">`
-			                store.legTypes.forEach(opt=>{
-			                	html += `<option value='${opt}' ${leg.type === opt ? 'selected' : ''}> ${opt} </option>`
-			                })
-			             html +=   `</select>
+			                <select class="form-control" id="type" name="type">
+			                	${_legTypes}
+							</select>
 			            </div>
 			        </div>
 			        <div class="col-4">
@@ -71,12 +87,7 @@ const render = (function(){
 			            <div class="form-group">
 			                <label for="company">Company</label>
 			                <select class="form-control" id="company" name="company">
-		`
-		// fill this out with airline logos, etc.
-		store.airlines.forEach(airline=> {
-			html += `<option value="${airline.name}" ${leg.company === airline.name ? 'selected' : ''}>${airline.name}</option>`
-		})
-		html += `
+								${_airlines}
 			                </select>
 			            </div>
 			        </div>
@@ -92,13 +103,13 @@ const render = (function(){
 			        <div class="col">
 			            <div class="form-group">
 			                <label for="startDate">Departure Date</label>
-			                <input class="form-control" type="date" id="startDate" name="startDate" value=${moment(leg.startTime).format('YYYY-MM-DD') || ''} >
+			                <input class="form-control" type="date" id="startDate" name="startDate" value=${leg.startTime? moment(leg.startTime).format('YYYY-MM-DD')  : ''} >
 			            </div>
 			        </div>
 			        <div class="col">
 			            <div class="form-group">
 			                <label for="startTime">Departure Time</label>
-			                <input class="form-control" type="time" id="startTime" name="startTime" value=${moment(leg.startTime).format('HH:MM') || ''} >
+			                <input class="form-control" type="time" id="startTime" name="startTime" value=${leg.startTime? moment(leg.startTime).format('HH:MM')  : ''} >
 			            </div>
 			        </div>
 			    </div>
@@ -111,13 +122,13 @@ const render = (function(){
 			        <div class="col">
 			            <div class="form-group">
 			                <label for="endDate">Arrival Date</label>
-			                <input class="form-control" type="date" id="endDate" name="endDate" value=${moment(leg.endTime).format('YYYY-MM-DD') || ''}>
+			                <input class="form-control" type="date" id="endDate" name="endDate" value=${leg.startTime? moment(leg.endTime).format('YYYY-MM-DD') :  ''}>
 			            </div>
 			        </div>
 			        <div class="col">
 			            <div class="form-group">
 			                <label for="endTime">Arrival Time</label>
-			                <input class="form-control" type="time" id="endTime" name="endTime" value=${moment(leg.endTime).format('HH:MM') || ''}>
+			                <input class="form-control" type="time" id="endTime" name="endTime" value=${leg.startTime? moment(leg.endTime).format('HH:MM') :  ''}>
 			            </div>
 			        </div>
 			    </div>
@@ -145,7 +156,7 @@ const render = (function(){
 	html +=		`
 			            <input type="submit" class="btn btn-success" id="saveLeg" tripId="${store.trips.current._id}" value="SAVE">
 			</form>`
-		return html;
+		$('.rightSide').html(html)
 	}
 
 
@@ -153,15 +164,15 @@ const render = (function(){
 	const trips = () => {
 		store.setTimeRanges()
 // start section
-		let html = `<section class="d-flex flex-row justify-content-around  " >`
-		if (store.trips.maxIndex > 1) html += `<button class="btn btn-outline-success btn-sm my-5" id="prevTrips"> <i class="fas fa-arrow-left"></i> </button>`
+		let html = `<section class="d-flex flex-row justify-content-between  " >`
+		if (store.trips.maxIndex > 1) html += `<a class="btn btn-success my-5" id="prevTrips"> <i class="fas fa-arrow-left"></i> </a>`
 // add cards for trips
 		// html += displayTrip(store.trips[store.trips.maxIndex - 2])
 		store.trips.maxIndex === 1 ? html += displayTripForm() : html += displayTrip(store.trips[store.trips.maxIndex - 2])
 		if (store.trips[store.trips.maxIndex - 1]) html += displayTrip(store.trips[store.trips.maxIndex - 1])
 		if (store.trips[store.trips.maxIndex]) html += displayTrip(store.trips[store.trips.maxIndex])
 // close off section
-			if (store.trips.maxIndex < store.trips.length - 1) html += `<button class="btn btn-outline-success btn-sm my-5" id="nextTrips"> <i class="fas fa-arrow-right"></i> </button>`
+			if (store.trips.maxIndex < store.trips.length - 1) html += `<a class="btn btn-success my-5" id="nextTrips"> <i class="fas fa-arrow-right"></i> </a>`
 			html += `</section>`
 		
 		$('.topRow').html(html)
@@ -176,7 +187,7 @@ const render = (function(){
 			html += `<li><a href="#!" class='updateLeg' legId='${leg._id}'>${leg.startLoc.name} -> ${leg.endLoc.name}</a></li>`
 		})
 		html += '</ul>'
-		return html;
+		$('.leftSide').html(html)
 	}
 	
 

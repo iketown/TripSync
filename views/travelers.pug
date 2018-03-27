@@ -1,0 +1,8 @@
+extends layout
+
+block leftSide
+	h1 My Travelers
+	pre= h.dump(user)
+
+block rightSide
+	pre.error!= stackHighlighted

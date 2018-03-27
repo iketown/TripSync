@@ -2,7 +2,7 @@
 	const store = (()=>{
 
 		const trips = []
-
+		
 		const sortTrips = function(){
 			console.log('sorting trips')
 			this.trips.forEach(trip => trip.tripLegs.sort( (a,b)=> a.startTime - b.startTime ) )
@@ -27,7 +27,8 @@
 					this.trips = results.data
 					this.setTimeRanges()
 					this.trips.maxIndex = 1
-					render.trips()
+					// render.trips() 
+					tripList.render()
 				})
 			axios.get('/admin/users/store')
 				.then(r => this.me = r.data)

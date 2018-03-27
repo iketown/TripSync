@@ -1,5 +1,0 @@
-$(()=>{
-	console.log('hey events')
-
-
-})

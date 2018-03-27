@@ -59,6 +59,7 @@ const jwtStrategy = new JwtStrategy(
   },
   async (payload, done) => {
     const user = await User.findById(payload.sub)
+    user.password = ''
     done(null, user);
   }
 );

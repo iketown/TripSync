@@ -1,6 +1,7 @@
 const attachListeners = () => {
 	console.log('attaching listeners')
 
+	
 	const googleAuto = ()=>{
 			// google places autocomplete
 			const startInput = document.getElementById("startLoc")
@@ -39,11 +40,11 @@ const attachListeners = () => {
 		return obj;
 	}
 
-	// addLegToTrip open form
-	$('.leftSide').on('click', '.addLegToTrip', function(e){
-		$('.rightSide').html(render.legForm()) 
-		attachListeners();
-	})
+	// // addLegToTrip open form
+	// $('.leftSide').on('click', '.addLegToTrip', function(e){
+	// 	$('.rightSide').html(render.legForm()) 
+	// 	attachListeners();
+	// })
 
 	// change Location listeners
 	$('.rightSide').on('click', '.changeLoc.start', function(e){
@@ -76,6 +77,38 @@ const attachListeners = () => {
 			})
 		handlers.addLegToTrip(sendObj, tripId)
 	})
+	// LISTENER to page thru events
+		$('.topRow').on('click', '#prevTrips', ()=>{ store.trips.maxIndex -= 2;  render.trips()})
+		$('.topRow').on('click', '#nextTrips', ()=>{ store.trips.maxIndex += 2;  render.trips()})
+		
+	// LISTENER to view a trip
+	$('.topRow').on('click', '.viewTrip', function(e){
+		let tripId = $(this).attr('tripId')
+		let trip = store.trips.find( trip=> trip._id === tripId )
+		store.trips.current = trip
+		render.showTrip(trip)
+	})
+	// LISTENER to add leg or event to trip
+	
+	$('.leftSide').on('click', '.addEventToTrip', function(e){
+		console.log(`adding event to ${store.trips.current.name}`)
+	})
+
+	// create new trip from top row LISTENER
+	$('.topRow').on('click', '#newTripButton' ,  function(event) {
+		const name = $('#tripName').val()
+		$('#tripName').val('')
+		axios.post('/admin/trips/', {name})
+			.then(response=> {
+				console.log(response.data)
+				store.trips.push(response.data)
+				store.maxIndex = 1;
+				render.trips()
+			})
+			.catch(err=> console.log(err))
+	});
+
+
 	$('.leftSide').on('click', '.updateLeg', function(e){
 		let legId = $(this).attr('legId')
 		$('.rightSide').html(render.legForm(legId))

@@ -23,8 +23,10 @@ const handlers = (()=>{
 				for(let i=0; i < store.trips.length; i++){
 					if (store.trips[i]._id === updatedTrip.data._id) store.trips[i] = updatedTrip.data
 				}
+				toastr.info('Leg Added')
 				store.trips.current = updatedTrip.data
 				render.trips()
+				render.showTrip(store.trips.current)
 				
 			})
 			.catch(err=> console.error(err))
