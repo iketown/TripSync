@@ -9,12 +9,13 @@ const UserSchema = Schema({
 	admin: Boolean,
 	firstName: String,
 	lastName: String,
-	userName: String,
-	email: {type: String, lowercase: true, required: true, unique: true, index: true},
+	// userName: String,
+	email: {type: String, lowercase: true, required: true, unique: "That email is already registered", index: true},
 	password: {
 		type: String,
 		required: true
 	},
+	avatar: String,
 	phone: String,
 	homeAirport: String,
 	prefAirlines: Array,

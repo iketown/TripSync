@@ -5,14 +5,27 @@ const { Leg } = require('../models/leg.model')
 const ObjectId = require('mongoose').Types.ObjectId
 
 exports.createUser = async (req,res) => {
-		const user = await User.create(req.body)
-		const users = await User.find()
-		res.render('users', {users, title: 'Users'})
+		const {email, firstName, lastName, avatar} = req.body
+		const password = req.body.password || 'tripsyncpassword'
+		// console.log('from create user', {email, firstName, lastName, avatar, password})
+		const newUser = new User({email, firstName, lastName, avatar, password})
+		try {
+			await newUser.save()
+			await User.findByIdAndUpdate(req.user.id, {$addToSet: {travelers: ObjectId(newUser.id)}})
+			user.password = ''
+			return res.status(200).json(user)
+		} catch(e) {
+			return res.json(e)
+		}
 }
 
+exports.updateUser = async (req,res)=>{
+	const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true})
+	res.status(200).json(updatedUser)
+}
 exports.getUsers = async (req,res)=>{
-	const users = await User.find()
-	res.render('users', {users, title: 'Users', user: req.user})
+	const myUsers = await User.findById(req.user.id).select('travelers').populate('travelers')
+	res.status(200).json(myUsers)
 }
 exports.newUser = async (req, res)=>{
 	const users = await User.find()
@@ -34,12 +47,6 @@ exports.editUser = async(req,res)=>{
 	// what legs is this person in?  also include others on that leg
 	const legs = await Leg.find({travelers: userId}).populate({path: 'travelers', select: 'firstName lastName _id'})
 	res.render('editUser', {title: `Edit ${user.firstName} ${user.lastName}`, user, users, legs})
-}
-exports.updateUser = async (req,res)=>{
-	const user = await User.findByIdAndUpdate(req.params.id, req.body, {new: true})
-	const users = await User.find();
-	req.flash('success', 'hey')
-	res.render('editUser', {user, users});
 }
 exports.deleteUser = async (req,res)=>{
 	await User.findByIdAndRemove(req.params.id)

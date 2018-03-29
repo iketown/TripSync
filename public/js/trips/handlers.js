@@ -35,11 +35,20 @@ const handlers = (()=>{
 		axios.get('/admin/trips')
 			.then(response=> store.trips = response.data)
 	}
+	const addNewUser = ()=>{
+		axios.post('/admin/users/', store.newUser)
+			.then( response => {
+				
+				store.users.push(response.data)
+			} )
+			.catch(e=> console.log(e))
+	}
 
 
 	return {
 		addLegToTrip,
 		getTrips,
-		fillOutForm
+		fillOutForm,
+		addNewUser
 	}
 })()

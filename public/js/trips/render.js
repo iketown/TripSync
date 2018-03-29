@@ -177,21 +177,21 @@ const render = (function(){
 		
 		$('.topRow').html(html)
 	}
-	const showTrip = trip => {
-		let html = `<h1> ${trip.name} </h1>`
-		html += `<button href="#!" class="addLegToTrip btn btn-outline-success mx-3" > add Leg </button>`
-		html += `<button href="#!" class="addEventToTrip btn btn-outline-success mx-3" > add Event </button>`
-		html += '<h3> Trip Legs: </h3>'
-		html += '<ul>'
-		trip.tripLegs.forEach(leg=>{
-			html += `<li><a href="#!" class='updateLeg' legId='${leg._id}'>${leg.startLoc.name} -> ${leg.endLoc.name}</a></li>`
-		})
-		html += '</ul>'
-		$('.leftSide').html(html)
-	}
+	// const showTrip = trip => {
+	// 	let html = `<h1> ${trip.name} </h1>`
+	// 	html += `<button href="#!" class="addLegToTrip btn btn-outline-success mx-3" > add Leg </button>`
+	// 	html += `<button href="#!" class="addEventToTrip btn btn-outline-success mx-3" > add Event </button>`
+	// 	html += '<h3> Trip Legs: </h3>'
+	// 	html += '<ul>'
+	// 	trip.tripLegs.forEach(leg=>{
+	// 		html += `<li><a href="#!" class='updateLeg' legId='${leg._id}'>${leg.startLoc.name} -> ${leg.endLoc.name}</a></li>`
+	// 	})
+	// 	html += '</ul>'
+	// 	$('.leftSide').html(html)
+	// }
 	
 
 	return {
-		trips, showTrip, legForm, locToggle
+		trips,  legForm, locToggle
 	}
 })()

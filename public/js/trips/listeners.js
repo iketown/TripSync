@@ -113,6 +113,7 @@ const attachListeners = () => {
 		let legId = $(this).attr('legId')
 		$('.rightSide').html(render.legForm(legId))
 	})
+
 	
 
 

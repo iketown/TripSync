@@ -16,10 +16,10 @@ const loginAuth = passport.authenticate('local', {
 
 
 router.post('/', catchErrors(usersController.createUser))
+router.get('/', jwtAuth, catchErrors(usersController.getUsers))
 router.post('/:id',  catchErrors(usersController.updateUser))
 router.get('/new', catchErrors(usersController.newUser))
 router.get('/store', jwtAuth, catchErrors(usersController.fillStore))
-router.get('/', jwtAuth, catchErrors(usersController.getUsers))
 router.get('/:id/edit', catchErrors(usersController.editUser))
 router.get('/:id/delete', catchErrors(usersController.deleteUser))
 router.get('/:id', catchErrors(usersController.showUser))

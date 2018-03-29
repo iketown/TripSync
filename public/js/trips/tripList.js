@@ -7,6 +7,7 @@ const tripList = {
 	render: function(){
 			store.sortTrips()
 
+		// list of trip -> LEGS
 		const _legs = trip => trip.tripLegs.map( leg => `
 			<article class='legListItem'>
 				<i class=" legLogo fas fa-${this.icons[leg.type]}"></i>
@@ -14,9 +15,12 @@ const tripList = {
 				<i class="fas fa-arrow-right"></i>
 				${leg.endLoc.city || leg.endLoc.cityLong || leg.endLoc.state || 'destination'}
 				<small><span class='date font-weight-light'>${moment(leg.startTime).format('MMM Do')}</span></small>
+				<a href='#!' legId="${leg._id}" class='legShow'><i class="fas fa-map-marker-alt show"></i></a>
 				<a href="#!" legId="${leg._id}" class='legIdEdit'><i class="far fa-edit edit"></i></a>
 			</article>`
 			).join('')
+
+		// list of TRIPS
 		const _tripSection = store.trips.map( trip => `
 			<section data-accordion>
 				<button data-control class='expandTripButton' tripId="${trip._id}">
@@ -31,7 +35,7 @@ const tripList = {
 				</div>
 			</section>  `
 		).join('');
-
+		// top level accordion
 		const html = `
 			<h2> My Trips </h2>
 			<section id="tripFullList" data-accordion-group>
@@ -48,6 +52,12 @@ const tripList = {
 			store.trips.currentLeg = leg
 			render.legForm()
 		})
+		$('.legShow').click(function(){
+			let legId = $(this).attr('legId')
+			let leg = store.trips.current.tripLegs.find(leg => leg._id === legId)
+			store.trips.currentLeg = leg
+			legView.render()
+		})
 		$('.addLegToTrip').click(function(){
 			let tripId = $(this).attr('tripId')
 			store.trips.currentLeg = {}
@@ -59,6 +69,17 @@ const tripList = {
 			const trip = store.trips.find(trip=> trip._id === tripId)
 			store.trips.current = trip
 			tripView.render()
+		})
+
+		// rollover hilight the arrow
+		$('.legListItem').hover(function(){
+		 const legId = $(this).find('.legShow').attr('legId')
+			try { const line = store.trips.current.tripLegs.find(leg=> leg._id === legId).line
+			 line.setOptions(store.mapArrowOptions.selected)  } catch (e) {  }
+		}, function(){
+		 const legId = $(this).find('.legShow').attr('legId')
+			 try { const line = store.trips.current.tripLegs.find(leg=> leg._id === legId).line
+			 line.setOptions(store.mapArrowOptions.unSelected) } catch(e) {  }
 		})
 	}
 

@@ -17,11 +17,11 @@ const getAll = async ()=>{
 
 exports.home = async (req, res)=>{
 	if (req.user){
-		const s = await getAll()
-		const user = req.user
-		res.render('adminHome', {user, s})
+		res.render('adminHome')
 	} else {
+		console.time('time')
 		res.render('home')
+		console.timeEnd('time')
 	}
 }
 

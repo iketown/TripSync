@@ -9,14 +9,17 @@ a {
 .delete {
 	color: darkred;
 }
+.topRow{
+	margin-bottom: 30px;
+}
 .viewLegButton{
 	float: right;
 }
 .viewLegButton , .viewLegButton {
 }
-.legListItem .edit, .legListItem .delete{
-	position: absolute;
-	right: 5px;
+.legListItem .edit, .legListItem .delete, .legListItem .show{
+	float: right;
+	margin: 0 5px;
 }
 h5.tripName{
 	margin-bottom: 0px;
@@ -40,10 +43,76 @@ p.tripDates{
 .legListItem .date {
 
 }
-#googleMap{
+#googleTripMap, #googleLegMap{
 	background-color: lightblue;
 	width: 100%;
-	height: 500px;
+	height: 350px;
+}
+.user-carousel .carousel-cell {
+/*	width: 175px;
+	height: 250px;*/
+	border: 1px black solid;
+	border-radius: 5px;
+	margin: 10px;
+	min-width: 100px;
+	padding: 5px;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-position: center;
+    background-size: 170px;
+    background-repeat: no-repeat;
+    background-position-y: -30px;
+
+}
+
+.carousel-cell button.userOut{
+	background-color: white;
+}
+.newUserForm h3 {
+	text-align: center;
+}
+/*.carousel-cell img{
+	display: block;
+	width: 100px;
+}*/
+.carousel-cell .userName{
+    text-align: center;
+    background-color: #ffffffd4;
+    padding: 3px 10px;
+    border-radius: 5px;
+    border: 1px grey solid;
+}
+.carousel-cell .userName p {
+	font-family: 'Oswald', sans-serif;
+	font-size: 18px;
+	margin: 0;
+}
+.avatarChooser {
+}
+.avatarNameDisplay{
+	font-family: 'Oswald', sans-serif;
+	font-size: 22px;
+	  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.carousel-cell .emptyImageDiv {
+	height: 100px;
+}
+.carousel-cell .btn{
+	/*position: relative;*/
+}
+.newUserForm{
+	padding: 25px;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    grid-template-areas: "firstName avatar" "lastName avatar" "email avatar" "save nameDisplay";
+}
+
+#avatarChooser .carousel-cell{
+	height: 200px;
+	width: 200px;
 }
 /*.listItem {
 	display: grid;
