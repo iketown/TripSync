@@ -97,6 +97,7 @@ mongoose.connect(DATABASE_URL, () => {
   app.listen(PORT, () => console.log(`listening on port ${PORT}`))
 })
 
+//   https://courses.thinkful.com/node-001v5/assignment/3.1.2
 
 
 module.exports = { app }
