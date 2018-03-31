@@ -9,7 +9,7 @@ const tripList = {
 
 		// list of trip -> LEGS
 		const _legs = trip => trip.tripLegs.map( leg => `
-			<article class='legListItem'>
+			<article class='legListItem' legId=${leg._id}>
 				<i class=" legLogo fas fa-${this.icons[leg.type]}"></i>
 				${leg.startLoc.city || leg.startLoc.cityLong || leg.startLoc.state || 'origin' } 
 				<i class="fas fa-arrow-right"></i>
@@ -46,18 +46,27 @@ const tripList = {
 
 		$('.leftSide').html(html)
 		$('#tripFullList [data-accordion]').accordion();
-		$('.legIdEdit').click(function(){
+
+		// leg edit and show are different views, could be the same view
+		$('.legListItem').click(function(){
 			let legId = $(this).attr('legId')
+			console.log('legid', legId)
 			let leg = store.trips.current.tripLegs.find(leg => leg._id === legId)
 			store.trips.currentLeg = leg
+			$(this).closest('#tripFullList').find('.legListItem').removeClass('selectedLeg')
+			$(this).addClass('selectedLeg')
 			render.legForm()
+			userHeader.render()
+			userHeader.attachListeners()
 		})
-		$('.legShow').click(function(){
-			let legId = $(this).attr('legId')
-			let leg = store.trips.current.tripLegs.find(leg => leg._id === legId)
-			store.trips.currentLeg = leg
-			legView.render()
-		})
+		// $('.legShow').click(function(){
+		// 	let legId = $(this).attr('legId')
+		// 	let leg = store.trips.current.tripLegs.find(leg => leg._id === legId)
+		// 	store.trips.currentLeg = leg
+		// 	legView.render()
+		// })
+
+
 		$('.addLegToTrip').click(function(){
 			let tripId = $(this).attr('tripId')
 			store.trips.currentLeg = {}
@@ -65,6 +74,8 @@ const tripList = {
 			console.log(tripId)
 		})
 		$('.expandTripButton').click(function(){
+			store.trips.currentLeg = null
+			userHeader.render()
 			let tripId = $(this).attr('tripId')
 			const trip = store.trips.find(trip=> trip._id === tripId)
 			store.trips.current = trip

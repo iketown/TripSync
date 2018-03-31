@@ -6,11 +6,11 @@ const attachListeners = () => {
 			// google places autocomplete
 			const startInput = document.getElementById("startLoc")
 			const endInput = document.getElementById("endLoc") 
-			const startAutoComplete = new google.maps.places.Autocomplete(startInput)
-			const endAutoComplete = new google.maps.places.Autocomplete(endInput)
+			// const startAutoComplete = new google.maps.places.Autocomplete(startInput)
+			// const endAutoComplete = new google.maps.places.Autocomplete(endInput)
 	
-			startAutoComplete.addListener('place_changed', startACHandler);
-			endAutoComplete.addListener('place_changed', endACHandler);
+			// startAutoComplete.addListener('place_changed', startACHandler);
+			// endAutoComplete.addListener('place_changed', endACHandler);
 	
 			function startACHandler(){
 				const place = startAutoComplete.getPlace();

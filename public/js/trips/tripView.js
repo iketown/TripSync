@@ -21,16 +21,26 @@ const tripView = (function(){
 		bounds.extend(end)
 	}
 	function initMap(){
-		let startLat = store.trips.current.tripLegs[0].startLoc.lat
-		let startLng = store.trips.current.tripLegs[0].startLoc.lng
-		const place = new google.maps.LatLng(startLat, startLng)
+
+		let startLat = store.trips.current.tripLegs[0].startLoc.lat 
+		let startLng = store.trips.current.tripLegs[0].startLoc.lng 
+		let endLat = store.trips.current.tripLegs[0].endLoc.lat 
+		let endLng = store.trips.current.tripLegs[0].endLoc.lng 
+		const start = new google.maps.LatLng(startLat, startLng)
+		const end = new google.maps.LatLng(endLat, endLng)
 		map = new google.maps.Map(document.getElementById('googleTripMap'), {
 			zoom: 8,
-			center: place,
-			styles: store.mapStyle
+			// center,
+			styles: store.mapStyle,
+			disableDefaultUI: true
 		})
+	 	bounds.extend(start)
+	 	bounds.extend(end)
+	 	const center = bounds.getCenter()
+		
 		store.trips.current.tripLegs.forEach(leg=> makeArrowAndExtendBounds(leg))
-		map.fitBounds( bounds )
+		map.setCenter( bounds.getCenter() )
+		map.fitBounds( bounds, {top: 5, bottom: 5, left: 5, right: 5} )
 	}
 
 
@@ -39,7 +49,7 @@ const tripView = (function(){
 
 
 
-	render= ()=>{
+	render = ()=>{
 		const trip = store.trips.current
 		html = `
 			<h2>${trip.name.toUpperCase()}</h2>
@@ -51,6 +61,7 @@ const tripView = (function(){
 	
 	return {
 		render,
+		// map,
 	}
 
 })()

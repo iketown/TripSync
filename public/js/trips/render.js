@@ -135,23 +135,6 @@ const render = (function(){
 			    <div class="form-group">
 	                <label for="endLoc">Arrival Location</label><div class='endLocSwap'>`
 	                html += locToggle(leg, 'end')
-	       html+= `
-	            </div></div>
-			    <h3>Travelers</h3>
-		`
-// add all my travelers here when i get some
-	html +=		` <div class="form-check">
-			        <input class="form-check-input travCheckBox" type="checkbox" name="travelers" id="5a99ae8393434693a7acbdf2" value="5a99ae8393434693a7acbdf2">
-			        <label class="form-check-label" for="5a99ae8393434693a7acbdf2">ChayeBay Eichenberger</label>
-			    </div>`
-	html +=		` <div class="form-check">
-			        <input class="form-check-input travCheckBox" type="checkbox" name="travelers" id="testing1" value="testing1">
-			        <label class="form-check-label" for="testing1">test1</label>
-			    </div>`
-	html +=		` <div class="form-check">
-			        <input class="form-check-input travCheckBox" type="checkbox" name="travelers" id="testing2" value="testing2">
-			        <label class="form-check-label" for="testing2">test2</label>
-			    </div>`
 
 	html +=		`
 			            <input type="submit" class="btn btn-success" id="saveLeg" tripId="${store.trips.current._id}" value="SAVE">

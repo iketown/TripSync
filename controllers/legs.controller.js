@@ -13,7 +13,6 @@ exports.addLegToTrip =  async (req, res) => {
 		startLoc._id = ObjectId()
 		const endLoc = new Location(req.body.endLoc)
 		endLoc._id = ObjectId()
-	console.log('startLoc', startLoc)
 		const leg = new Leg()
 		const { company, flightNum, type, startDate, startTime, endDate, endTime } = req.body
 		leg._id = ObjectId()
@@ -44,9 +43,21 @@ exports.addLegToTrip =  async (req, res) => {
 	}
 
 }
-exports.updateLeg = async (req, res)=>{
+exports.updateLegUsers = async (req, res)=>{
+	console.log('req.body', req.body)
+	const travelers = req.body.map(id => ObjectId(id))
+	// const updateObj = {travelers}
+	// const updateObj = {}
+	const leg = await Leg.findById(req.params.id)
+	leg.travelers = travelers
+	await leg.save()
+	console.log('leg from controller', leg)
+	res.json(leg)
+}
+exports.updateLeg = async(req,res)=>{
 
 }
+
 exports.createLeg = async (req, res) => {
 	console.log('req.body', req.body)
 	let leg = new Leg()

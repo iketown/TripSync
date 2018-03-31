@@ -14,26 +14,30 @@ const legView = (function(){
 	 	map = new google.maps.Map(document.getElementById('googleLegMap'), {
 	 		center: start,
 	 		zoom: 8,
-	 		styles: store.mapStyle
+	 		styles: store.mapStyle,
+	 		disableDefaultUI: true
 		 	})
 		const tripLine = new google.maps.Polyline({
 			path: [start, end],
 			strokeWeight: 1,
 			geodesic: true,
 			icons: [{
-                icon: {path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW, scale: 2},
-                offset: '100%'
+                icon: {path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW, scale: 2,strokeColor: 'red' },
+                offset: '100%',
+                
             }] 
 		}).setMap(map)
 	 	const startMarker = new google.maps.Marker({
 	 		position: start,
+	 		icon: {
+		      path: google.maps.SymbolPath.CIRCLE,
+		      scale: 4,
+		      strokeColor: 'green'
+		    },
 	 		map: map
 	 	})
-	 	const endMarker = new google.maps.Marker({
-	 		position: end,
-	 		map: map
-	 	})
-	 	map.fitBounds(bounds)
+
+	 	map.fitBounds(bounds, {top: 5, bottom: 5, left: 5, right: 5})
 	 }
 
 	 const render = ()=>{

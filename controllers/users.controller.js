@@ -12,8 +12,8 @@ exports.createUser = async (req,res) => {
 		try {
 			await newUser.save()
 			await User.findByIdAndUpdate(req.user.id, {$addToSet: {travelers: ObjectId(newUser.id)}})
-			user.password = ''
-			return res.status(200).json(user)
+			newUser.password = ''
+			return res.status(200).json(newUser)
 		} catch(e) {
 			return res.json(e)
 		}

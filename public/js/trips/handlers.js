@@ -38,17 +38,42 @@ const handlers = (()=>{
 	const addNewUser = ()=>{
 		axios.post('/admin/users/', store.newUser)
 			.then( response => {
-				
+				console.log('response', response.data)
 				store.users.push(response.data)
+				userHeader.render()
 			} )
 			.catch(e=> console.log(e))
+	}
+	const updateUser = ()=>{
+		const{firstName, lastName, email, avatar, _id} = store.currentUser
+		const updateObj = {firstName, lastName, email, avatar}
+		axios.post(`/admin/users/${_id}`, updateObj )
+			.then( response=> {
+				toastr.success(`${firstName} was updated.`)
+				userHeader.render()
+
+			})
+			.catch(err=> console.log(err))
+	}
+	const updateLegUsers = ()=>{
+		let leg = store.trips.currentLeg
+		let userIds = leg.travelers.map(t => t._id)
+		axios.post(`/admin/legs/updateUsers/${leg._id}`, userIds)
+			.then( response => {
+				console.log('response from api', response.data)
+				// store.trips.currentLeg = response.data
+				userHeader.render()
+			} )
+			.catch( err => console.log(err) )
 	}
 
 
 	return {
-		addLegToTrip,
+		updateLegUsers,
 		getTrips,
 		fillOutForm,
-		addNewUser
+		addNewUser,
+		updateUser,
+		addLegToTrip
 	}
 })()

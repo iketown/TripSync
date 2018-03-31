@@ -21,6 +21,10 @@ a {
 	float: right;
 	margin: 0 5px;
 }
+.legListItem.selectedLeg{
+	background: yellow;
+	border: 2px black solid;
+}
 h5.tripName{
 	margin-bottom: 0px;
 	font-weight: bold;
@@ -45,8 +49,8 @@ p.tripDates{
 }
 #googleTripMap, #googleLegMap{
 	background-color: lightblue;
-	width: 100%;
-	height: 350px;
+	width: 50%;
+	height: 250px;
 }
 .user-carousel .carousel-cell {
 /*	width: 175px;
@@ -103,11 +107,36 @@ p.tripDates{
 .carousel-cell .btn{
 	/*position: relative;*/
 }
+.addUserToLeg{
+	background: rgb(252, 255, 78);
+    position: absolute;
+    height: 75px;
+    width: 75px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border: 2px black solid;
+    font-weight: bolder;
+    top: 37px;
+    font-size: 16px;
+}
 .newUserForm{
 	padding: 25px;
     display: grid;
     grid-template-columns: 3fr 2fr;
     grid-template-areas: "firstName avatar" "lastName avatar" "email avatar" "save nameDisplay";
+    /*background: white;
+    max-width: 600px;
+    border-radius: 10px;
+    position: fixed;
+    margin: -200px -300px;
+    top: 50%;
+    left: 50%;*/
+}
+.unselectedUser{
+	opacity: .5;
 }
 
 #avatarChooser .carousel-cell{
