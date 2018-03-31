@@ -7,16 +7,18 @@ const userHeader = (function(){
 			// first sort them by presense in current leg, if that exists
 			if (store.trips.currentLeg) {
 				let legTravelers = store.trips.currentLeg.travelers
+				console.log('leg Travelrs =', legTravelers)
 				store.users.sort((user, others)=>{
 					return legTravelers.filter(t=>t._id === others._id).length - legTravelers.filter(t=>t._id === user._id).length
 				})
 			}
 
 			return	store.users.map(user => {
-				let inCurrentLeg = store.trips.currentLeg && store.trips.currentLeg.travelers.find(t=> t._id === user._id)
+				// let inCurrentLeg = store.trips.currentLeg && store.trips.currentLeg.travelers.find(t=> t._id === user._id)
 				 return `
 					<div class='carousel-cell' style="background-image: url('/people/${user.avatar}');">
 						<div class="addUserToLeg" userId="${user._id}" style="display:none;">ADD</div>
+						<div class="removeUserFromLeg" userId="${user._id}" style="display: none;"><i class="fas fa-ban delete removeUserFromLeg"></i></div>
 						<div class='emptyImageDiv'></div>
 						<div class='userName editUserLink' userId="${user._id}">
 							<p><a href="#" >${user.firstName}<br>${user.lastName}</a></p> 
@@ -44,13 +46,6 @@ const userHeader = (function(){
 			</div>
 		`
 
-
-
-
-
-
-
-
 		// populate and carousel-ify top user header
 		$('.topRow').html(carouselHTML)
 
@@ -63,7 +58,7 @@ const userHeader = (function(){
 
 // edit a user profile
 		$('.topRow').on('click', '.addNewTraveler', function(e){
-			store.currentUser = null;
+			store.currentUser = {};
 			userEditor.render()
 		});
 		$('.topRow').on('click', '.editUserLink', function(){
@@ -72,35 +67,47 @@ const userHeader = (function(){
 			userEditor.render()
 		})
 
-		highlight()
-		attachListeners()
+		this.highlight()
+		this.attachListeners()
 	}
 
 highlight = ()=>{
 	$('.user-carousel .carousel-cell').each( function(index){
 		let userId = $(this).find('.userName').attr('userid')
 		if (store.trips.currentLeg && !store.trips.currentLeg.travelers.find(user=> user._id === userId)) {
+			// the OUT crowd
 			$(this).fadeTo(100, .5)
 			$(this).find('.addUserToLeg').show()
-		} else {
+			$(this).find('.removeUserFromLeg').hide()
+			$(this).addClass('zoomOut')
+		} else if (store.trips.currentLeg && store.trips.currentLeg.travelers.find(user=> user._id === userId)) {
+			// the IN crowd
 			$(this).fadeTo(100, 1)
 			$(this).find('.addUserToLeg').hide()
+			$(this).find('.removeUserFromLeg').show()
+			$(this).removeClass('zoomOut')
 		}
+		$('.user-carousel').flickity('resize')
 	})
 }
 attachListeners = ()=>{
-	// $('.user-carousel .carousel-cell').on('click', '.addUserToLeg', function(){
 		$('.addUserToLeg').click(function(){
-		let userId = $(this).closest('.carousel-cell').find('.userName').attr('userid')
-		console.log(userId)
-		const user = store.users.find( u => u._id === userId)
-		console.log('the user is', user)
-		if ( !store.trips.currentLeg.travelers.find(t => t._id === userId) ){
-			store.trips.currentLeg.travelers.push(user)
-		} 
-		console.log('updated leg', store.trips.currentLeg)
-		handlers.updateLegUsers()
-	})
+			let userId = $(this).closest('.carousel-cell').find('.userName').attr('userid')
+			console.log(userId)
+			const user = store.users.find( u => u._id === userId)
+			console.log('the user is', user)
+			if ( !store.trips.currentLeg.travelers.find(t => t._id === userId) ){
+				store.trips.currentLeg.travelers.push(user)
+			} 
+			handlers.updateLegUsers()
+		})
+		$('.removeUserFromLeg').click(function(){
+			let userId = $(this).closest('.carousel-cell').find('.userName').attr('userid')
+			if ( store.trips.currentLeg.travelers.find(t => t._id === userId) ){
+				store.trips.currentLeg.travelers = store.trips.currentLeg.travelers.filter(t=> t._id !== userId)
+				handlers.updateLegUsers()
+			} 
+		})
 }
 sort = ()=>{
 

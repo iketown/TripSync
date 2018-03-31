@@ -15,9 +15,11 @@ const handlers = (()=>{
 		return 'ok'
 	}
 
-	const addLegToTrip = (obj, tripId)=>{
+	const addLegToTrip = ()=>{
+		const tripId = store.trips.current._id
 		console.log('tripId', tripId)
-		axios.post(`/admin/legs/addLegToTrip/${tripId}`, obj)
+		let leg = store.trips.currentLeg
+		axios.post(`/admin/legs/addLegToTrip/${tripId}`, leg)
 			.then(updatedTrip=> {
 				console.log('updated trip.data', updatedTrip.data)
 				for(let i=0; i < store.trips.length; i++){
@@ -25,21 +27,31 @@ const handlers = (()=>{
 				}
 				toastr.info('Leg Added')
 				store.trips.current = updatedTrip.data
-				render.trips()
-				render.showTrip(store.trips.current)
+				tripList.render()
 				
 			})
 			.catch(err=> console.error(err))
 	}
+	const updateLeg = ()=>{
+		
+		let leg = store.trips.currentLeg
+		axios.post(`/admin/legs/${leg._id}`, leg)
+			.then(response => console.log(response.data))
+			catch(err=>console.error(err))
+	}
+	const addNewTrip = ()=>{
+
+	}
+
 	const getTrips = ()=>{
 		axios.get('/admin/trips')
 			.then(response=> store.trips = response.data)
 	}
 	const addNewUser = ()=>{
-		axios.post('/admin/users/', store.newUser)
+		axios.post('/admin/users/', store.currentUser)
 			.then( response => {
-				console.log('response', response.data)
-				store.users.push(response.data)
+				console.log('response from new user', response.data)
+				store.users = response.data.travelers
 				userHeader.render()
 			} )
 			.catch(e=> console.log(e))
@@ -50,6 +62,7 @@ const handlers = (()=>{
 		axios.post(`/admin/users/${_id}`, updateObj )
 			.then( response=> {
 				toastr.success(`${firstName} was updated.`)
+				console.log('response from update user', response.data)
 				userHeader.render()
 
 			})
@@ -74,6 +87,8 @@ const handlers = (()=>{
 		fillOutForm,
 		addNewUser,
 		updateUser,
-		addLegToTrip
+		addLegToTrip,
+		updateLeg
+
 	}
 })()

@@ -9,6 +9,9 @@ a {
 .delete {
 	color: darkred;
 }
+.leftSide{
+	text-align: center;
+}
 .topRow{
 	margin-bottom: 30px;
 }
@@ -49,8 +52,9 @@ p.tripDates{
 }
 #googleTripMap, #googleLegMap{
 	background-color: lightblue;
-	width: 50%;
+	width: 100%;
 	height: 250px;
+	/*float: left;*/
 }
 .user-carousel .carousel-cell {
 /*	width: 175px;
@@ -67,7 +71,10 @@ p.tripDates{
     background-size: 170px;
     background-repeat: no-repeat;
     background-position-y: -30px;
-
+}
+.zoomOut{
+	zoom: .9;
+	-moz-transform: scale(0.9);
 }
 
 .carousel-cell button.userOut{
@@ -91,6 +98,16 @@ p.tripDates{
 	font-family: 'Oswald', sans-serif;
 	font-size: 18px;
 	margin: 0;
+}
+.cityHeader{
+	font-family: 'Oswald', sans-serif;
+	font-weight: 700;
+	margin: 0;
+	text-align: center;
+}
+.fromto{
+	text-align: center;
+
 }
 .avatarChooser {
 }
@@ -122,6 +139,16 @@ p.tripDates{
     top: 37px;
     font-size: 16px;
 }
+.removeUserFromLeg{
+	position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 30px;
+    background: white;
+    border-radius: 50%;
+    padding: 3px;
+}
+
 .newUserForm{
 	padding: 25px;
     display: grid;
@@ -213,6 +240,16 @@ input{
     'photo phone'
     'photo userName'
     'photo homeAirport' ;
+}
+.legHeader{
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	align-self: center;
+}
+.mapHeader{
+	display: grid;
+	grid-template-columns: 2fr 1fr;
 }
 .userCard p {
 	margin: 0;

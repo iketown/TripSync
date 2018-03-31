@@ -12,24 +12,25 @@ exports.createUser = async (req,res) => {
 		try {
 			await newUser.save()
 			await User.findByIdAndUpdate(req.user.id, {$addToSet: {travelers: ObjectId(newUser.id)}})
-			newUser.password = ''
-			return res.status(200).json(newUser)
+			const myUsers = await User.findById(req.user.id).select('travelers').populate('travelers')
+			return res.status(200).json(myUsers)
 		} catch(e) {
 			return res.json(e)
 		}
 }
-
 exports.updateUser = async (req,res)=>{
-	const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true})
-	res.status(200).json(updatedUser)
-}
-exports.getUsers = async (req,res)=>{
+	console.log('req.body from updateUser', req.body)
+	await User.findByIdAndUpdate(req.params.id, req.body)
 	const myUsers = await User.findById(req.user.id).select('travelers').populate('travelers')
 	res.status(200).json(myUsers)
 }
 exports.newUser = async (req, res)=>{
 	const users = await User.find()
 	res.render('editUser', {users})
+}
+exports.getUsers = async (req,res)=>{
+	const myUsers = await User.findById(req.user.id).select('travelers').populate('travelers')
+	res.status(200).json(myUsers)
 }
 
 exports.showUser = async(req,res)=>{

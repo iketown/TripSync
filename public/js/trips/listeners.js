@@ -1,44 +1,43 @@
 const attachListeners = () => {
-	console.log('attaching listeners')
 
 	
-	const googleAuto = ()=>{
-			// google places autocomplete
-			const startInput = document.getElementById("startLoc")
-			const endInput = document.getElementById("endLoc") 
-			// const startAutoComplete = new google.maps.places.Autocomplete(startInput)
-			// const endAutoComplete = new google.maps.places.Autocomplete(endInput)
+	// const googleAuto = ()=>{
+	// 		// google places autocomplete
+	// 		const startInput = document.getElementById("startLoc")
+	// 		const endInput = document.getElementById("endLoc") 
+	// 		const startAutoComplete = new google.maps.places.Autocomplete(startInput)
+	// 		const endAutoComplete = new google.maps.places.Autocomplete(endInput)
 	
-			// startAutoComplete.addListener('place_changed', startACHandler);
-			// endAutoComplete.addListener('place_changed', endACHandler);
+	// 		startAutoComplete.addListener('place_changed', startACHandler);
+	// 		endAutoComplete.addListener('place_changed', endACHandler);
 	
-			function startACHandler(){
-				const place = startAutoComplete.getPlace();
-				store.startLocTemp = place; // temporary container
-			}
-			function endACHandler(){
-				const place = endAutoComplete.getPlace();
-				store.endLocTemp = place // temporary container
-			}
-		}
-	googleAuto() 
+	// 		function startACHandler(){
+	// 			const place = startAutoComplete.getPlace();
+	// 			store.startLocTemp = place; // temporary container
+	// 		}
+	// 		function endACHandler(){
+	// 			const place = endAutoComplete.getPlace();
+	// 			store.endLocTemp = place // temporary container
+	// 		}
+	// 	}
+	// googleAuto() 
 
-	const parseLocation = (goog)=>{
-		if(!goog) return null;
-		obj = {};
-		 try { obj.city = goog.address_components.find(a=>a.types.includes('locality')).long_name } catch(e) { console.log('no city') }
-		 try {obj.cityLong = goog.address_components.find(a=>a.types.includes('administrative_area_level_3')).long_name } catch(e) { console.log('no admin3')}
-		try {obj.state = goog.address_components.find(a=>a.types.includes('administrative_area_level_1')).long_name } catch(e) {console.log('no admin1')}
-		obj.lat = goog.geometry.location.lat()
-		obj.lng = goog.geometry.location.lng()
-		obj.name = goog.name
-		obj.place_id = goog.place_id
-		obj.utcOffset = goog.utc_offset
-		obj.address = goog.formatted_address
-		obj.phone = goog.formatted_phone_number
-		console.log('parseLocation', obj)
-		return obj;
-	}
+	// const parseLocation = (goog)=>{
+	// 	if(!goog) return null;
+	// 	obj = {};
+	// 	 try { obj.city = goog.address_components.find(a=>a.types.includes('locality')).long_name } catch(e) { console.log('no city') }
+	// 	 try {obj.cityLong = goog.address_components.find(a=>a.types.includes('administrative_area_level_3')).long_name } catch(e) { console.log('no admin3')}
+	// 	try {obj.state = goog.address_components.find(a=>a.types.includes('administrative_area_level_1')).long_name } catch(e) {console.log('no admin1')}
+	// 	obj.lat = goog.geometry.location.lat()
+	// 	obj.lng = goog.geometry.location.lng()
+	// 	obj.name = goog.name
+	// 	obj.place_id = goog.place_id
+	// 	obj.utcOffset = goog.utc_offset
+	// 	obj.address = goog.formatted_address
+	// 	obj.phone = goog.formatted_phone_number
+	// 	console.log('parseLocation', obj)
+	// 	return obj;
+	// }
 
 	// // addLegToTrip open form
 	// $('.leftSide').on('click', '.addLegToTrip', function(e){

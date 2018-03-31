@@ -16,12 +16,8 @@ const UserSchema = Schema({
 		required: true
 	},
 	avatar: String,
-	phone: String,
-	homeAirport: String,
-	prefAirlines: Array,
 	travelers: [{type: Schema.Types.ObjectId, ref: 'User'}],
 	trips: [{type: Schema.Types.ObjectId, ref: 'Trip'}],
-	customCompanies: [] // in addition to american, delta, southwest etc. for admin
 })
 
 // automatically hash the password before saving

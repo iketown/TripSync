@@ -5,6 +5,7 @@
 		const users = []
 		
 		const sortTrips = function(){
+			
 			console.log('sorting trips')
 			this.trips.forEach(trip => trip.tripLegs.sort( (a,b)=> a.startTime - b.startTime ) )
 			this.trips.sort((a,b) => a.timeRange.startTime - b.timeRange.startTime )

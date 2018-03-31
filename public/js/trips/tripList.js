@@ -5,7 +5,7 @@ const tripList = {
 		return (trip.timeRange.startTime !== Infinity) ? `${moment(trip.timeRange.startTime).format('MMM D')} - ${moment(trip.timeRange.endTime).format('MMM D')}` : 'no dates yet'
 	},
 	render: function(){
-			store.sortTrips()
+			store.setTimeRanges()
 
 		// list of trip -> LEGS
 		const _legs = trip => trip.tripLegs.map( leg => `
@@ -41,12 +41,16 @@ const tripList = {
 			<section id="tripFullList" data-accordion-group>
 					${_tripSection}
 			</section>
+			<buttton class='btn btn-success addNewTrip'>Create New Trip</button>
 		`
 
 
 		$('.leftSide').html(html)
 		$('#tripFullList [data-accordion]').accordion();
-
+		$('.addNewTrip').click(function(){
+			console.log('adding new trip')
+			
+		})
 		// leg edit and show are different views, could be the same view
 		$('.legListItem').click(function(){
 			let legId = $(this).attr('legId')
@@ -55,9 +59,8 @@ const tripList = {
 			store.trips.currentLeg = leg
 			$(this).closest('#tripFullList').find('.legListItem').removeClass('selectedLeg')
 			$(this).addClass('selectedLeg')
-			render.legForm()
+			legEditor.render()
 			userHeader.render()
-			userHeader.attachListeners()
 		})
 		// $('.legShow').click(function(){
 		// 	let legId = $(this).attr('legId')
@@ -70,8 +73,7 @@ const tripList = {
 		$('.addLegToTrip').click(function(){
 			let tripId = $(this).attr('tripId')
 			store.trips.currentLeg = {}
-			render.legForm()
-			console.log(tripId)
+			legEditor.render()
 		})
 		$('.expandTripButton').click(function(){
 			store.trips.currentLeg = null

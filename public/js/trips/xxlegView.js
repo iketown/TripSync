@@ -56,7 +56,7 @@ const legView = (function(){
 
 
 	return {
-		map,
-		render,
+		// map,
+		// render,
 	}
 })()

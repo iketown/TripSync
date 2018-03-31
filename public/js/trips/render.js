@@ -64,10 +64,16 @@ const render = (function(){
 		const _legTypes = store.legTypes.map(opt=>{
         	return `<option value='${opt}' ${leg.type === opt ? 'selected' : ''}> ${opt} </option>`
         })
-
+		// const travelerList = () => {
+		// 	let html = '<h4>Travelers</h4><ul>'
+		// 	html += store.trips.currentLeg.travelers.map(t=> `<li>${t.firstName} ${t.lastName} <a><small><i class="fas fa-ban delete removeUserFromLeg"></i></small></a></li>`).join('')
+		// 	html += '</ul>'
+		// 	console.log(html)
+		// 	return html
+		// }
 
 		let html = `
-		<h4 text-center font-weight-bold>${leg.startLoc ? "Editing " +leg.startName + ' <i class="fas fa-arrow-right"></i> ' + leg.endName : 'New Leg' }</h4>
+		<h4 text-center font-weight-bold>${leg.startLoc ? leg.startName + ' <i class="fas fa-arrow-right"></i> ' + leg.endName : 'New Leg' } </h4>
 			<form action="#" method="POST" id="addLegForm">
 			    <div class="row">
 			        <div class="col-8">
@@ -116,6 +122,7 @@ const render = (function(){
 			    <div class="form-group">
 	                <label for="startLoc">Departure Location</label><div class='startLocSwap'>`
 	                html += locToggle(leg, 'start')
+		
 		html += `</div></div>
 			    <hr>
 			    <div class="row">
@@ -134,11 +141,11 @@ const render = (function(){
 			    </div>
 			    <div class="form-group">
 	                <label for="endLoc">Arrival Location</label><div class='endLocSwap'>`
-	                html += locToggle(leg, 'end')
+        html += locToggle(leg, 'end')
 
-	html +=		`
-			            <input type="submit" class="btn btn-success" id="saveLeg" tripId="${store.trips.current._id}" value="SAVE">
-			</form>`
+		html += `<input type="submit" class="btn btn-success" id="saveLeg" tripId="${store.trips.current._id}" value="SAVE">
+				</form>`
+
 		$('.rightSide').html(html)
 	}
 
@@ -160,21 +167,10 @@ const render = (function(){
 		
 		$('.topRow').html(html)
 	}
-	// const showTrip = trip => {
-	// 	let html = `<h1> ${trip.name} </h1>`
-	// 	html += `<button href="#!" class="addLegToTrip btn btn-outline-success mx-3" > add Leg </button>`
-	// 	html += `<button href="#!" class="addEventToTrip btn btn-outline-success mx-3" > add Event </button>`
-	// 	html += '<h3> Trip Legs: </h3>'
-	// 	html += '<ul>'
-	// 	trip.tripLegs.forEach(leg=>{
-	// 		html += `<li><a href="#!" class='updateLeg' legId='${leg._id}'>${leg.startLoc.name} -> ${leg.endLoc.name}</a></li>`
-	// 	})
-	// 	html += '</ul>'
-	// 	$('.leftSide').html(html)
-	// }
+	
 	
 
 	return {
-		trips,  legForm, locToggle
+		// trips,  legForm, locToggle
 	}
 })()

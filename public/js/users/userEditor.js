@@ -1,7 +1,7 @@
 const userEditor = (function(){
 
 	const userForm = ()=> { 
-			const user = store.currentUser
+			const user = store.currentUser._id && store.currentUser
 
 			const userImageDisplay = title => {
 				return `<div class='carousel-cell' id="${title} "imgName='${title}'>
@@ -55,11 +55,11 @@ const userEditor = (function(){
 
 
 		function putUserInfoIntoStore(){
-			store.newUser = {}
-			store.newUser.avatar = $('#avatarChooser .is-selected').attr('imgname')
-			store.newUser.firstName = $('#firstName').val()
-			store.newUser.lastName = $('#lastName').val()
-			store.newUser.email = $('#email').val()
+			store.currentUser.avatar = $('#avatarChooser .is-selected').attr('imgname')
+			store.currentUser.firstName = $('#firstName').val()
+			store.currentUser.lastName = $('#lastName').val()
+			store.currentUser.email = $('#email').val()
+
 		}
 		$('.submitNewUserButton').click(function(e){
 			e.preventDefault()
@@ -71,7 +71,6 @@ const userEditor = (function(){
 		})
 		$('.updateUserButton').click(function(e){
 			e.preventDefault()
-
 			putUserInfoIntoStore()
 			handlers.updateUser()
 		})
