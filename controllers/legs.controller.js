@@ -7,35 +7,26 @@ const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
 
 exports.addLegToTrip =  async (req, res) => {
-	// return res.send('no bueno')
 	try {
-		const startLoc = new Location(req.body.startLoc)
-		startLoc._id = ObjectId()
-		const endLoc = new Location(req.body.endLoc)
-		endLoc._id = ObjectId()
 		const leg = new Leg()
-		const { company, flightNum, type, startDate, startTime, endDate, endTime } = req.body
+		const { company, flightNum, type, startMoment, endMoment, startLoc, endLoc } = req.body
 		leg._id = ObjectId()
 		leg.company = company
-		leg.flightNum = flightNum
 		leg.type = type
+		leg.flightNum = flightNum
+		leg.startLoc = startLoc
+		leg.endLoc = endLoc
 		leg.adminId = ObjectId(req.user._id)
-		leg.startTime = Moment(startDate+"-"+startTime, "YYYY-MM-DD-HH:mm")
-		leg.endTime = Moment(endDate+"-"+endTime, "YYYY-MM-DD-HH:mm")
-		leg.startLoc = ObjectId(startLoc._id)
-		leg.endLoc = ObjectId(endLoc._id)
+		leg.startMoment = startMoment
+		leg.endMoment = endMoment
 		leg.tripId = ObjectId(req.params.tripId)
-		const [startLocUpdate, endLocUpdate, legUpdate, tripUpdate] = await Promise.all([
-			startLoc.save(),
-			endLoc.save(),
-			leg.save(),
-			Trip.findByIdAndUpdate(req.params.tripId, {$push: {tripLegs: leg._id}}, {new: true})
+		console.log('leg from addlegtotrip', leg)
+		await leg.save()
+		const updatedTrip = await Trip.findByIdAndUpdate(req.params.tripId, {$push: {tripLegs: leg._id}}, {new: true})
 				.populate({path: 'tripEvents', populate: {path: 'users'}})
 				.populate({path: 'tripLegs', populate: {path: 'travelers'}})
-				.populate({path: 'tripLegs', populate: {path: 'startLoc'}})
-				.populate({path: 'tripLegs', populate: {path: 'endLoc'}})
-			])
-		res.status(200).json(tripUpdate)
+		
+		res.status(200).json(updatedTrip)
 
 	} catch(e) {
 		console.log(e);
@@ -54,8 +45,19 @@ exports.updateLegUsers = async (req, res)=>{
 	res.json(updatedLeg)
 }
 exports.updateLeg = async(req,res)=>{
-	try {const updatedLeg = await Leg.findByIdAndUpdate(req.params.legId, req.body)
-		res.status(200).json(updatedLeg)} catch(e){console.log(e)}
+		const leg = await Leg.findById(req.params.legId)
+	const { company, flightNum, type, startMoment, endMoment, startLoc, endLoc } = req.body
+		leg.company = company
+		leg.type = type
+		leg.flightNum = flightNum
+		leg.startLoc = startLoc
+		leg.endLoc = endLoc
+		leg.startMoment = startMoment
+		leg.endMoment = endMoment
+		leg.adminId = ObjectId(req.user._id)
+		leg.tripId = ObjectId(req.params.tripId)
+		await leg.save()
+		res.status(200).send(leg)
 }
 
 exports.createLeg = async (req, res) => {

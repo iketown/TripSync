@@ -48,8 +48,8 @@ const tripList = {
 		$('.leftSide').html(html)
 		$('#tripFullList [data-accordion]').accordion();
 		$('.addNewTrip').click(function(){
-			console.log('adding new trip')
-			
+			store.trips.current = null
+			tripEditor.render()
 		})
 		// leg edit and show are different views, could be the same view
 		$('.legListItem').click(function(){

@@ -33,7 +33,7 @@ const userHeader = (function(){
 				<div class='carousel-cell addNewTraveler'>
 					<div class='emptyImageDiv'></div>
 					<div class='userName'>
-						<p>NEW<br>
+						<p>ADD NEW<br>
 						TRAVELER</p>
 					</div>
 				</div> 

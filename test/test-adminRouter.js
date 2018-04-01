@@ -8,6 +8,7 @@ const cookie = ''
 
 describe('admin router', function(){
 	// before, create admin user
+	
 	// move cookie to a more global scope.
 
 	// after, destroy database

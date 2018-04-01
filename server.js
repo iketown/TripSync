@@ -91,6 +91,8 @@ if (app.get('env') === 'development') {
 }
 
 app.use(errorHandlers.productionErrors)
+
+function runServer()
 // connect the db and start the server
 mongoose.connect(DATABASE_URL, () => {
   const PORT = process.env.PORT || 8080

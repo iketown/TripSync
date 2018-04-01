@@ -10,7 +10,7 @@ const UserSchema = Schema({
 	firstName: String,
 	lastName: String,
 	// userName: String,
-	email: {type: String, lowercase: true, required: true, unique: "That email is already registered", index: true},
+	email: {type: String, lowercase: true, required: true},
 	password: {
 		type: String,
 		required: true

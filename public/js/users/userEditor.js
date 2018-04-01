@@ -38,6 +38,8 @@ const userEditor = (function(){
 	}
 
 	const render = ()=>{
+		$('#displayFirstName').text('')
+		$('#displayLastName').text('')
 		$('.rightSide').html(userForm())
 		$('#avatarChooser').flickity({
 			cellAlign: 'center',

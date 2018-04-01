@@ -19,28 +19,34 @@ const handlers = (()=>{
 		const tripId = store.trips.current._id
 		console.log('tripId', tripId)
 		let leg = store.trips.currentLeg
+		leg.line = null
 		axios.post(`/admin/legs/addLegToTrip/${tripId}`, leg)
-			.then(updatedTrip=> {
+			.then(updatedTrip => {
 				console.log('updated trip.data', updatedTrip.data)
-				for(let i=0; i < store.trips.length; i++){
-					if (store.trips[i]._id === updatedTrip.data._id) store.trips[i] = updatedTrip.data
+				for(let i=0;i<store.trips.length;i++){
+					if (store.trips[i]._id === updatedTrip.data._id) store.trips[i] = store.trips.current = updatedTrip.data
 				}
-				toastr.info('Leg Added')
-				store.trips.current = updatedTrip.data
 				tripList.render()
 				
 			})
 			.catch(err=> console.error(err))
 	}
 	const updateLeg = ()=>{
-		
+		// it only 'updates' if it already has an id.  otherwise 'addLegToTrip' is called
 		let leg = store.trips.currentLeg
-		axios.post(`/admin/legs/${leg._id}`, leg)
-			.then(response => console.log(response.data))
-			catch(err=>console.error(err))
-	}
-	const addNewTrip = ()=>{
-
+		let legId = store.trips.currentLeg._id
+		leg.line = null // otherwise JSON circular reference
+		axios.post(`/admin/legs/${legId}`, leg)
+			.then(response =>{
+				const newTrip = response.data
+				for (var i = store.trips.length - 1; i >= 0; i--) {
+					if (store.trips[i]._id === newTrip._id) store.trips[i] = newTrip
+				}
+				tripList.render()
+				// set store.trips.currentLeg ?
+				legEditor.render()
+			})
+			.catch(err=>console.error(err))
 	}
 
 	const getTrips = ()=>{
@@ -50,9 +56,16 @@ const handlers = (()=>{
 	const addNewUser = ()=>{
 		axios.post('/admin/users/', store.currentUser)
 			.then( response => {
+				if (response.data.errmsg){
+					toastr.error(`${store.currentUser.email} is already registered.  Please try again`)
+					store.currentUser = {}
+					userEditor.render()
+				} else {
 				console.log('response from new user', response.data)
 				store.users = response.data.travelers
 				userHeader.render()
+					
+				}
 			} )
 			.catch(e=> console.log(e))
 	}
@@ -79,6 +92,28 @@ const handlers = (()=>{
 			} )
 			.catch( err => console.log(err) )
 	}
+	const addUpdateTrip = ()=>{
+		const tripName = store.trips.current.name
+		const tripId = store.trips.current._id || ''
+		axios.post(`/admin/trips/${tripId}`, {tripName})
+			.then( myTrips => {
+				console.log(myTrips.data)
+				store.trips = myTrips.data
+				tripList.render()
+			}) 
+			.catch(err => console.error(err))
+	}
+	const deleteTrip = ()=>{
+		const tripId = store.trips.current._id
+		axios.delete(`/admin/trips/${tripId}`)
+			.then(response=> {
+				console.log('response from delete trip', response.data)
+				store.trips = response.data
+				tripList.render()
+			})
+	}
+
+
 
 
 	return {
@@ -88,7 +123,8 @@ const handlers = (()=>{
 		addNewUser,
 		updateUser,
 		addLegToTrip,
-		updateLeg
-
+		updateLeg,
+		addUpdateTrip,
+		deleteTrip
 	}
 })()

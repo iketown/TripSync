@@ -7,18 +7,18 @@
 		const sortTrips = function(){
 			
 			console.log('sorting trips')
-			this.trips.forEach(trip => trip.tripLegs.sort( (a,b)=> a.startTime - b.startTime ) )
-			this.trips.sort((a,b) => a.timeRange.startTime - b.timeRange.startTime )
+			this.trips.forEach(trip => trip.tripLegs.sort( (a,b)=> a.startMoment - b.startMoment ) )
+			this.trips.sort((a,b) => a.timeRange.startMoment - b.timeRange.startMoment )
 		}
 
 		const setTimeRanges = function(){
 			this.trips.forEach(trip=>{
 				let timeArr=[]
 				trip.tripLegs.forEach(leg=>{
-					timeArr.push(leg.startTime)
-					timeArr.push(leg.endTime)
+					timeArr.push(leg.startMoment)
+					timeArr.push(leg.endMoment)
 				})
-				trip.timeRange = {startTime: Math.min(...timeArr), endTime: Math.max(...timeArr)}
+				trip.timeRange = {startMoment: Math.min(...timeArr), endMoment: Math.max(...timeArr)}
 			})
 			this.sortTrips()
 		}

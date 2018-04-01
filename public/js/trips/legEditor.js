@@ -102,19 +102,19 @@ const legEditor = (function(){
 			        <div class="col">
 			            <div class="form-group">
 			                <label for="startDate">Departure Date</label>
-			                <input class="form-control" type="date" id="startDate" name="startDate" value=${leg && leg.startTime? moment(leg.startTime).format('YYYY-MM-DD')  : ''} >
+			                <input class="form-control" type="date" id="startDate" name="startDate" value=${leg && leg.startMoment? moment(leg.startMoment).format('YYYY-MM-DD')  : ''} >
 			            </div>
 			        </div>
 			        <div class="col">
 			            <div class="form-group">
 			                <label for="startTime">Departure Time</label>
-			                <input class="form-control" type="time" id="startTime" name="startTime" value=${leg && leg.startTime? moment(leg.startTime).format('HH:MM')  : ''} >
+			                <input class="form-control" type="time" id="startTime" name="startTime" value=${leg && leg.startMoment? moment(leg.startMoment).format('HH:MM')  : ''} >
 			            </div>
 			        </div>
 			    </div>
 			    <div class="form-group">
 	                <label for="startLoc">Departure Location</label>
-					<input id="startLoc" type='text'>
+					<input class='form-control' id="startLoc" type='text' value="${leg?leg.startLoc.address:'enter a location'}">
 				</div>
 
 
@@ -128,24 +128,30 @@ const legEditor = (function(){
 			        <div class="col">
 			            <div class="form-group">
 			                <label for="endDate">Arrival Date</label>
-			                <input class="form-control" type="date" id="endDate" name="endDate" value=${leg && leg.startTime? moment(leg.endTime).format('YYYY-MM-DD') :  ''}>
+			                <input class="form-control" type="date" id="endDate" name="endDate" value=${leg && leg.startMoment? moment(leg.endMoment).format('YYYY-MM-DD') :  ''}>
 			            </div>
 			        </div>
 			        <div class="col">
 			            <div class="form-group">
 			                <label for="endTime">Arrival Time</label>
-			                <input class="form-control" type="time" id="endTime" name="endTime" value=${leg && leg.startTime? moment(leg.endTime).format('HH:MM') :  ''}>
+			                <input class="form-control" type="time" id="endTime" name="endTime" value=${leg && leg.startMoment? moment(leg.endMoment).format('HH:MM') :  ''}>
 			            </div>
 			        </div>
 			    </div>
 			    <div class="form-group">
 	                <label for="endLoc">Arrival Location</label>
-					<input id="endLoc" type='text'>
+					<input class="form-control" id="endLoc" type='text' value="${leg?leg.endLoc.address:'enter a location'}">
 				</div>`
         
 
-		html += `<input type="submit" class="btn btn-success" id="saveLeg" tripId="${store.trips.current._id}" value="SAVE">
+		html += `
+		<div class="button-group">
+			<input type="submit" class="btn btn-success" id="saveLeg" tripId="${store.trips.current._id}" value="${leg?'UPDATE':'SAVE'}">
+			<input type="submit" class="btn btn-danger" id="deleteLeg" tripId="${store.trips.current._id}" value="DELETE" ${leg?'':'hidden'}>
+
+		</div>
 				</form>`
+
 		$('.rightSide').html(html)
 
 
@@ -154,17 +160,20 @@ const legEditor = (function(){
 			e.preventDefault()
 			const $form = $(this).closest('form')
 			const tripId = $(this).attr('tripId')
-			if(!store.trips.currentLeg) store.trips.currentLeg = {}
+			if(!store.trips.currentLeg) store.trips.currentLeg = {} // if it doesn't exist make it an empty object
 			store.trips.currentLeg.type = $form.find('#type').val()
 			store.trips.currentLeg.company = $form.find('#company').val()
 			store.trips.currentLeg.flightNum = $form.find('#flightNum').val()
-			store.trips.currentLeg.startDate = $form.find('#startDate').val()
-			store.trips.currentLeg.endDate = $form.find('#endDate').val()
-			store.trips.currentLeg.startTime = $form.find('#startTime').val()
-			store.trips.currentLeg.endTime = $form.find('#endTime').val()
-			store.trips.currentLeg.startLoc = parseLocation(store.startLocTemp) || ''
-			store.trips.currentLeg.endLoc = parseLocation(store.endLocTemp) || ''
+			const startDate = $form.find('#startDate').val()
+			const endDate = $form.find('#endDate').val()
+			const startTime = $form.find('#startTime').val()
+			const endTime = $form.find('#endTime').val()
+			store.trips.currentLeg.startMoment = moment(startDate+"-"+startTime, "YYYY-MM-DD-HH:mm")
+			store.trips.currentLeg.endMoment = moment(endDate+"-"+endTime, "YYYY-MM-DD-HH:mm")
+			if (store.startLocTemp) store.trips.currentLeg.startLoc = parseLocation(store.startLocTemp)
+			if (store.endLocTemp) store.trips.currentLeg.endLoc = parseLocation(store.endLocTemp)
 			if (store.trips.currentLeg._id) {
+				console.log('update leg was called')
 				handlers.updateLeg()
 			} else {
 				handlers.addLegToTrip()
@@ -178,17 +187,16 @@ const legEditor = (function(){
 	const parseLocation = (goog)=>{
 		if(!goog) return null;
 		obj = {};
+		obj.address = goog.formatted_address
 		 try { obj.city = goog.address_components.find(a=>a.types.includes('locality')).long_name } catch(e) { console.log('no city') }
 		 try {obj.cityLong = goog.address_components.find(a=>a.types.includes('administrative_area_level_3')).long_name } catch(e) { console.log('no admin3')}
 		try {obj.state = goog.address_components.find(a=>a.types.includes('administrative_area_level_1')).long_name } catch(e) {console.log('no admin1')}
+		obj.name = obj.city || obj.cityLong || obj.state || 'no name'
 		obj.lat = goog.geometry.location.lat()
 		obj.lng = goog.geometry.location.lng()
-		obj.name = goog.name
 		obj.place_id = goog.place_id
 		obj.utcOffset = goog.utc_offset
-		obj.address = goog.formatted_address
-		obj.phone = goog.formatted_phone_number
-		console.log('parseLocation', obj)
+		console.log('parsed Location:', obj)
 		return obj;
 	}
 

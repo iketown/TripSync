@@ -1,11 +1,16 @@
 a {
 	text-decoration: none;
 }
-
+.btn {
+	margin: 8px;
+	max-width: 300px;
+}
 .edit {
 	color: darkblue;
 }
-
+.button-group{
+	display: flex;
+}
 .delete {
 	color: darkred;
 }
