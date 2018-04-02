@@ -121,7 +121,6 @@ const handlers = (()=>{
 			.catch( err => console.log(err) )
 	}
 	const addUpdateTrip = ()=>{
-		console.log('addupdatetrip called')
 		const tripName = store.trips.current.name
 		const tripId = store.trips.current._id || ''
 		axios.post(`/admin/trips/${tripId}`, {tripName})

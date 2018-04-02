@@ -19,7 +19,6 @@ const signToken = (user)=>{
 }
 
 exports.signUp = async(req, res)=>{
-	console.log('hi from signup')
 	const {email, password, firstName, lastName} = req.body;
 	// check that the email isn't already taken
 	const foundUser = await User.findOne({email});
@@ -37,6 +36,7 @@ exports.signUp = async(req, res)=>{
 exports.signIn = async (req, res)=>{
 	// validation is handled by passport local strategy
 	// req.user will already have the user on it by now.
+	console.log('hello from signin')
 	const token = signToken(req.user)
 	const myTrips = await Trip.find({adminId: ObjectId(req.user._id)})
 		.populate('tripLegs')

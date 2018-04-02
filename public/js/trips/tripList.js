@@ -21,10 +21,10 @@ const tripList = {
 			).join('')
 
 		// list of TRIPS
-		const _tripSection = store.trips.map( trip => `
+		const _tripSection = store.trips.map( (trip, i) => `
 			<section data-accordion>
 				<button data-control class='expandTripButton' tripId="${trip._id}">
-					 <h5 class='tripName'>${trip.name.toUpperCase()}</h5> 
+					 <h5 class='tripName' style="color: ${store.colors[i]}">${trip.name.toUpperCase()}</h5> 
 					 <p class='tripDates'>${this.dateRange(trip)}</p>
 				</button>
 				<div data-content>
