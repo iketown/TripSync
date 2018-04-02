@@ -28,8 +28,6 @@
 				.then(results => {
 					this.trips = results.data
 					this.setTimeRanges()
-					this.trips.maxIndex = 1
-					// render.trips() 
 					tripList.render()
 				})
 			axios.get('/admin/users')
@@ -40,6 +38,13 @@
 				)
 				.catch(err=> console.log(err))
 		}
+		const colors = [
+			"#3d5afe", // blue
+			"#ff3d00", // orange
+			"#1b5e20", // green
+			"#5d4037", // brown
+			"#b71c1c", // red,
+		]
 
 		const airlines = [
 			{name: "Alaska", logoUrl: '', abbr: ''}, 
@@ -74,9 +79,8 @@
 		}
 			const peopleSVGs = [ "woman.svg", "man-1.svg", "woman-1.svg", "man-2.svg", "woman-2.svg", "man-3.svg", "woman-3.svg", "man-4.svg", "man-5.svg", "woman-4.svg", "man-6.svg", "woman-5.svg", "man-7.svg", "woman-6.svg", "punk.svg", "woman-7.svg"]
 
-		
-
 		const mapStyle = [{"featureType":"water","elementType":"geometry","stylers":[{"color":"#e9e9e9"},{"lightness":17}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#f5f5f5"},{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ffffff"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#ffffff"},{"lightness":29},{"weight":0.2}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":16}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#f5f5f5"},{"lightness":21}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#dedede"},{"lightness":21}]},{"elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#ffffff"},{"lightness":16}]},{"elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#333333"},{"lightness":40}]},{"elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#f2f2f2"},{"lightness":19}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#fefefe"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#fefefe"},{"lightness":17},{"weight":1.2}]}]
+
 
 		return {
 			getEventsOnLoad,
@@ -86,6 +90,7 @@
 			setTimeRanges,
 			mapArrowOptions,
 			mapStyle,
-			peopleSVGs
+			peopleSVGs,
+			colors,
 		}
 	})()

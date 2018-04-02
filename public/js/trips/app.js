@@ -1,10 +1,13 @@
 $( function(){
-      
-	store.getEventsOnLoad();
-	attachListeners()
+
+	signInOut.renderNav()      
+	signInOut.renderIntro()
+	signInOut.renderSignInForm()
+	// store.getEventsOnLoad();
+	// attachListeners()
 	
 
-	toastr.options = { "positionClass": "toast-bottom-left" }	
+	// toastr.options = { "positionClass": "toast-bottom-left" }	
 
 
 

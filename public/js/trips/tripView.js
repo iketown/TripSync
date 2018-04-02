@@ -1,7 +1,7 @@
 const tripView = (function(){
 
-	let map;
-	let bounds; 
+
+
 	function makeArrowAndExtendBounds(leg){
 		const start = new google.maps.LatLng(leg.startLoc.lat, leg.startLoc.lng)
 		const end = new google.maps.LatLng(leg.endLoc.lat, leg.endLoc.lng)
@@ -17,27 +17,46 @@ const tripView = (function(){
 		leg.line.setMap(map)
 		// leg.startWindow = new google.maps.InfoWindow({content: leg.startLoc.city, position: start}).open(map)
 		// leg.endWindow = new google.maps.InfoWindow({content: leg.endLoc.city, position: end}).open(map)
-		bounds.extend(start)
-		bounds.extend(end)
+		// bounds.extend(start)
+		// bounds.extend(end)
 	}
+	
+	let bounds;
 	function initMap(){
 		if (store.trips.current.tripLegs.length) {
-			bounds = new google.maps.LatLngBounds
-			let startLat = store.trips.current.tripLegs[0].startLoc.lat 
-			let startLng = store.trips.current.tripLegs[0].startLoc.lng 
-			let endLat = store.trips.current.tripLegs[0].endLoc.lat 
-			let endLng = store.trips.current.tripLegs[0].endLoc.lng 
-			const start = new google.maps.LatLng(startLat, startLng)
-			const end = new google.maps.LatLng(endLat, endLng)
+			const getSwNe = ()=>{
+				const lats = []
+				const lngs = []
+				store.trips.forEach(trip=>{
+					trip.tripLegs.forEach(leg=>{
+						lats.push(leg.startLoc.lat)
+						lngs.push(leg.endLoc.lng)
+						lats.push(leg.startLoc.lat)
+						lngs.push(leg.endLoc.lng)
+					})
+				})
+				const sw = {lat: Math.min(...lats) ,lng: Math.min(...lngs)}
+				const ne = {lat: Math.max(...lats), lng: Math.max(...lngs)}
+				return {sw,ne}
+			}
+			const swne = getSwNe()
+			bounds = new google.maps.LatLngBounds( swne.sw, swne.ne );
+			
+			// let startLat = store.trips.current.tripLegs[0].startLoc.lat 
+			// let startLng = store.trips.current.tripLegs[0].startLoc.lng 
+			// let endLat = store.trips.current.tripLegs[0].endLoc.lat 
+			// let endLng = store.trips.current.tripLegs[0].endLoc.lng 
+			// const start = new google.maps.LatLng(startLat, startLng)
+			// const end = new google.maps.LatLng(endLat, endLng)
 			map = new google.maps.Map(document.getElementById('googleTripMap'), {
 				zoom: 8,
-				center: start,
+				// center: start,
 				styles: store.mapStyle,
 				disableDefaultUI: true
 			})
-		 	bounds.extend(start)
-		 	bounds.extend(end)
-		 	const center = bounds.getCenter()
+		 	// bounds.extend(start)
+		 	// bounds.extend(end)
+		 	// const center = bounds.getCenter()
 			
 			store.trips.current.tripLegs.forEach(leg=> makeArrowAndExtendBounds(leg))
 			map.setCenter( bounds.getCenter() )
@@ -62,7 +81,7 @@ const tripView = (function(){
 			</div>
 		`
 		$('.rightSide').html(html)
-		initMap()
+			initMap()
 		$('.renameTrip').click(function(){
 			tripEditor.render()
 		})
@@ -72,15 +91,8 @@ const tripView = (function(){
 	}
 	
 	return {
-		render,
+		render, bounds
 	}
 
 })()
-
-
-
-
-
-
-
 

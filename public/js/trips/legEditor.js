@@ -114,7 +114,7 @@ const legEditor = (function(){
 			    </div>
 			    <div class="form-group">
 	                <label for="startLoc">Departure Location</label>
-					<input class='form-control' id="startLoc" type='text' value="${leg?leg.startLoc.address:'enter a location'}">
+					<input class='form-control' id="startLoc" type='text' value="${leg?leg.startLoc.address:''}">
 				</div>
 
 
@@ -140,7 +140,7 @@ const legEditor = (function(){
 			    </div>
 			    <div class="form-group">
 	                <label for="endLoc">Arrival Location</label>
-					<input class="form-control" id="endLoc" type='text' value="${leg?leg.endLoc.address:'enter a location'}">
+					<input class="form-control" id="endLoc" type='text' value="${leg?leg.endLoc.address:''}">
 				</div>`
         
 
@@ -221,7 +221,7 @@ const legEditor = (function(){
 				updateHeaderLocations()
 			}
 		}
-	const updateHeaderLocations = ()=>{
+	const updateHeaderLocations = ()=>{ // so it fills in under the pic while you type your name
 		const start = store.startLocTemp && parseLocation(store.startLocTemp)
 		const end = store.endLocTemp && parseLocation(store.endLocTemp)
 		if (start) $('.cityHeader.start').text(start.city || start.cityLong || start.state)

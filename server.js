@@ -11,11 +11,8 @@ const MongoStore = require('connect-mongo')(session);
 const path = require('path')
 
 const legsRouter = require('./routes/legs.router')
-const locationsRouter = require('./routes/locations.router')
 const usersRouter = require('./routes/users.router')
-const groupsRouter = require('./routes/groups.router')
 const tripsRouter = require('./routes/trips.router')
-const eventsRouter = require('./routes/events.router')
 const authRouter = require('./routes/auth.router')
 const homeRouter = require('./routes/home.router')
 const adminRouter = require('./routes/admin.router')
@@ -23,7 +20,7 @@ const adminRouter = require('./routes/admin.router')
 const expressValidator = require('express-validator')
 const helpers = require('./helpers')
 const errorHandlers = require('./handlers/errorHandlers')
-const {DATABASE_URL} = require('./config')
+const {DATABASE_URL, PORT} = require('./config')
 const flash = require('connect-flash')
 
 
@@ -39,21 +36,14 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 app.use(expressValidator())
 app.use(cookieParser())
-app.use(session({
-  secret: 'secret thing',
-  key: 'key key',
-  resave: false,
-  saveUninitialized: false,
-  store: new MongoStore({ mongooseConnection: mongoose.connection })
-}));
 
 app.use( passport.initialize() )
 // app.use(passport.session())
-app.use(flash());
+// app.use(flash());
 
 app.use((req, res, next)=>{
 	res.locals.h = helpers;
-	res.locals.flashes = req.flash();
+	// res.locals.flashes = req.flash();
 	res.locals.currentPath = req.path;
   // res.locals.user = req.user
 	next();
@@ -63,44 +53,50 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 const jwtAuth = passport.authenticate('jwt', {
   session: false,
-  failureRedirect: '/auth/login'
+  failureRedirect: '/'
 })
 
 //
 app.use('/', homeRouter)
-app.use('/admin/trips', jwtAuth, tripsRouter)
-app.use('/admin/users', jwtAuth, usersRouter)
 app.use('/auth', authRouter)
 app.use('/admin', jwtAuth,  adminRouter)
+app.use('/admin/trips', jwtAuth, tripsRouter)
+app.use('/admin/users', jwtAuth, usersRouter)
 app.use('/admin/legs',  legsRouter)
-// app.use('/admin/locations',jwtAuth, locationsRouter)
-// app.use('/admin/travelers', jwtAuth, usersRouter)
-// app.use('/admin/events',jwtAuth, eventsRouter)
-// app.use('/home', homeRouter)
 
-// catch everything else 
-// app.get('*', (req, res)=>{
-// 	res.sendFile(path.join(__dirname, './public', 'index.html'))
-// })
+let server;
 
-app.use(errorHandlers.notFound)
-app.use(errorHandlers.flashValidationErrors);
-
-if (app.get('env') === 'development') {
-  app.use(errorHandlers.developmentErrors);
+function runServer(dbURL, port = PORT){
+  return new Promise((resolve,reject)=>{
+    mongoose.connect(dbURL, err=> {
+      if(err){
+        return reject(err);
+      }
+      server = app.listen(port, ()=>{
+        console.log(`app listening on port ${port} 😇`);
+        resolve()
+      })
+    })
+  })
+}
+function closeServer() {
+  return mongoose.disconnect().then(() => {
+    return new Promise((resolve, reject) => {
+      console.log('Closing server');
+      server.close(err => {
+        if (err) {
+          return reject(err);
+        }
+        resolve();
+      });
+    });
+  });
 }
 
-app.use(errorHandlers.productionErrors)
+// this block runs if you start with "node server.js"
+if(require.main === module){
+  runServer(DATABASE_URL).catch(err=> console.error(err))
+}
 
-function runServer()
-// connect the db and start the server
-mongoose.connect(DATABASE_URL, () => {
-  const PORT = process.env.PORT || 8080
-  app.listen(PORT, () => console.log(`listening on port ${PORT}`))
-})
-
-//   https://courses.thinkful.com/node-001v5/assignment/3.1.2
-
-
-module.exports = { app }
+module.exports = { app, runServer, closeServer }
 

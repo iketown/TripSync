@@ -6,9 +6,6 @@ const homeController = require('../controllers/home.controller')
 const jwtAuth = passport.authenticate('jwt', {session: false})
 
 router.get('/', homeController.home)
-// router.get('/example',  jwtAuth, homeController.examplePage)
-// router.get('/store', jwtAuth, homeController.fillStore)
-// router.get('/jshome', jwtAuth, homeController.jshome)
-
+router.get('/admin', jwtAuth, homeController.adminHome)
 
 module.exports = router

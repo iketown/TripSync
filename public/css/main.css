@@ -5,6 +5,20 @@ a {
 	margin: 8px;
 	max-width: 300px;
 }
+.navbar{
+	padding: 8px 20px;
+}
+.navBarMe{
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.navBarMe .signOut {
+	margin-bottom: 0;
+}
+.navBarMe .me {
+	margin: 0;
+}
 .edit {
 	color: darkblue;
 }
@@ -55,7 +69,7 @@ p.tripDates{
 .legListItem .date {
 
 }
-#googleTripMap, #googleLegMap{
+#googleTripMap, #googleLegMap, #googleAllTrips{
 	background-color: lightblue;
 	width: 100%;
 	height: 250px;

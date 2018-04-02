@@ -25,6 +25,7 @@
     "express-promise-router": "^3.0.1",
     "express-session": "^1.15.6",
     "express-validator": "^5.0.3",
+    "faker": "^4.1.0",
     "gravatar": "^1.6.0",
     "joi": "^13.1.2",
     "jquery": "^3.3.1",

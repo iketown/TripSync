@@ -1,58 +1,53 @@
-const express = require('express');
-const bodyParser = require('body-parser')
+// const express = require('express');
+// const bodyParser = require('body-parser')
 const { User } = require('../models/user.model')
-const { getAll } = require('./home.controller')
+const { Trip } = require('../models/trip.model')
 const {JWT_SECRET, JWT_EXPIRY} = require('../config')
 const JWT = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-// const router = express.Router();
-// router.use(bodyParser.urlencoded({extended: false}));
-// router.use(bodyParser.json());
-// const config = require('../config')
+const ObjectId = require('mongoose').Types.ObjectId
+
 
 const signToken = (user)=>{
 	return JWT.sign({
 		iss: 'iketown',
 		sub: user.id,
 		iat: new Date().getTime(),
-		expiresIn: JWT_EXPIRY  // exp in 24 hrs.
+		expiresIn: JWT_EXPIRY  
 
 	}, JWT_SECRET)
 }
 
 exports.signUp = async(req, res)=>{
 	console.log('hi from signup')
-	const {email, password} = req.body;
+	const {email, password, firstName, lastName} = req.body;
 	// check that the email isn't already taken
 	const foundUser = await User.findOne({email});
 	if(foundUser) return res.status(403).json({error: 'email already registered'})
 	// create user in database
-	const newUser = new User({email, password})
+	const newUser = new User({email, password, firstName, lastName})
 	await newUser.save()
 
 	// return token
 	const token = signToken(newUser)
 	res.cookie('jwt-auth', token); 
-	res.render('adminHome', {user: newUser})
+	res.status(200).send(newUser)
 }
 
 exports.signIn = async (req, res)=>{
 	// validation is handled by passport local strategy
 	// req.user will already have the user on it by now.
 	const token = signToken(req.user)
+	const myTrips = await Trip.find({adminId: ObjectId(req.user._id)})
+		.populate('tripLegs')
+	const me = await User.findById(req.user._id)
+		.populate({path: 'travelers'})
+		.populate({path: 'trips', populate: {path: 'tripLegs'}})
 	res.cookie('jwt-auth', token)
-	res.render('adminHome', {user: req.user})
+	res.status(200).send({me, myTrips})
 }
 
 exports.signOut = (req, res)=>{
 	res.clearCookie("jwt-auth");
-	res.render('home')
-}
-
-exports.loginPage = (req, res)=>{
-	console.log('req.path',req.path)
-	res.render('login', {attemptedPath: req.path})
-}
-exports.signUpPage = async (req, res)=>{
-	res.render('signUp')
+	res.redirect('/')
 }

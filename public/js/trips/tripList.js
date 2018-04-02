@@ -2,7 +2,7 @@
 const tripList = {
 	icons: {"Flight": 'plane', "Ground": 'car', "Other": 'dot-circle'},
 	dateRange: (trip)=>{
-		return (trip.timeRange.startTime !== Infinity) ? `${moment(trip.timeRange.startTime).format('MMM D')} - ${moment(trip.timeRange.endTime).format('MMM D')}` : 'no dates yet'
+		return (trip.timeRange.startMoment !== Infinity) ? `${moment(trip.timeRange.startMoment).format('MMM D')} - ${moment(trip.timeRange.endMoment).format('MMM D')}` : 'no dates yet'
 	},
 	render: function(){
 			store.setTimeRanges()
@@ -14,7 +14,7 @@ const tripList = {
 				${leg.startLoc.city || leg.startLoc.cityLong || leg.startLoc.state || 'origin' } 
 				<i class="fas fa-arrow-right"></i>
 				${leg.endLoc.city || leg.endLoc.cityLong || leg.endLoc.state || 'destination'}
-				<small><span class='date font-weight-light'>${moment(leg.startTime).format('MMM Do')}</span></small>
+				<small><span class='date font-weight-light'>${moment(leg.startMoment).format('MMM Do')}</span></small>
 				<a href='#!' legId="${leg._id}" class='legShow'><i class="fas fa-map-marker-alt show"></i></a>
 				<a href="#!" legId="${leg._id}" class='legIdEdit'><i class="far fa-edit edit"></i></a>
 			</article>`

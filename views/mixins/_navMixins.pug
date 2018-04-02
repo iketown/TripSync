@@ -1,6 +1,6 @@
 mixin navStranger
 	nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
-		a.navbar-brand(href='/home') TripSync
+		a.navbar-brand(href='/') TripSync
 		.collapse.navbar-collapse#nav01
 			ul.navbar-nav.ml-auto
 				li.nav-item
@@ -17,13 +17,9 @@ mixin navStranger
 mixin navSignedIn
 	nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
 		
-		a.navbar-brand(href='/admin/home') TripSync
+		a.navbar-brand(href='/') TripSync
 		.collapse.navbar-collapse#nav01
 			ul.navbar-nav.ml-auto
-				li.nav-item(class= (currentPath === `/admin/travelers`) ? 'active' : '')
-					a.nav-link(href=`/admin/travelers`) My Travelers
-				li.nav-item(class= (currentPath === `/admin/home`) ? 'active' : '')
-					a.nav-link(href=`/admin/home`) My Trips
 				li.nav-item
 					a.nav-link(href='/auth/signout') Sign Out
 				li.nav-idem

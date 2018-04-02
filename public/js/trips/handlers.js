@@ -2,6 +2,34 @@
 
 const handlers = (()=>{
 
+	const signUp = (me)=>{
+		axios.post('/auth/signup', me)
+			.then(response=>{
+
+				store.me = response.data
+				store.getEventsOnLoad();
+			})
+			.catch(err=>{
+				toastr.error('that email has already registered.')
+				signInOut.renderSignInForm()
+			  console.log('signup error', err) })
+	}
+	const signIn = (me)=>{
+		axios.post('/auth/signin', me)
+			.then(response=> {
+				console.log('response from signin', response.data)
+				// setup my trips
+				store.trips = response.data.myTrips;
+				store.setTimeRanges()
+				tripList.render()
+				store.me = response.data.me
+				// setup my users
+				store.users = response.data.me.travelers;
+				userHeader.render()
+				allTripView.render()
+			})
+	}
+
 	const fillOutForm = ()=>{
 		const $form = $('#addLegForm')
 		 $form.find('#type').val(store.legTypes[Math.floor(Math.random()*3)])
@@ -93,13 +121,15 @@ const handlers = (()=>{
 			.catch( err => console.log(err) )
 	}
 	const addUpdateTrip = ()=>{
+		console.log('addupdatetrip called')
 		const tripName = store.trips.current.name
 		const tripId = store.trips.current._id || ''
 		axios.post(`/admin/trips/${tripId}`, {tripName})
 			.then( myTrips => {
-				console.log(myTrips.data)
+				console.log('myTrips', myTrips.data)
 				store.trips = myTrips.data
 				tripList.render()
+				tripView.render()
 			}) 
 			.catch(err => console.error(err))
 	}
@@ -117,6 +147,8 @@ const handlers = (()=>{
 
 
 	return {
+		signUp,
+		signIn,
 		updateLegUsers,
 		getTrips,
 		fillOutForm,

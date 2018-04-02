@@ -16,6 +16,7 @@ const tripEditor = (function(){
 		$('.rightSide').html(html)
 
 		$('.updateTrip').click(function(){
+			console.log('update trip called')
 			store.trips.current.name = $('#tripName').val()
 			handlers.addUpdateTrip()
 		})

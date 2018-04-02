@@ -8,7 +8,7 @@ const jwtAuth = passport.authenticate('jwt', {
 	failureRedirect: '/auth/login'
 })
 
-router.get('/home',  adminController.home)
-router.get('/travelers', adminController.travelers)
+router.get('/', jwtAuth,  adminController.home)
+// router.get('/travelers', adminController.travelers)
 
 module.exports = router

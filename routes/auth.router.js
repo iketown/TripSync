@@ -10,10 +10,10 @@ const localAuth = passport.authenticate('local', {
 	failureRedirect: '/'
 })
 
-router.get('/signup', authController.signUpPage)
+router.post('/signin', localAuth , authController.signIn)
 router.post('/signup', authController.signUp)
-router.post('/signin', validateBody(schemas.authSchema), localAuth , authController.signIn)
-router.get('/login', authController.loginPage)
 router.get('/signout', authController.signOut)
+// router.get('/signup', authController.signUpPage)
+// router.get('/login', authController.loginPage)
 
 module.exports = router

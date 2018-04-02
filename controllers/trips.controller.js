@@ -9,7 +9,6 @@ const ObjectId = mongoose.Types.ObjectId
 exports.getMyTrips = async(req, res)=>{
 	const trips = await Trip.find( {adminId: req.user.id} )
 		.populate({path: 'tripLegs', populate: {path: 'travelers'}})
-
 	res.json(trips)
 }
 exports.createTrip = async (req, res)=>{
@@ -21,10 +20,15 @@ exports.createTrip = async (req, res)=>{
 	await trip.save()
 	const trips = await Trip.find( {adminId: req.user.id} )
 		.populate({path: 'tripLegs', populate: {path: 'travelers'}})
-
 	res.json(trips)
 } 
 exports.updateTrip = async(req,res)=>{
+	const trip = await Trip.findById(req.params.id)
+	trip.name = req.body.tripName
+	await trip.save()
+	const trips = await Trip.find( {adminId: req.user.id} )
+		.populate({path: 'tripLegs', populate: {path: 'travelers'}})
+	res.json(trips)
 
 }
 exports.deleteTrip = async(req,res)=>{
