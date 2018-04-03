@@ -131,7 +131,7 @@ const handlers = (()=>{
 				console.log('myTrips', myTrips.data)
 				store.trips = myTrips.data
 				tripRender.accordion()
-				tripView.render()
+				tripRender.viewTrip()
 			}) 
 			.catch(err => console.error(err))
 	}

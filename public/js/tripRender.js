@@ -9,13 +9,13 @@ const tripRender = (function(){
 	}
 
 	const accordion = () => {
-			const icons =  {"Flight": 'plane', "Ground": 'car', "Other": 'dot-circle'}
-			const dateRange = (trip) => {
-				return (trip.timeRange.startMoment !== Infinity) ? 
-				`${moment(trip.timeRange.startMoment).format('MMM D')} - ${moment(trip.timeRange.endMoment).format('MMM D')}` 
-				: 'no dates yet'
-			}
-			store.setTimeRanges()
+		const icons =  {"Flight": 'plane', "Ground": 'car', "Other": 'dot-circle'}
+		const dateRange = (trip) => {
+			return (trip.timeRange.startMoment !== Infinity) ? 
+			`${moment(trip.timeRange.startMoment).format('MMM D')} - ${moment(trip.timeRange.endMoment).format('MMM D')}` 
+			: 'no dates yet'
+		}
+		store.setTimeRanges()
 
 		// list of trip -> LEGS
 		const _legs = trip => trip.tripLegs.map( leg => `
@@ -39,12 +39,13 @@ const tripRender = (function(){
 				</button>
 				<div data-content>
 					${_legs(trip)}
-					<article class='legListItem'>
+					<article class=''>
 						<a href='#!' class='addLegToTrip' tripId=${trip._id}><p class="font-weight-bold"><i class="fas fa-plus"></i> Add Leg to <span class='font-weight-light'>(${trip.name})</span> Trip </p></a>
 					</article>
 				</div>
 			</section>  `
 		).join('');
+
 		// top level accordion
 		const html = `
 			<h2> My Trips </h2>
@@ -54,53 +55,35 @@ const tripRender = (function(){
 			<buttton class='btn btn-success addNewTrip'>Create New Trip</button>
 		`
 
-
 		$('.leftSide').html(html)
 		$('#tripFullList [data-accordion]').accordion();
 
-		$('.addNewTrip').click(function(){
-			store.trips.current = null
+		$('.addNewTrip').click( newHandlers.addNewTrip )
+		$('.legListItem').click( newHandlers.selectLeg )
+		$('.addLegToTrip').click( newHandlers.addLegToTrip )
+		$('.expandTripButton').click( newHandlers.selectTrip )
+		$('.legListItem').hover( newHandlers.hoverLeg, newHandlers.unhoverLeg )
+	} // end accordion
+
+	const viewTrip = () => {
+		const trip = store.trips.current
+		html = `
+			<h2>${ trip.name.toUpperCase() }</h2>
+			<div id="googleTripMap"></div>
+			<div class='button-group'>
+				<button class='btn btn-info renameTrip'>Rename Trip</button>
+				<button class='btn btn-danger deleteTrip'>Delete Trip</button>
+			</div>
+		`
+		$('.rightSide').html(html)
+			mapRender.trip()
+		$('.renameTrip').click(function(){
 			tripEditor.render()
 		})
-
-		$('.legListItem').click(function(){
-			let legId = $(this).attr('legId')
-			console.log('legid', legId)
-			let leg = store.trips.current.tripLegs.find(leg => leg._id === legId)
-			store.trips.currentLeg = leg
-			$(this).closest('#tripFullList').find('.legListItem').removeClass('selectedLeg')
-			$(this).addClass('selectedLeg')
-			legEditor.render()
-			userHeader.render()
-		})
-
-		$('.addLegToTrip').click(function(){
-			let tripId = $(this).attr('tripId')
-			store.trips.currentLeg = {}
-			legEditor.render()
-		})
-		$('.expandTripButton').click(function(){
-			store.trips.currentLeg = null
-			userHeader.render()
-			let tripId = $(this).attr('tripId')
-			const trip = store.trips.find(trip=> trip._id === tripId)
-			store.trips.current = trip
-			tripView.render()
-		})
-
-		// rollover hilight the arrow
-		$('.legListItem').hover(function(){
-		 const legId = $(this).find('.legShow').attr('legId')
-			try { const line = store.trips.current.tripLegs.find(leg=> leg._id === legId).line
-			 line.setOptions(store.mapArrowOptions.selected)  } catch (e) {  }
-		}, function(){
-		 const legId = $(this).find('.legShow').attr('legId')
-			 try { const line = store.trips.current.tripLegs.find(leg=> leg._id === legId).line
-			 line.setOptions(store.mapArrowOptions.unSelected) } catch(e) {  }
-		})
+		$('.deleteTrip').click(function(){
+			handlers.deleteTrip()
+		})		
 	}
-
-
 
 
 
@@ -111,7 +94,7 @@ const tripRender = (function(){
 	return {
 		allTrips,
 		accordion,
-
+		viewTrip,
 	}
 
 })()
