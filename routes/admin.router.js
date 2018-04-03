@@ -5,10 +5,10 @@ const adminController = require('../controllers/admin.controller')
 
 const jwtAuth = passport.authenticate('jwt', {
 	session: false,
-	failureRedirect: '/auth/login'
+	// failureRedirect: '/auth/login'
 })
 
-router.get('/', jwtAuth,  adminController.home)
+router.get('/', jwtAuth, adminController.home)
 // router.get('/travelers', adminController.travelers)
 
 module.exports = router

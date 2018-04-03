@@ -26,8 +26,8 @@ const flash = require('connect-flash')
 
 require('dotenv').config({ path: 'variables.env' });
 // set up view engine
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
 
 app.use(express.static('public'));
@@ -53,13 +53,12 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 const jwtAuth = passport.authenticate('jwt', {
   session: false,
-  failureRedirect: '/'
 })
 
 //
 app.use('/', homeRouter)
+app.use('/admin', adminRouter)
 app.use('/auth', authRouter)
-app.use('/admin', jwtAuth,  adminRouter)
 app.use('/admin/trips', jwtAuth, tripsRouter)
 app.use('/admin/users', jwtAuth, usersRouter)
 app.use('/admin/legs',  legsRouter)

@@ -7,28 +7,31 @@ const handlers = (()=>{
 			.then(response=>{
 
 				store.me = response.data
-				store.getEventsOnLoad();
+				api.getEventsOnLoad();
 			})
 			.catch(err=>{
-				toastr.error('that email has already registered.')
+				toastr.error(err.response.data.error)
 				signInOut.renderSignInForm()
-			  console.log('signup error', err) })
+			  console.log('signup error', err.response) })
 	}
 	const signIn = (me)=>{
 		axios.post('/auth/signin', me)
-			.then(response=> {
-				console.log('response from signin', response.data)
-				// setup my trips
-				store.trips = response.data.myTrips;
-				store.setTimeRanges()
-				tripList.render()
-				store.me = response.data.me
-				// setup my users
-				store.users = response.data.me.travelers;
-				userHeader.render()
-				allTripView.render()
+			.then( () => {
+				return api.getEventsOnLoad()
 			})
+			.then( () => {
+				console.log('made it back from getevents on load')
+					tripList.render()
+					userHeader.render()
+					allTripView.render()
+					signInOut.renderNav()			
+			})
+			.catch(err=> {
+				console.log('error from signin handler', err.response)
+			})
+			// need catch
 	}
+
 
 	const fillOutForm = ()=>{
 		const $form = $('#addLegForm')

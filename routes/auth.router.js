@@ -7,7 +7,7 @@ const {validateBody, schemas} = require('../helpers/routerHelpers')
 
 const localAuth = passport.authenticate('local', {
 	session: false,
-	failureRedirect: '/'
+	// failureRedirect: '/'
 })
 
 router.post('/signin', localAuth , authController.signIn)

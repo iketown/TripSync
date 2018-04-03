@@ -4,12 +4,15 @@ const signInOut = (function(){
 	}
 
 	function renderNav(){
-		const navHtml = `
-            <nav class="navbar navbar-dark bg-primary"><a class="navbar-brand" href="/">TripSync</a>
+		const signedInHtml = `
                 <div class="navBarMe">
-                    <p class='text-white me'>ike76@me.com</p>
+                    <p class='text-white me'>${store.me && store.me.email}</p>
                     <p class='signOut'><strong><a href='/auth/signout'>SIGN OUT</a></strong></p>
                 </div>
+		`
+		const navHtml = `
+            <nav class="navbar navbar-dark bg-primary"><a class="navbar-brand" href="/">TripSync</a>
+                ${store.me ? signedInHtml : ''}
             </nav>`
 
 		$('.navDiv').html(navHtml)
@@ -43,6 +46,7 @@ const signInOut = (function(){
 		$('.rightSide').html(signInHtml)
 
 		$('#signInButton').click(function(){
+			console.log('signin button clicked')
 			const me = {}
 			me.email = $('#emailInput').val()
 			me.password = $('#passwordInput').val()
@@ -60,20 +64,20 @@ const signInOut = (function(){
 			<div class='row'>
 				<div class='form-group col-md-6'>
 					<label for="firstName">First Name</label>
-					<input type='firstName' id='firstName' name='firstName' class='form-control'>
+					<input type='firstName' id='firstName' name='firstName' class='form-control' required>
 				</div>
 				<div class='form-group col-md-6'>
 					<label for="lastName">Last Name</label>
-					<input type='lastName' id='lastName' name='lastName' class='form-control'>
+					<input type='lastName' id='lastName' name='lastName' class='form-control' required>
 				</div>
 			</div>
 			<div class='form-group'>
 				<label for="email">Email</label>
-				<input type='email' id='email' name='email' class='form-control'>
+				<input type='email' id='email' name='email' class='form-control' required>
 			</div>
 			<div class='form-group'>
 				<label for="password">Password</label>
-				<input type='password' id='password' name='password' class='form-control'>
+				<input type='password' id='password' name='password' class='form-control' required>
 			</div>
 			<button class='btn btn-success' id='signUpButton'>SIGN UP</button>
 			</div>

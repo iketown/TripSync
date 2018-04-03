@@ -23,21 +23,6 @@
 			this.sortTrips()
 		}
 
-		function getEventsOnLoad(events){
-			axios.get('/admin/trips/')
-				.then(results => {
-					this.trips = results.data
-					this.setTimeRanges()
-					tripList.render()
-				})
-			axios.get('/admin/users')
-				.then(r => {
-					this.users = r.data.travelers
-					userHeader.render()
-					}
-				)
-				.catch(err=> console.log(err))
-		}
 		const colors = [
 			"#3d5afe", // blue
 			"#ff3d00", // orange
@@ -83,7 +68,6 @@
 
 
 		return {
-			getEventsOnLoad,
 			airlines,
 			legTypes,
 			sortTrips,

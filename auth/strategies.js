@@ -53,13 +53,23 @@ const localStrategy = new LocalStrategy({
 const jwtStrategy = new JwtStrategy(
   {
     secretOrKey: JWT_SECRET,
-    jwtFromRequest: cookieExtractor || headerfromt,
+    jwtFromRequest: cookieExtractor,
     // Only allow HS256 tokens - the same as the ones we issue
     algorithms: ['HS256']
   },
-  async (payload, done) => {
-    const user = await User.findById(payload.sub)
-    done(null, user);
+  function(payload, done){
+    User.findById(payload.sub, function(err,user){
+      if(err){
+        return done(err,false);
+      }
+      if (user) {
+        return done(null,user)
+      } else {
+        return done(null,false);
+      }
+    })
+    // const user = await User.findById(payload.sub)
+    // done(null, user);
   }
 );
 

@@ -64,7 +64,7 @@ const allTripView = (function(){
 
 	const render = ()=>{
 		let allTripHtml = `
-			<h1> Hey All Trips go here </h1>
+			<h1> My Trips </h1>
 			<div id="googleAllTrips"></div>
 		`
 		$('.rightSide').html(allTripHtml)

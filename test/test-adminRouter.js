@@ -47,6 +47,7 @@ describe('Users API', function(){
 				.post('/auth/signup')
 				.send(admin)
 				.then(function(res){
+					console.log('response from admin test', res.body)
 					expect(res).to.have.status(200)
 					expect(res.body).to.include.keys(
 						'firstName', 'lastName', 'email', '_id', 'password');
