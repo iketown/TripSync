@@ -75,7 +75,7 @@ const handlers = (()=>{
 				}
 				tripRender.accordion()
 				// set store.trips.currentLeg ?
-				legEditor.render()
+				legRender.edit()
 			})
 			.catch(err=>console.error(err))
 	}

@@ -6,13 +6,13 @@ const newHandlers = (function(){
 		store.trips.currentLeg = leg
 		$(this).closest('#tripFullList').find('.legListItem').removeClass('selectedLeg')
 		$(this).addClass('selectedLeg')
-		legEditor.render()
+		legRender.edit()
 		userHeader.render()
 	}
 	const addLegToTrip = function(){
 		let tripId = $(this).attr('tripId')
 		store.trips.currentLeg = {}
-		legEditor.render()
+		legRender.edit()
 	}
 	const selectTrip = function(){
 		store.trips.currentLeg = null
