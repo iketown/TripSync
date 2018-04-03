@@ -23,7 +23,7 @@ const handlers = (()=>{
 				console.log('made it back from getevents on load')
 					tripList.render()
 					userHeader.render()
-					allTripView.render()
+					tripRender.allTrips()
 					signInOut.renderNav()			
 			})
 			.catch(err=> {

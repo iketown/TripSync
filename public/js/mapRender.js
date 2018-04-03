@@ -1,12 +1,11 @@
-const allTripView = (function(){
-
-	const bounds = new google.maps.LatLngBounds;
-	let map;
+const mapRender = (function(){
 
 
-	function initMap(){
+		const bounds = new google.maps.LatLngBounds;
+		let map;
+	function allTrips(){
 
-	map = new google.maps.Map(document.getElementById('googleAllTrips'), {
+		map = new google.maps.Map(document.getElementById('googleAllTrips'), {
 				// zoom: 8,
 				center: {
 					lat:store.trips[0].tripLegs[0].startLoc.lat, 
@@ -56,22 +55,10 @@ const allTripView = (function(){
 			})
 		})
 	}
-	function makeArrow(color){
-
-	}
 
 
-
-	const render = ()=>{
-		let allTripHtml = `
-			<h1> My Trips </h1>
-			<div id="googleAllTrips"></div>
-		`
-		$('.rightSide').html(allTripHtml)
-		initMap()
-	}
 
 	return {
-		render,
+		allTrips,
 	}
 })()

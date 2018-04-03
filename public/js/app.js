@@ -3,10 +3,10 @@ $( function(){
 	api.getEventsOnLoad()
 	.then(function(response){
 		console.log('response from app', response)
-		// store.addStartupData()
 		tripList.render()
 		userHeader.render()
 		signInOut.renderNav()
+		tripRender.allTrips()
 	}).catch(err=>{
 		// console.log('error', err)
 		signInOut.renderNav()      
