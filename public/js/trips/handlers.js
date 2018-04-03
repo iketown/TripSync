@@ -21,7 +21,7 @@ const handlers = (()=>{
 			})
 			.then( () => {
 				console.log('made it back from getevents on load')
-					tripList.render()
+					tripRender.accordion()
 					userHeader.render()
 					tripRender.allTrips()
 					signInOut.renderNav()			
@@ -57,7 +57,7 @@ const handlers = (()=>{
 				for(let i=0;i<store.trips.length;i++){
 					if (store.trips[i]._id === updatedTrip.data._id) store.trips[i] = store.trips.current = updatedTrip.data
 				}
-				tripList.render()
+				tripRender.accordion()
 				
 			})
 			.catch(err=> console.error(err))
@@ -73,7 +73,7 @@ const handlers = (()=>{
 				for (var i = store.trips.length - 1; i >= 0; i--) {
 					if (store.trips[i]._id === newTrip._id) store.trips[i] = newTrip
 				}
-				tripList.render()
+				tripRender.accordion()
 				// set store.trips.currentLeg ?
 				legEditor.render()
 			})
@@ -130,7 +130,7 @@ const handlers = (()=>{
 			.then( myTrips => {
 				console.log('myTrips', myTrips.data)
 				store.trips = myTrips.data
-				tripList.render()
+				tripRender.accordion()
 				tripView.render()
 			}) 
 			.catch(err => console.error(err))
@@ -141,7 +141,7 @@ const handlers = (()=>{
 			.then(response=> {
 				console.log('response from delete trip', response.data)
 				store.trips = response.data
-				tripList.render()
+				tripRender.accordion()
 			})
 	}
 

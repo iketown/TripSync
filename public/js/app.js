@@ -3,7 +3,7 @@ $( function(){
 	api.getEventsOnLoad()
 	.then(function(response){
 		console.log('response from app', response)
-		tripList.render()
+		tripRender.accordion()
 		userHeader.render()
 		signInOut.renderNav()
 		tripRender.allTrips()
