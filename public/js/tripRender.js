@@ -78,23 +78,38 @@ const tripRender = (function(){
 		$('.rightSide').html(html)
 			mapRender.trip()
 		$('.renameTrip').click(function(){
-			tripEditor.render()
+			tripRender.edit()
 		})
 		$('.deleteTrip').click(function(){
 			handlers.deleteTrip()
 		})		
 	}
 
+	const edit = () => {
+		const trip = store.trips.current
+		let html = `<h2>${trip ? 'Edit Trip' : 'Add Trip'}</h2>`
+		html += `
+			<div class='form-group'>
+				<label for="tripName">Name</label>
+				<input id="tripName" type="text" value="${trip?trip.name:''}" name="tripName" class="form-control" placeholder="'Italy' or 'Northern California' or 'Mexico: ${moment().add(1,'year').format('YYYY')}' etc...">
+			</div>
+			<div class='button-group'>
+				<button class='btn btn-success ${trip?'updateTrip':'addTrip'}'>${trip?'UPDATE' :'ADD to MY TRIPS'}</button>
+			</div>
+		`
 
+		$('.rightSide').html(html)
 
-
-
+		$('.updateTrip').click(newHandlers.updateTrip)
+		$('.addTrip').click(newHandlers.addTrip)
+	}
 
 
 	return {
 		allTrips,
 		accordion,
 		viewTrip,
+		edit,
 	}
 
 })()

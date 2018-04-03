@@ -6,16 +6,21 @@ const {TEST_DATABASE_URL} = require('../config');
 const faker = require('faker')
 const mongoose = require('mongoose')
 const {app, runServer, closeServer} = require('../server')
+const {User} = require('../models/user.model')
 
-
-function createAdmin(){
-	const admin = {
+function seedUsers(){
+	const users = []
+	for(let i=0;i<10;i++){ users.push( createUser() ) }
+	return User.insertMany(users)
+}
+function createUser(){
+	const user = {
 		firstName: faker.name.firstName(),
 		lastName: faker.name.lastName(),
 		email: faker.internet.email(),
 		password: 'password',
 	}
-	return admin;
+	return user;
 }
 function tearDownDb() {
   console.warn('Deleting database');
@@ -29,7 +34,7 @@ describe('Users API', function(){
 		return runServer(TEST_DATABASE_URL);
 	});
 	beforeEach(function(){
-
+		return seedUsers()
 	});
 	afterEach(function(){
 		return tearDownDb()
@@ -39,22 +44,36 @@ describe('Users API', function(){
 	})
 
 
-	const admin = createAdmin()
-	console.log('admin from test', admin)
-	describe('SIGNUP endpoint', function(){
-		it('should return a valid user id', function(){
-			return chai.request(app)
-				.post('/auth/signup')
-				.send(admin)
-				.then(function(res){
-					console.log('response from admin test', res.body)
-					expect(res).to.have.status(200)
-					expect(res.body).to.include.keys(
-						'firstName', 'lastName', 'email', '_id', 'password');
-					expect(res).to.have.cookie('jwt-auth')
-				})
+	const user = createUser()
+	const agent = chai.request.agent(app)
+
+	describe('Sign In / Sign Up', function(){
+		it('should return a jwt cookie', function(){
+			return agent.post('/auth/signup')	
+			.send(user)
+			.then(function(res){
+				expect(res).to.have.cookie('jwt-auth')
+				return agent.post('/auth/signin')
+					.send({email: user.email, password: user.password})
+			})
+			.then(function(res){
+				expect(res).to.have.status(200)
+			})
+			.catch(err=> console.log('signin/up error'))
 		})
-	})
+	});
+
+	describe('Sign In / Sign Up2', function(){
+		it('should return a jwt cookie', function(){
+			return agent.post('/auth/signup')	
+			.send(user)
+			.then(function(res){
+				expect(res).to.have.cookie('jwt-auth2')
+			})
+			.catch(err=> console.log('signin/up 2 error'))
+		})
+	});
+
 
 
 

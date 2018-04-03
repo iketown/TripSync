@@ -46,14 +46,14 @@ const userEditor = (function(){
 			pageDots: false,
 			wrapAround: true
 			});
-		const avatarIndex = store.peopleSVGs.indexOf(store.currentUser && store.currentUser.avatar)
-		$('#avatarChooser').flickity('selectCell', avatarIndex)
-		$('#firstName').on('keyup', function(){
-			$('#displayFirstName').text( $(this).val() )
-		})
-		$('#lastName').on('keyup', function(){
-			$('#displayLastName').text( $(this).val() )
-		})
+	const avatarIndex = store.peopleSVGs.indexOf(store.currentUser && store.currentUser.avatar)
+	$('#avatarChooser').flickity('selectCell', avatarIndex)
+	$('#firstName').on('keyup', function(){
+		$('#displayFirstName').text( $(this).val() )
+	})
+	$('#lastName').on('keyup', function(){
+		$('#displayLastName').text( $(this).val() )
+	})
 
 
 		function putUserInfoIntoStore(){

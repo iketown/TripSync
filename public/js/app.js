@@ -5,13 +5,13 @@ $( function(){
 		console.log('response from app', response)
 		tripRender.accordion()
 		userHeader.render()
-		signInOut.renderNav()
+		homeRender.nav()
 		tripRender.allTrips()
 	}).catch(err=>{
 		// console.log('error', err)
-		signInOut.renderNav()      
-		signInOut.renderIntro()
-		signInOut.renderSignInForm()
+		homeRender.nav()      
+		homeRender.intro()
+		homeRender.signInForm()
 	})
 
 

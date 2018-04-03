@@ -34,7 +34,16 @@ const newHandlers = (function(){
 	}
 	const addNewTrip = function(){
 		store.trips.current = null
-		tripEditor.render()
+		tripRender.edit()
+	}
+	const updateTrip = function(){
+		store.trips.current.name = $('#tripName').val()
+		handlers.addUpdateTrip()
+	}
+	const addTrip = function(){
+		store.trips.current = {}
+		store.trips.current.name = $('#tripName').val()
+		handlers.addUpdateTrip()
 	}
 
 	return {
@@ -44,6 +53,7 @@ const newHandlers = (function(){
 		hoverLeg,
 		unhoverLeg,
 		addNewTrip,
-		 
+		updateTrip,
+		addTrip,
 	}
 })()

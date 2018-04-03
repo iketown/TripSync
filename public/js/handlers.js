@@ -5,13 +5,18 @@ const handlers = (()=>{
 	const signUp = (me)=>{
 		axios.post('/auth/signup', me)
 			.then(response=>{
-
 				store.me = response.data
-				api.getEventsOnLoad();
+				return api.getEventsOnLoad();
+			})
+			.then( () => {
+					tripRender.accordion()
+					userHeader.render()
+					tripRender.allTrips()
+					homeRender.nav()			
 			})
 			.catch(err=>{
 				toastr.error(err.response.data.error)
-				signInOut.renderSignInForm()
+				homeRender.signInForm()
 			  console.log('signup error', err.response) })
 	}
 	const signIn = (me)=>{
@@ -20,13 +25,13 @@ const handlers = (()=>{
 				return api.getEventsOnLoad()
 			})
 			.then( () => {
-				console.log('made it back from getevents on load')
 					tripRender.accordion()
 					userHeader.render()
 					tripRender.allTrips()
-					signInOut.renderNav()			
+					homeRender.nav()			
 			})
 			.catch(err=> {
+				toastr.error('Email / Password not recognized')
 				console.log('error from signin handler', err.response)
 			})
 			// need catch
