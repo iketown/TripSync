@@ -1,3 +1,19 @@
+/*GRID*/
+
+body{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 100px 300px 1fr;
+}
+.navDiv{
+	grid-column: 1 / span 2;
+}
+
+
+
+
+
+
 a {
 	text-decoration: none;
 }
