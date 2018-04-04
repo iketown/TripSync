@@ -11,9 +11,7 @@ const api = (function(){
 					store.me = response.data.me
 					// setup my users
 					store.users = response.data.me.travelers;
-					return 'hay'
 				})
-				// .catch(err=> console.log('error from getevents', err))
 		}
 
 

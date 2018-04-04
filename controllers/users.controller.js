@@ -19,7 +19,6 @@ exports.createUser = async (req,res) => {
 		}
 }
 exports.updateUser = async (req,res)=>{
-	console.log('req.body from updateUser', req.body)
 	await User.findByIdAndUpdate(req.params.id, req.body)
 	const myUsers = await User.findById(req.user.id).select('travelers').populate('travelers')
 	res.status(200).json(myUsers)

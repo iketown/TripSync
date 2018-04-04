@@ -7,7 +7,7 @@ const jwtAuth = passport.authenticate('jwt', {session: false})
 
 // router.post('/', legsController.createLeg)
 router.post('/addLegToTrip/:tripId', jwtAuth, legsController.addLegToTrip)
-router.post('/updateUsers/:id', jwtAuth, legsController.updateLegUsers)
+router.post('/updateUsers/:legId', jwtAuth, legsController.updateLegUsers)
 // router.post('/addLegToTrip/:id', legsController.updateLeg)
 router.post('/:legId', legsController.updateLeg)
 

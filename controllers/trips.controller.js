@@ -12,8 +12,6 @@ exports.getMyTrips = async(req, res)=>{
 	res.json(trips)
 }
 exports.createTrip = async (req, res)=>{
-	console.log(req.body)
-	console.log('req.user._id', req.user._id)
 	trip = new Trip()
 	trip.adminId = ObjectId(req.user.id)
 	trip.name = req.body.tripName
