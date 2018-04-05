@@ -63,7 +63,8 @@ const handlers = (()=>{
 					if (store.trips[i]._id === updatedTrip.data._id) store.trips[i] = store.trips.current = updatedTrip.data
 				}
 				tripRender.accordion()
-				legRender.edit()
+				tripRender.allTrips()
+				toastr.success('Leg Added 👍')
 			})
 			.catch(err=> console.error(err))
 	}
