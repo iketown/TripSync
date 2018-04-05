@@ -66,11 +66,12 @@ const tripRender = (function(){
 	} // end accordion
 
 	const viewTrip = () => {
-		const trip = store.trips.current
+		const trip = store.current
 		html = `
 			<h2 class='tripName'>${ trip.name.toUpperCase() }</h2>
 			<div id="googleTripMap"></div>
 			<div class='button-group'>
+				<button class='btn btn-info addLegToTrip' tripId="${trip._id}">Add Travel</button>
 				<button class='btn btn-info renameTrip'>Rename Trip</button>
 				<button class='btn btn-danger deleteTrip'>Delete Trip</button>
 			</div>
@@ -82,11 +83,14 @@ const tripRender = (function(){
 		})
 		$('.deleteTrip').click(function(){
 			handlers.deleteTrip()
-		})		
+		})
+		$('.addLegToTrip').click(function(){
+			newHandlers.addLegToTrip()
+		})
 	}
 
 	const edit = () => {
-		const trip = store.trips.current
+		const trip = store.current
 		let html = `<div class="newTripForm"><h2>${trip ? 'Edit Trip' : 'Add Trip'}</h2>`
 		html += `
 			<div class='form-group'>

@@ -54,13 +54,13 @@ const mapRender = (function(){
 	function trip(){
 		let bounds;
 
-		if (store.trips.current.tripLegs.length) {
+		if (store.current.tripLegs.length) {
 			bounds = new google.maps.LatLngBounds();
 			map = new google.maps.Map(document.getElementById('googleTripMap'), {
 				styles: store.mapStyle,
 				disableDefaultUI: true
 			})
-			store.trips.current.tripLegs.forEach(leg=> makeArrowAndExtendBounds(leg))
+			store.current.tripLegs.forEach(leg=> makeArrowAndExtendBounds(leg))
 			map.setCenter( bounds.getCenter() )
 			map.fitBounds( bounds, {top: 10, bottom: 10, left: 10, right: 10} )
 		}
@@ -84,11 +84,11 @@ const mapRender = (function(){
 	}
 
 	function leg(){
-		if (store.trips.currentLeg && store.trips.currentLeg._id){
-			let startLat = store.trips.currentLeg.startLoc.lat 
-			let startLng = store.trips.currentLeg.startLoc.lng 
-			let endLat = store.trips.currentLeg.endLoc.lat 
-			let endLng = store.trips.currentLeg.endLoc.lng 
+		if (store.currentLeg && store.currentLeg._id){
+			let startLat = store.currentLeg.startLoc.lat 
+			let startLng = store.currentLeg.startLoc.lng 
+			let endLat = store.currentLeg.endLoc.lat 
+			let endLng = store.currentLeg.endLoc.lng 
 			const start = new google.maps.LatLng(startLat, startLng)
 			const end = new google.maps.LatLng(endLat, endLng)
 		 	const bounds = new google.maps.LatLngBounds

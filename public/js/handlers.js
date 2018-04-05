@@ -52,15 +52,15 @@ const handlers = (()=>{
 	}
 
 	const addLegToTrip = ()=>{
-		const tripId = store.trips.current._id
+		const tripId = store.current._id
 		console.log('tripId', tripId)
-		let leg = store.trips.currentLeg
+		let leg = store.currentLeg
 		leg.line = null
 		axios.post(`/admin/legs/addLegToTrip/${tripId}`, leg)
 			.then(updatedTrip => {
 				console.log('updated trip.data', updatedTrip.data)
 				for(let i=0;i<store.trips.length;i++){
-					if (store.trips[i]._id === updatedTrip.data._id) store.trips[i] = store.trips.current = updatedTrip.data
+					if (store.trips[i]._id === updatedTrip.data._id) store.trips[i] = store.current = updatedTrip.data
 				}
 				tripRender.accordion()
 				tripRender.allTrips()
@@ -69,8 +69,8 @@ const handlers = (()=>{
 			.catch(err=> console.error(err))
 	}
 	const updateLeg = ()=>{
-		let leg = store.trips.currentLeg
-		let legId = store.trips.currentLeg._id
+		let leg = store.currentLeg
+		let legId = store.currentLeg._id
 		leg.line = null // otherwise JSON circular reference
 		axios.post(`/admin/legs/${legId}`, leg)
 			.then(response =>{
@@ -117,7 +117,7 @@ const handlers = (()=>{
 			.catch(err=> console.log(err))
 	}
 	const updateLegUsers = ()=>{
-		let leg = store.trips.currentLeg
+		let leg = store.currentLeg
 		let userIds = leg.travelers.map(t => t._id)
 		
 		axios.post(`/admin/legs/updateUsers/${leg._id}`, userIds)
@@ -128,7 +128,7 @@ const handlers = (()=>{
 			.catch( err => console.log(err) )
 	}
 	const deleteLeg = () => {
-		let leg = store.trips.currentLeg
+		let leg = store.currentLeg
 		axios.delete(`/admin/legs/${leg._id}`)
 			.then(res=> {
 				store.removeLeg()
@@ -137,8 +137,8 @@ const handlers = (()=>{
 			})
 	}
 	const addUpdateTrip = ()=>{
-		const tripName = store.trips.current.name
-		const tripId = store.trips.current._id || ''
+		const tripName = store.current.name
+		const tripId = store.current._id || ''
 		axios.post(`/admin/trips/${tripId}`, {tripName})
 			.then( myTrips => {
 				console.log('myTrips', myTrips.data)
@@ -149,7 +149,7 @@ const handlers = (()=>{
 			.catch(err => console.error(err))
 	}
 	const deleteTrip = ()=>{
-		const tripId = store.trips.current._id
+		const tripId = store.current._id
 		axios.delete(`/admin/trips/${tripId}`)
 			.then(response=> {
 				console.log('response from delete trip', response.data)

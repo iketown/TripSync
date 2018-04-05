@@ -2,8 +2,8 @@ const newHandlers = (function(){
 
 	const selectLeg = function(){
 		let legId = $(this).attr('legId')
-		let leg = store.trips.current.tripLegs.find(leg => leg._id === legId)
-		store.trips.currentLeg = leg
+		let leg = store.current.tripLegs.find(leg => leg._id === legId)
+		store.currentLeg = leg
 		$(this).closest('#tripFullList').find('.legListItem').removeClass('selectedLeg')
 		$(this).addClass('selectedLeg')
 		legRender.edit()
@@ -13,41 +13,41 @@ const newHandlers = (function(){
 		// this should call api, create new empty leg and display it.
 
 		let tripId = $(this).attr('tripId')
-		store.trips.currentLeg = null
+		store.currentLeg = null
 		$(this).closest('#tripFullList').find('.legListItem').removeClass('selectedLeg')
 		$(this).addClass('selectedLeg')
 		userHeader.render()
 		legRender.edit()
 	}
 	const selectTrip = function(){
-		store.trips.currentLeg = null
+		store.currentLeg = null
 		userHeader.render()
 		let tripId = $(this).attr('tripId')
 		const trip = store.trips.find(trip=> trip._id === tripId)
-		store.trips.current = trip
+		store.current = trip
 		tripRender.viewTrip()
 	}
 	const hoverLeg = function(){
 		const legId = $(this).attr('legId')
-		const line = store.trips.current.tripLegs.find(leg=> leg._id === legId).line
+		const line = store.current.tripLegs.find(leg=> leg._id === legId).line
 		line.setOptions(store.mapArrowOptions.selected)
 	}
 	const unhoverLeg = function(){
 		const legId = $(this).attr('legId')
-		const line = store.trips.current.tripLegs.find(leg=> leg._id === legId).line
+		const line = store.current.tripLegs.find(leg=> leg._id === legId).line
 		line.setOptions(store.mapArrowOptions.unSelected) 
 	}
 	const addNewTrip = function(){
-		store.trips.current = null
+		store.current = null
 		tripRender.edit()
 	}
 	const updateTrip = function(){
-		store.trips.current.name = $('#tripName').val()
+		store.current.name = $('#tripName').val()
 		handlers.addUpdateTrip()
 	}
 	const addTrip = function(){
-		store.trips.current = {}
-		store.trips.current.name = $('#tripName').val()
+		store.current = {}
+		store.current.name = $('#tripName').val()
 		handlers.addUpdateTrip()
 	}
 

@@ -5,8 +5,8 @@ const userHeader = (function(){
 
 		function userCards(){
 			// first sort them by presence in current leg, if that exists
-			if (store.trips.currentLeg) {
-				let legTravelers = store.trips.currentLeg.travelers
+			if (store.currentLeg) {
+				let legTravelers = store.currentLeg.travelers
 				console.log('leg Travelrs =', legTravelers)
 				store.users.sort((user, others)=>{
 					return legTravelers.filter(t=>t._id === others._id).length - legTravelers.filter(t=>t._id === user._id).length
@@ -14,7 +14,7 @@ const userHeader = (function(){
 			}
 
 			return	store.users.map(user => {
-				// let inCurrentLeg = store.trips.currentLeg && store.trips.currentLeg.travelers.find(t=> t._id === user._id)
+				// let inCurrentLeg = store.currentLeg && store.currentLeg.travelers.find(t=> t._id === user._id)
 				 return `
 					<div class='carousel-cell' style="background-image: url('/people/${user.avatar}');">
 						<div class="addUserToLeg" userId="${user._id}" style="display:none;">ADD</div>
@@ -74,13 +74,13 @@ const userHeader = (function(){
 highlight = ()=>{
 	$('.user-carousel .carousel-cell').each( function(index){
 		let userId = $(this).find('.userName').attr('userid')
-		if (store.trips.currentLeg && !store.trips.currentLeg.travelers.find(user=> user._id === userId)) {
+		if (store.currentLeg && !store.currentLeg.travelers.find(user=> user._id === userId)) {
 			// the OUT crowd
 			$(this).fadeTo(100, .5)
 			$(this).find('.addUserToLeg').show()
 			$(this).find('.removeUserFromLeg').hide()
 			$(this).addClass('zoomOut')
-		} else if (store.trips.currentLeg && store.trips.currentLeg.travelers.find(user=> user._id === userId)) {
+		} else if (store.currentLeg && store.currentLeg.travelers.find(user=> user._id === userId)) {
 			// the IN crowd
 			$(this).fadeTo(100, 1)
 			$(this).find('.addUserToLeg').hide()
@@ -96,15 +96,15 @@ attachListeners = ()=>{
 			console.log(userId)
 			const user = store.users.find( u => u._id === userId)
 			console.log('the user is', user)
-			if ( !store.trips.currentLeg.travelers.find(t => t._id === userId) ){
-				store.trips.currentLeg.travelers.push(user)
+			if ( !store.currentLeg.travelers.find(t => t._id === userId) ){
+				store.currentLeg.travelers.push(user)
 			} 
 			handlers.updateLegUsers()
 		})
 		$('.removeUserFromLeg').click(function(){
 			let userId = $(this).closest('.carousel-cell').find('.userName').attr('userid')
-			if ( store.trips.currentLeg.travelers.find(t => t._id === userId) ){
-				store.trips.currentLeg.travelers = store.trips.currentLeg.travelers.filter(t=> t._id !== userId)
+			if ( store.currentLeg.travelers.find(t => t._id === userId) ){
+				store.currentLeg.travelers = store.currentLeg.travelers.filter(t=> t._id !== userId)
 				handlers.updateLegUsers()
 			} 
 		})

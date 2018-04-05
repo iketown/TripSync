@@ -1,8 +1,8 @@
 const legRender = (function(){
 
 	const travelerList = ()=>{
-		if (store.trips.currentLeg){
-			return store.trips.currentLeg.travelers.map(t=>{
+		if (store.currentLeg){
+			return store.currentLeg.travelers.map(t=>{
 				return `<li><div class="legTraveler">${t.firstName} ${t.lastName}</div></li>`
 			}).join('')
 		} else {
@@ -10,7 +10,7 @@ const legRender = (function(){
 		}
 	}
 	const edit = () => {
-		const leg = store.trips.currentLeg
+		const leg = store.currentLeg
 		store.startLocTemp = null
 		store.endLocTemp = null
 
@@ -109,8 +109,8 @@ const legRender = (function(){
 				</div>
 				<hr>
 				<div class="button-group">
-					<input type="submit" class="btn btn-success" id="saveLeg" tripId="${store.trips.current._id}" value="${leg?'UPDATE':'SAVE'}">
-					<input type="submit" class="btn btn-danger" id="deleteLeg" tripId="${store.trips.current._id}" value="DELETE" ${leg?'':'hidden'}>
+					<input type="submit" class="btn btn-success" id="saveLeg" tripId="${store.current._id}" value="${leg?'UPDATE':'SAVE'}">
+					<input type="submit" class="btn btn-danger" id="deleteLeg" tripId="${store.current._id}" value="DELETE" ${leg?'':'hidden'}>
 				</div>
 			</form>`
 		}
@@ -123,19 +123,19 @@ const legRender = (function(){
 				e.preventDefault()
 				const $form = $(this).closest('form')
 				const tripId = $(this).attr('tripId')
-				if(!store.trips.currentLeg) store.trips.currentLeg = {} // if it doesn't exist make it an empty object
-				store.trips.currentLeg.type = $form.find('#type').val()
-				store.trips.currentLeg.company = $form.find('#company').val()
-				store.trips.currentLeg.flightNum = $form.find('#flightNum').val()
+				if(!store.currentLeg) store.currentLeg = {} // if it doesn't exist make it an empty object
+				store.currentLeg.type = $form.find('#type').val()
+				store.currentLeg.company = $form.find('#company').val()
+				store.currentLeg.flightNum = $form.find('#flightNum').val()
 				const startDate = $form.find('#startDate').val()
 				const endDate = $form.find('#endDate').val()
 				const startTime = $form.find('#startTime').val()
 				const endTime = $form.find('#endTime').val()
-				store.trips.currentLeg.startMoment = moment(startDate+"-"+startTime, "YYYY-MM-DD-HH:mm")
-				store.trips.currentLeg.endMoment = moment(endDate+"-"+endTime, "YYYY-MM-DD-HH:mm")
-				if (store.startLocTemp) store.trips.currentLeg.startLoc = parseLocation(store.startLocTemp)
-				if (store.endLocTemp) store.trips.currentLeg.endLoc = parseLocation(store.endLocTemp)
-				if (store.trips.currentLeg._id) {
+				store.currentLeg.startMoment = moment(startDate+"-"+startTime, "YYYY-MM-DD-HH:mm")
+				store.currentLeg.endMoment = moment(endDate+"-"+endTime, "YYYY-MM-DD-HH:mm")
+				if (store.startLocTemp) store.currentLeg.startLoc = parseLocation(store.startLocTemp)
+				if (store.endLocTemp) store.currentLeg.endLoc = parseLocation(store.endLocTemp)
+				if (store.currentLeg._id) {
 					console.log('update leg was called')
 					handlers.updateLeg()
 				} else {
