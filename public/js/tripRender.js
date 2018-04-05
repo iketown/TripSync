@@ -2,7 +2,6 @@ const tripRender = (function(){
 
 	const allTrips = () => {
 		html = `
-			<h1> My Trips </h1>
 			<div id="googleAllTrips"></div>`
 		$('.rightSide').html(html)
 		mapRender.allTrips()
@@ -18,17 +17,18 @@ const tripRender = (function(){
 		store.setTimeRanges()
 
 		// list of trip -> LEGS
-		const _legs = trip => trip.tripLegs.map( leg => `
-			<article class='legListItem' legId=${leg._id}>
-				<i class=" legLogo fas fa-${icons[leg.type]}"></i>
-				${leg.startLoc.city || leg.startLoc.cityLong || leg.startLoc.state || 'origin' } 
-				<i class="fas fa-arrow-right"></i>
-				${leg.endLoc.city || leg.endLoc.cityLong || leg.endLoc.state || 'destination'}
-				<small><span class='date font-weight-light'>${moment(leg.startMoment).format('MMM Do')}</span></small>
-				<a href='#!' legId="${leg._id}" class='legShow'><i class="fas fa-map-marker-alt show"></i></a>
-				<a href="#!" legId="${leg._id}" class='legIdEdit'><i class="far fa-edit edit"></i></a>
-			</article>`
-			).join('')
+		const _legs = trip => { 
+				return trip.tripLegs.map( leg => {
+							return `<article class='legListItem' legId=${leg._id}>
+								<i class=" legLogo fas fa-${icons[leg.type]}"></i>
+								${ leg.startLoc.city ||  leg.startLoc.cityLong ||  leg.startLoc.state || 'origin' } 
+								<i class="fas fa-arrow-right"></i>
+								${ leg.endLoc.city ||  leg.endLoc.cityLong ||  leg.endLoc.state || 'destination'}
+								<small><span class='date font-weight-light'>${ moment(leg.startMoment).format('MMM Do')}</span></small>
+								</article>` }
+								).join('') 
+		} 
+	
 
 		// list of TRIPS
 		const _tripSection = store.trips.map( (trip, i) => `
@@ -68,7 +68,7 @@ const tripRender = (function(){
 	const viewTrip = () => {
 		const trip = store.trips.current
 		html = `
-			<h2>${ trip.name.toUpperCase() }</h2>
+			<h2 class='tripName'>${ trip.name.toUpperCase() }</h2>
 			<div id="googleTripMap"></div>
 			<div class='button-group'>
 				<button class='btn btn-info renameTrip'>Rename Trip</button>
@@ -87,14 +87,15 @@ const tripRender = (function(){
 
 	const edit = () => {
 		const trip = store.trips.current
-		let html = `<h2>${trip ? 'Edit Trip' : 'Add Trip'}</h2>`
+		let html = `<div class="newTripForm"><h2>${trip ? 'Edit Trip' : 'Add Trip'}</h2>`
 		html += `
 			<div class='form-group'>
 				<label for="tripName">Name</label>
-				<input id="tripName" type="text" value="${trip?trip.name:''}" name="tripName" class="form-control" placeholder="'Italy' or 'Northern California' or 'Mexico: ${moment().add(1,'year').format('YYYY')}' etc...">
+				<input id="tripName" type="text" value="${trip?trip.name:''}" name="tripName" class="form-control">
 			</div>
 			<div class='button-group'>
 				<button class='btn btn-success ${trip?'updateTrip':'addTrip'}'>${trip?'UPDATE' :'ADD to MY TRIPS'}</button>
+			</div>
 			</div>
 		`
 

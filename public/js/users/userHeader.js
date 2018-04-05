@@ -4,7 +4,7 @@ const userHeader = (function(){
 	const render = ()=>{
 
 		function userCards(){
-			// first sort them by presense in current leg, if that exists
+			// first sort them by presence in current leg, if that exists
 			if (store.trips.currentLeg) {
 				let legTravelers = store.trips.currentLeg.travelers
 				console.log('leg Travelrs =', legTravelers)

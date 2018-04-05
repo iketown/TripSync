@@ -13,11 +13,11 @@ const api = (function(){
 					store.users = response.data.me.travelers;
 				})
 		}
+		
 
 
 
 	return {
 		getEventsOnLoad,
-
 	}
 })()

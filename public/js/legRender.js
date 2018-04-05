@@ -1,5 +1,14 @@
 const legRender = (function(){
 
+	const travelerList = ()=>{
+		if (store.trips.currentLeg){
+			return store.trips.currentLeg.travelers.map(t=>{
+				return `<li><div class="legTraveler">${t.firstName} ${t.lastName}</div></li>`
+			}).join('')
+		} else {
+			return ''
+		}
+	}
 	const edit = () => {
 		const leg = store.trips.currentLeg
 		store.startLocTemp = null
@@ -15,13 +24,16 @@ const legRender = (function(){
 			leg.startName = leg.startLoc.city || leg.startLoc.cityLong || leg.startLoc.state || 'origin'
 			leg.endName = leg.endLoc.city || leg.endLoc.cityLong || leg.endLoc.state || 'arrival'
 		}
-
 		let html = ()=>{
 			return `
 			<div class="mapHeader">
 				<div id="googleLegMap"></div>
 				<div class="legHeader">
-					<div class='fromto'>FROM</div>
+					<ul class='legTravelerList'>
+						${travelerList()}
+					</ul>
+					
+					<div class='fromto'>traveling from</div>
 					<h3 class='cityHeader start'>${leg && leg.startName || '? ? ?'}</h3>
 					<div class='fromto'>TO</div>
 					<h3 class='cityHeader end'>${leg && leg.endName || '? ? ?'}</h3>
@@ -74,7 +86,7 @@ const legRender = (function(){
 			    </div>
 			    <div class="form-group">
 	                <label for="startLoc">Departure Location</label>
-					<input class='form-control' id="startLoc" type='text' value="${leg?leg.startLoc.address:''}">
+					<input class='form-control' id="startLoc" type='text' value="${leg && leg.startLoc?leg.startLoc.address:''}">
 				</div>
 			    <hr>
 			    <div class="row">
@@ -93,8 +105,9 @@ const legRender = (function(){
 			    </div>
 			    <div class="form-group">
 	                <label for="endLoc">Arrival Location</label>
-					<input class="form-control" id="endLoc" type='text' value="${leg?leg.endLoc.address:''}">
+					<input class="form-control" id="endLoc" type='text' value="${leg && leg.endLoc?leg.endLoc.address:''}">
 				</div>
+				<hr>
 				<div class="button-group">
 					<input type="submit" class="btn btn-success" id="saveLeg" tripId="${store.trips.current._id}" value="${leg?'UPDATE':'SAVE'}">
 					<input type="submit" class="btn btn-danger" id="deleteLeg" tripId="${store.trips.current._id}" value="DELETE" ${leg?'':'hidden'}>
@@ -128,6 +141,11 @@ const legRender = (function(){
 				} else {
 					handlers.addLegToTrip()
 				} 
+			})
+
+			$('#deleteLeg').click(function(e){
+				e.preventDefault()
+				handlers.deleteLeg()
 			})
 
 		const parseLocation = (goog)=>{
@@ -182,6 +200,7 @@ const legRender = (function(){
 	}
 	return {
 		edit,
+		travelerList,
 
 	}	
 })()

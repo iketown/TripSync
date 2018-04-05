@@ -32,6 +32,7 @@ exports.addLegToTrip =  async (req, res) => {
 	}
 
 }
+
 exports.updateLegUsers = async (req, res)=>{
 	const travelers = req.body.map(id => ObjectId(id))
 	// const updateObj = {travelers}
@@ -77,8 +78,9 @@ exports.getLeg = async(req, res)=>{
 	const leg = await Leg.findById(req.params.id).populate('travelers').populate('startLoc').populate('endLoc')
 	res.json(leg)
 }
-exports.deleteLeg = (req, res)=>{
-	res.send('hi from delete LEG')
+exports.deleteLeg = async(req, res)=>{
+	await Leg.findByIdAndRemove(req.params.legId)
+	res.status(200).send('leg deleted')
 }
 
 

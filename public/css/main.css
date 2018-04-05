@@ -1,39 +1,92 @@
-/*GRID*/
 
-body{
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 100px 300px 1fr;
+*{
+	box-sizing: border-box;
 }
-.navDiv{
-	grid-column: 1 / span 2;
+html{
 }
-
-
-
-
-
-
+.bg {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-image: linear-gradient(#fffcf587, #e4e4e4ad), url(./images/bgmap.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+body {
+	font-family: 'Roboto', sans-serif;
+	/*background-color: #FFFCF5;*/
+	color: #66615b;
+}
 a {
 	text-decoration: none;
+}
+.newTripForm{
+	align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-self: center;
+    margin-top: 1rem;
+}
+.newTripForm #tripName {
+	width: 20rem;
+}
+.rightSide{
+	background-color: #ffffff5e;
+    padding: 0 1rem;
+    border-radius: 10px;
+}
+#addLegForm #startLoc, #addLegForm #endLoc {
+	width: 90%;
+    margin: 3px 1rem;
+}
+.legTravelerList{
+	list-style: none;
+	margin: 1rem;
+	padding: 0;
+	text-align: center;
+}
+.legTraveler{
+	font-family: 'Oswald', sans-serif;
+    font-weight: 400;
 }
 .btn {
 	margin: 8px;
 	max-width: 300px;
+}
+.btn.signOut{
+	border: 1px solid #999;
+}
+.navDiv {
+	background-color: #70AB8F;
+	display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3px 1rem;
+}
+.navDiv a, .navDiv p {
+	color: white;
 }
 .navbar{
 	padding: 8px 20px;
 }
 .navBarMe{
 	display: flex;
-    flex-direction: column;
     align-items: center;
 }
-.navBarMe .signOut {
-	margin-bottom: 0;
+.navBarMe .signOut, .navBarMe .me {
+	margin: 0 1rem;
 }
-.navBarMe .me {
-	margin: 0;
+.navbar-brand{
+	font-family: monospace;
+    font-size: 2rem;
+}
+.tripName{
+	font-family: 'Oswald', sans-serif;
+	font-size: 2rem;
+	margin: .5rem 0;
 }
 .edit {
 	color: darkblue;
@@ -60,17 +113,16 @@ a {
 	margin: 0 5px;
 }
 .legListItem.selectedLeg{
-	background: yellow;
-	border: 2px black solid;
+	background: #ffdcdc;	
 }
 h5.tripName{
 	margin-bottom: 0px;
 	font-weight: bold;
 }
 p.tripDates{
-	margin-bottom: 0px;
+	margin: 3px 0;
 	color: #afafaf;
-	font-size: small;
+	font-size: 1rem;
 }
 .legListItem {
 	position: relative;
@@ -86,10 +138,11 @@ p.tripDates{
 
 }
 #googleTripMap, #googleLegMap, #googleAllTrips{
-	background-color: lightblue;
+	background-color: #E4DBBF;
 	width: 100%;
 	height: 250px;
-	/*float: left;*/
+	box-shadow: 5px 5px 20px 2px #ddd;
+	margin: 2rem 0;
 }
 .user-carousel .carousel-cell {
 /*	width: 175px;
@@ -142,6 +195,7 @@ p.tripDates{
 }
 .fromto{
 	text-align: center;
+	font-size: small;
 
 }
 .avatarChooser {
@@ -243,7 +297,7 @@ input, select {
 	margin: 5px;
 }
 label{
-	justify-self: end;
+	margin: 0 1rem;
 }
 input{
 	/*margin-left: 5px;*/
@@ -286,7 +340,7 @@ input{
 	display: grid;
 	grid-template-columns: 2fr 1fr;
 }
-.userCard p {
+/*.userCard p {
 	margin: 0;
 }
 .userCard .photo {
@@ -312,33 +366,40 @@ input{
 .legCompanyImage{
 	width: 30px;
     margin-right: 10px;
-}
-
-
-/*#addEditUser{
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	
-	margin: 20px 10px;
-}
-.input{
-	display: grid;
-	grid-template-columns: 5px 1fr 5px;
-	grid-template-rows: 15px 1fr;
-}
-.input label{
-	align-self: center;
-	grid-column: 2;
-	font-size: 12px;
-	color: grey;
-}
-.input input{
-	grid-column: 2;
-}
-.input input[type=submit] {
-}
-.submit{
-	grid-column: 1 / -1;
-	align-self: center;
-    justify-self: center;
 }*/
+.expandTripButton .tripName, .legListItem {
+	cursor: pointer;
+}
+.btn{
+	border: 3px solid #555;
+    color: #555;
+
+    font-family: 'Oswald', sans-serif;
+    font-size: inherit;
+    color: inherit;
+    background: none;
+    cursor: pointer;
+    padding: 10px 30px;
+    display: inline-block;
+    margin: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    outline: none;
+    position: relative;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    text-align: center;
+}
+.btn:hover, .btn:active, .btn:focus {
+    background: #DC5B21;
+    color: white;
+}
+.form-control{
+	font-family: monospace;
+	font-size: 1.5rem;
+}
+.updateUserButton{
+	margin: 10px 0;
+}

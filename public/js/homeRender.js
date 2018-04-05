@@ -4,13 +4,13 @@ const homeRender = (function(){
 		const signedInHtml = `
                 <div class="navBarMe">
                     <p class='text-white me'>${store.me && store.me.email}</p>
-                    <p class='signOut'><strong><a href='/auth/signout'>SIGN OUT</a></strong></p>
+                    <p class='signOut btn'><strong><a href='/auth/signout'>SIGN OUT</a></strong></p>
                 </div>
 		`
 		const navHtml = `
-            <nav class="navbar navbar-dark bg-primary"><a class="navbar-brand" href="/">TripSync</a>
+            <a class="navbar-brand" href="/">TripSync</a>
                 ${store.me ? signedInHtml : ''}
-            </nav>`
+            `
 
 		$('.navDiv').html(navHtml)		
 	}

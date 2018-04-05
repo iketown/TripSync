@@ -13,7 +13,7 @@ const mapRender = (function(){
 			addLegsToBounds()
 			addLines()
 			map.setCenter( bounds.getCenter() )
-			map.fitBounds( bounds, {top: 5, bottom: 5, left: 5, right: 5} )
+			map.fitBounds( bounds, {top: 10, bottom: 10, left: 10, right: 10} )
 		}
 		function addLegsToBounds(){
 			store.trips.forEach(trip=>{
@@ -110,16 +110,16 @@ const mapRender = (function(){
 	                
 	            }] 
 			}).setMap(map)
-		 	const startMarker = new google.maps.Marker({
-		 		position: start,
-		 		icon: {
-			      path: google.maps.SymbolPath.CIRCLE,
-			      scale: 4,
-			      strokeColor: 'green'
-			    },
-		 		map: map
-		 	})
-		 	map.fitBounds(bounds, {top: 5, bottom: 5, left: 5, right: 5})
+		 	// const startMarker = new google.maps.Marker({
+		 	// 	position: start,
+		 	// 	icon: {
+			 //      path: google.maps.SymbolPath.CIRCLE,
+			 //      scale: 4,
+			 //      strokeColor: 'green'
+			 //    },
+		 	// 	map: map
+		 	// })
+		 	map.fitBounds(bounds, {top: 10, bottom: 10, left: 10, right: 10})
 		}
 	}
 

@@ -10,8 +10,13 @@ const newHandlers = (function(){
 		userHeader.render()
 	}
 	const addLegToTrip = function(){
+		// this should call api, create new empty leg and display it.
+
 		let tripId = $(this).attr('tripId')
-		store.trips.currentLeg = {}
+		store.trips.currentLeg = null
+		$(this).closest('#tripFullList').find('.legListItem').removeClass('selectedLeg')
+		$(this).addClass('selectedLeg')
+		userHeader.render()
 		legRender.edit()
 	}
 	const selectTrip = function(){
@@ -23,12 +28,12 @@ const newHandlers = (function(){
 		tripRender.viewTrip()
 	}
 	const hoverLeg = function(){
-		const legId = $(this).find('.legShow').attr('legId')
+		const legId = $(this).attr('legId')
 		const line = store.trips.current.tripLegs.find(leg=> leg._id === legId).line
 		line.setOptions(store.mapArrowOptions.selected)
 	}
 	const unhoverLeg = function(){
-		const legId = $(this).find('.legShow').attr('legId')
+		const legId = $(this).attr('legId')
 		const line = store.trips.current.tripLegs.find(leg=> leg._id === legId).line
 		line.setOptions(store.mapArrowOptions.unSelected) 
 	}

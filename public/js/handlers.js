@@ -63,12 +63,11 @@ const handlers = (()=>{
 					if (store.trips[i]._id === updatedTrip.data._id) store.trips[i] = store.trips.current = updatedTrip.data
 				}
 				tripRender.accordion()
-				
+				legRender.edit()
 			})
 			.catch(err=> console.error(err))
 	}
 	const updateLeg = ()=>{
-		// it only 'updates' if it already has an id.  otherwise 'addLegToTrip' is called
 		let leg = store.trips.currentLeg
 		let legId = store.trips.currentLeg._id
 		leg.line = null // otherwise JSON circular reference
@@ -79,8 +78,7 @@ const handlers = (()=>{
 					if (store.trips[i]._id === newTrip._id) store.trips[i] = newTrip
 				}
 				tripRender.accordion()
-				// set store.trips.currentLeg ?
-				legRender.edit()
+				tripRender.allTrips()
 			})
 			.catch(err=>console.error(err))
 	}
@@ -113,20 +111,29 @@ const handlers = (()=>{
 				toastr.success(`${firstName} was updated.`)
 				console.log('response from update user', response.data)
 				userHeader.render()
-
+				tripRender.allTrips()
 			})
 			.catch(err=> console.log(err))
 	}
 	const updateLegUsers = ()=>{
 		let leg = store.trips.currentLeg
 		let userIds = leg.travelers.map(t => t._id)
+		
 		axios.post(`/admin/legs/updateUsers/${leg._id}`, userIds)
 			.then( response => {
-				console.log('response from api', response.data)
-				// store.trips.currentLeg = response.data
 				userHeader.render()
+				$('.legTravelerList').hide().html(legRender.travelerList()).fadeIn()
 			} )
 			.catch( err => console.log(err) )
+	}
+	const deleteLeg = () => {
+		let leg = store.trips.currentLeg
+		axios.delete(`/admin/legs/${leg._id}`)
+			.then(res=> {
+				store.removeLeg()
+				tripRender.viewTrip()
+				tripRender.accordion()
+			})
 	}
 	const addUpdateTrip = ()=>{
 		const tripName = store.trips.current.name
@@ -147,6 +154,7 @@ const handlers = (()=>{
 				console.log('response from delete trip', response.data)
 				store.trips = response.data
 				tripRender.accordion()
+				tripRender.allTrips()
 			})
 	}
 
@@ -164,6 +172,7 @@ const handlers = (()=>{
 		addLegToTrip,
 		updateLeg,
 		addUpdateTrip,
-		deleteTrip
+		deleteTrip,
+		deleteLeg,
 	}
 })()
