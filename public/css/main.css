@@ -124,6 +124,9 @@ header.logo{
 .legListItem.selectedLeg{
 	background: #ffdcdc;	
 }
+.legListItem .date{
+	display: block;
+}
 h5.tripName{
 	margin-bottom: 0px;
 	font-weight: bold;
