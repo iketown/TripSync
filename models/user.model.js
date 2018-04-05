@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema
 const bcrypt = require('bcryptjs')
-const gravatar = require('gravatar');
 
 const UserSchema = Schema({
 	// _id: Schema.Types.ObjectId,
@@ -46,9 +45,6 @@ UserSchema.virtual('fullName').get( function(){
 	return this.firstName +' ' + this.lastName
 })
 
-UserSchema.virtual('gravatarUrl').get(function(){
-	return gravatar.url(this.email, {s: '200'})
-})
 
 UserSchema.methods.serialize = function(){
 	return {
