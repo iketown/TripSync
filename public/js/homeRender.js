@@ -17,7 +17,7 @@ const homeRender = (function(){
 
 	const intro = () => {
 		const introHtml = `
-            <h1>TripSync</h1>
+            <header class='logo'><h1>TripSync</h1></header>
             <h3>group travel made simple</h3>
 		`
 		$('.leftSide').html(introHtml)
@@ -25,7 +25,7 @@ const homeRender = (function(){
 	const signInForm = () => {
 		const signInHtml = `
 			<h2>Please Sign In</h2>
-			<div class="form-group">
+			<div class="form-group signInForm">
 			    <label  for="emailInput">Email</label>
 			    <input class= "form-control" type="email" id="emailInput" name="email">
 			    <br>
