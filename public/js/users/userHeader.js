@@ -1,21 +1,20 @@
+const userHeader = (function() {
 
-const userHeader = (function(){
+	const render = () => {
 
-	const render = ()=>{
-
-		function userCards(){
+		function userCards() {
 			// first sort them by presence in current leg, if that exists
 			if (store.currentLeg) {
 				let legTravelers = store.currentLeg.travelers
 				console.log('leg Travelrs =', legTravelers)
-				store.users.sort((user, others)=>{
-					return legTravelers.filter(t=>t._id === others._id).length - legTravelers.filter(t=>t._id === user._id).length
+				store.users.sort((user, others) => {
+					return legTravelers.filter(t => t._id === others._id).length - legTravelers.filter(t => t._id === user._id).length
 				})
 			}
 
-			return	store.users.map(user => {
+			return store.users.map(user => {
 				// let inCurrentLeg = store.currentLeg && store.currentLeg.travelers.find(t=> t._id === user._id)
-				 return `
+				return `
 					<div class='carousel-cell' style="background-image: url('/people/${user.avatar}');">
 						<div class="addUserToLeg" userId="${user._id}" style="display:none;">ADD</div>
 						<div class="removeUserFromLeg" userId="${user._id}" style="display: none;"><i class="fas fa-ban delete removeUserFromLeg"></i></div>
@@ -28,7 +27,8 @@ const userHeader = (function(){
 				`
 			}).join('')
 		}
-		function newUserCardForm(){
+
+		function newUserCardForm() {
 			return `
 				<div class='carousel-cell addNewTraveler'>
 					<div class='emptyImageDiv'></div>
@@ -56,14 +56,14 @@ const userHeader = (function(){
 			contain: true
 		})
 
-// edit a user profile
-		$('.topRow').on('click', '.addNewTraveler', function(e){
+		// edit a user profile
+		$('.topRow').on('click', '.addNewTraveler', function(e) {
 			store.currentUser = {};
 			userEditor.render()
 		});
-		$('.topRow').on('click', '.editUserLink', function(){
+		$('.topRow').on('click', '.editUserLink', function() {
 			let userId = $(this).attr('userId')
-			store.currentUser = store.users.find(user=> user._id === userId)
+			store.currentUser = store.users.find(user => user._id === userId)
 			userEditor.render()
 		})
 
@@ -71,55 +71,51 @@ const userHeader = (function(){
 		this.attachListeners()
 	}
 
-highlight = ()=>{
-	$('.user-carousel .carousel-cell').each( function(index){
-		let userId = $(this).find('.userName').attr('userid')
-		if (store.currentLeg && !store.currentLeg.travelers.find(user=> user._id === userId)) {
-			// the OUT crowd
-			$(this).fadeTo(100, .5)
-			$(this).find('.addUserToLeg').show()
-			$(this).find('.removeUserFromLeg').hide()
-			$(this).addClass('zoomOut')
-		} else if (store.currentLeg && store.currentLeg.travelers.find(user=> user._id === userId)) {
-			// the IN crowd
-			$(this).fadeTo(100, 1)
-			$(this).find('.addUserToLeg').hide()
-			$(this).find('.removeUserFromLeg').show()
-			$(this).removeClass('zoomOut')
-		}
-		$('.user-carousel').flickity('resize')
-	})
-}
-attachListeners = ()=>{
-		$('.addUserToLeg').click(function(){
+	highlight = () => {
+		$('.user-carousel .carousel-cell').each(function(index) {
+			let userId = $(this).find('.userName').attr('userid')
+			if (store.currentLeg && !store.currentLeg.travelers.find(user => user._id === userId)) {
+				// the OUT crowd
+				$(this).fadeTo(100, .5)
+				$(this).find('.addUserToLeg').show()
+				$(this).find('.removeUserFromLeg').hide()
+				$(this).addClass('zoomOut')
+			} else if (store.currentLeg && store.currentLeg.travelers.find(user => user._id === userId)) {
+				// the IN crowd
+				$(this).fadeTo(100, 1)
+				$(this).find('.addUserToLeg').hide()
+				$(this).find('.removeUserFromLeg').show()
+				$(this).removeClass('zoomOut')
+			}
+			$('.user-carousel').flickity('resize')
+		})
+	}
+	attachListeners = () => {
+		$('.addUserToLeg').click(function() {
 			let userId = $(this).closest('.carousel-cell').find('.userName').attr('userid')
 			console.log(userId)
-			const user = store.users.find( u => u._id === userId)
+			const user = store.users.find(u => u._id === userId)
 			console.log('the user is', user)
-			if ( !store.currentLeg.travelers.find(t => t._id === userId) ){
+			if (!store.currentLeg.travelers.find(t => t._id === userId)) {
 				store.currentLeg.travelers.push(user)
-			} 
+			}
 			handlers.updateLegUsers()
 		})
-		$('.removeUserFromLeg').click(function(){
+		$('.removeUserFromLeg').click(function() {
 			let userId = $(this).closest('.carousel-cell').find('.userName').attr('userid')
-			if ( store.currentLeg.travelers.find(t => t._id === userId) ){
-				store.currentLeg.travelers = store.currentLeg.travelers.filter(t=> t._id !== userId)
+			if (store.currentLeg.travelers.find(t => t._id === userId)) {
+				store.currentLeg.travelers = store.currentLeg.travelers.filter(t => t._id !== userId)
 				handlers.updateLegUsers()
-			} 
+			}
 		})
-}
+	}
 
 
 
-
-
-
-return {
-	render,
-	highlight,
-	attachListeners,
-}
+	return {
+		render,
+		highlight,
+		attachListeners,
+	}
 
 })()
-

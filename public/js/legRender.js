@@ -11,6 +11,7 @@ const legRender = (function(){
 	}
 	const edit = () => {
 		const leg = store.currentLeg
+		// boolean of if its new or update
 		store.startLocTemp = null
 		store.endLocTemp = null
 
@@ -85,7 +86,7 @@ const legRender = (function(){
 			        </div>
 			    </div>
 			    <div class="form-group">
-	                <label for="startLoc">Departure Location</label>
+	                <label for="startLoc">Departure Location (auto lookup)</label>
 					<input class='form-control' id="startLoc" type='text' value="${leg && leg.startLoc?leg.startLoc.address:''}">
 				</div>
 			    <hr>

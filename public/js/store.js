@@ -21,8 +21,8 @@
 			this.sortTrips()
 		}
 		const removeLeg = function(){
-			const deleteId = this.trips.currentLeg._id
-			this.trips.current.tripLegs = this.trips.current.tripLegs.filter(leg => leg._id !== deleteId)
+			const deleteId = this.currentLeg._id
+			this.current.tripLegs = this.current.tripLegs.filter(leg => leg._id !== deleteId)
 		}
 		const updateTrip = function(newTrip){
 			for(let i=0; i<store.trips.length; i++){
@@ -83,5 +83,7 @@
 			colors,
 			removeLeg,
 			updateTrip,
+			trips,
+			users,
 		}
 	})()

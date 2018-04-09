@@ -104,13 +104,9 @@ const tripRender = (function(){
 			</div>
 			</form>
 		`
-
 		$('.rightSide').html(html)
 
-		// $('.updateTrip').click(newHandlers.updateTrip)
-		$('#newTripForm').submit(newHandlers.addTrip)
-		$('#updateTripForm').submit(newHandlers.updateTrip)
-		// $('.addTrip').click(newHandlers.addTrip)
+
 	}
 
 

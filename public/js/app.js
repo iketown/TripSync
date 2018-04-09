@@ -1,27 +1,23 @@
-$( function(){
+$(function() {
 
 	api.getEventsOnLoad()
-	.then(function(response){
-		tripRender.accordion()
-		userHeader.render()
-		homeRender.nav()
-		tripRender.allTrips()
-	}).catch(err=>{
-		// console.log('error', err)
-		homeRender.nav()      
-		homeRender.intro()
-		homeRender.signInForm()
-	})
+		.then(data => {
+			store.trips = data.myTrips;
+			store.setTimeRanges()
+			store.me = data.me
+			store.users = data.me.travelers;
+			tripRender.accordion()
+			userHeader.render()
+			homeRender.nav()
+			tripRender.allTrips()
+			listeners()
+		}).catch(err => {
+			// console.log('error', err)
+			homeRender.nav()
+			homeRender.intro()
+			homeRender.signInForm()
+			listeners()
+		})
 
 
-	// store.getEventsOnLoad();
-	// attachListeners()
-	
-
-	// toastr.options = { "positionClass": "toast-bottom-left" }	
-
-
-
-
-
-} )
+})
