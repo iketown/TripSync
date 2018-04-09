@@ -13,9 +13,7 @@ const handlers = (() => {
         homeRender.nav()
       })
       .catch(err => {
-        // const errorMessage = err.response.data.error
         console.log('signup err', err)
-        // toastr.error(errorMessage)
         homeRender.signInForm()
       })
   }
@@ -36,9 +34,15 @@ const handlers = (() => {
         toastr.error('Email / Password not recognized')
         console.log('error from signin handler', err.response)
       })
-    // need catch
   }
-
+  const selectTrip = function() {
+    store.currentLeg = null
+    userHeader.render()
+    let tripId = $(this).attr('tripId')
+    const trip = store.trips.find(trip => trip._id === tripId)
+    store.current = trip
+    tripRender.viewTrip()
+  }
 
   const fillOutForm = () => {
     const $form = $('#addLegForm')
@@ -51,6 +55,28 @@ const handlers = (() => {
     $form.find('#startTime').val(moment(faker.date.future()).format('HH:MM'))
     $form.find('#endTime').val(moment(faker.date.future()).format('HH:MM'))
     return 'ok'
+  }
+  const selectLeg = function() {
+    let legId = $(this).attr('legId')
+    let leg = store.current.tripLegs.find(leg => leg._id === legId)
+    store.currentLeg = leg
+    $(this).closest('#tripFullList').find('.legListItem').removeClass('selectedLeg')
+    $(this).addClass('selectedLeg')
+    legRender.edit()
+    userHeader.render()
+  }
+
+  const newLegForm = function() {
+    let tripId = $(this).attr('tripId')
+    store.currentLeg = null
+    $(this).closest('#tripFullList').find('.legListItem').removeClass('selectedLeg')
+    $(this).addClass('selectedLeg')
+    userHeader.render()
+    legRender.edit()
+  }
+  const newTripForm = function() {
+    store.current = null
+    tripRender.edit()
   }
 
   const addLegToTrip = () => {
@@ -143,7 +169,30 @@ const handlers = (() => {
         tripRender.accordion()
       })
   }
+  const hoverLeg = function() {
+    const legId = $(this).attr('legId')
+    const line = store.current.tripLegs.find(leg => leg._id === legId).line
+    line.setOptions(store.mapArrowOptions.selected)
+  }
+  const unhoverLeg = function() {
+    const legId = $(this).attr('legId')
+    const line = store.current.tripLegs.find(leg => leg._id === legId).line
+    line.setOptions(store.mapArrowOptions.unSelected)
+  }
+
+  const updateTrip = function(e) {
+    e.preventDefault()
+    store.current.name = $('#tripName').val()
+    addUpdateTrip()
+  }
+  const addTrip = function(e) {
+    e.preventDefault()
+    store.current = {}
+    store.current.name = $('#tripName').val()
+    addUpdateTrip()
+  }
   const addUpdateTrip = () => {
+
     const tripName = store.current.name
     const tripId = store.current._id || ''
     api.addUpdateTrip(tripId, tripName)
@@ -179,8 +228,16 @@ const handlers = (() => {
     updateUser,
     addLegToTrip,
     updateLeg,
+    addTrip,
+    updateTrip,
     addUpdateTrip,
     deleteTrip,
     deleteLeg,
+    newLegForm,
+    selectLeg,
+    selectTrip,
+    hoverLeg,
+    unhoverLeg,
+    newTripForm,
   }
 })()

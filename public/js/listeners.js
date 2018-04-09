@@ -1,10 +1,10 @@
 const listeners = function(){
 
 
-		$('.rightSide').on('submit','#newTripForm', newHandlers.addTrip )
-		$('.rightSide').on('submit', '#updateTripForm', newHandlers.updateTrip)
-		// $('#newTripForm').submit(newHandlers.addTrip)
-		// $('#updateTripForm').submit(newHandlers.updateTrip)
+		$('.rightSide').on('submit','#newTripForm', handlers.addTrip )
+		$('.rightSide').on('submit', '#updateTripForm', handlers.updateTrip)
+		// $('#newTripForm').submit(handlers.addTrip)
+		// $('#updateTripForm').submit(handlers.updateTrip)
 
 
 }

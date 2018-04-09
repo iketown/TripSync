@@ -58,11 +58,11 @@ const tripRender = (function(){
 		$('.leftSide').html(html)
 		$('#tripFullList [data-accordion]').accordion();
 
-		$('.addNewTrip').click( newHandlers.addNewTrip )
-		$('.legListItem').click( newHandlers.selectLeg )
-		$('.addLegToTrip').click( newHandlers.addLegToTrip )
-		$('.expandTripButton').click( newHandlers.selectTrip )
-		$('.legListItem').hover( newHandlers.hoverLeg, newHandlers.unhoverLeg )
+		$('.addNewTrip').click( handlers.newTripForm )
+		$('.legListItem').click( handlers.selectLeg )
+		$('.addLegToTrip').click( handlers.newLegForm )
+		$('.expandTripButton').click( handlers.selectTrip )
+		$('.legListItem').hover( handlers.hoverLeg, handlers.unhoverLeg )
 	} // end accordion
 
 	const viewTrip = () => {
@@ -85,7 +85,7 @@ const tripRender = (function(){
 			handlers.deleteTrip()
 		})
 		$('.addLegToTrip').click(function(){
-			newHandlers.addLegToTrip()
+			handlers.newLegForm()
 		})
 	}
 
