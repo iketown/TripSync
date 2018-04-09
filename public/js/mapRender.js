@@ -54,7 +54,7 @@ const mapRender = (function(){
 	function trip(){
 		let bounds;
 
-		if (store.current.tripLegs.length) {
+		if (store.current.tripLegs && store.current.tripLegs.length) {
 			bounds = new google.maps.LatLngBounds();
 			map = new google.maps.Map(document.getElementById('googleTripMap'), {
 				styles: store.mapStyle,

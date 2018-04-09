@@ -119,7 +119,7 @@ const legRender = (function(){
 
 
 
-			$('#saveLeg').click(function(e){
+			$('#addLegForm').submit(function(e){
 				e.preventDefault()
 				const $form = $(this).closest('form')
 				const tripId = $(this).attr('tripId')

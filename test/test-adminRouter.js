@@ -77,7 +77,7 @@ describe('TripSync API', function(){
 				.then(function(res){
 					expect(res).to.have.status(200);
 					expect(res).to.be.json
-					trip = res.body[0]
+					trip = res.body.trips[0]
 				})
 		})
 		it('should add a leg to trip', function(){

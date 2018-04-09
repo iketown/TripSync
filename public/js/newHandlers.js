@@ -41,11 +41,13 @@ const newHandlers = (function(){
 		store.current = null
 		tripRender.edit()
 	}
-	const updateTrip = function(){
+	const updateTrip = function(e){
+		e.preventDefault()
 		store.current.name = $('#tripName').val()
 		handlers.addUpdateTrip()
 	}
-	const addTrip = function(){
+	const addTrip = function(e){
+		e.preventDefault()
 		store.current = {}
 		store.current.name = $('#tripName').val()
 		handlers.addUpdateTrip()

@@ -91,22 +91,26 @@ const tripRender = (function(){
 
 	const edit = () => {
 		const trip = store.current
-		let html = `<div class="newTripForm"><h2>${trip ? 'Edit Trip' : 'Add Trip'}</h2>`
+		let html = `<div class=""><h2>${trip ? 'Edit Trip' : 'Add Trip'}</h2>`
 		html += `
+			<form action="#" id="${trip ? 'updateTripForm' : 'newTripForm'}">
 			<div class='form-group'>
 				<label for="tripName">Name</label>
 				<input id="tripName" type="text" value="${trip?trip.name:''}" name="tripName" class="form-control">
 			</div>
 			<div class='button-group'>
-				<button class='btn btn-success ${trip?'updateTrip':'addTrip'}'>${trip?'UPDATE' :'ADD to MY TRIPS'}</button>
+				<button class='btn btn-success'>${trip?'UPDATE' :'ADD to MY TRIPS'}</button>
 			</div>
 			</div>
+			</form>
 		`
 
 		$('.rightSide').html(html)
 
-		$('.updateTrip').click(newHandlers.updateTrip)
-		$('.addTrip').click(newHandlers.addTrip)
+		// $('.updateTrip').click(newHandlers.updateTrip)
+		$('#newTripForm').submit(newHandlers.addTrip)
+		$('#updateTripForm').submit(newHandlers.updateTrip)
+		// $('.addTrip').click(newHandlers.addTrip)
 	}
 
 

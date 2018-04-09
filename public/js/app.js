@@ -2,7 +2,6 @@ $( function(){
 
 	api.getEventsOnLoad()
 	.then(function(response){
-		console.log('response from app', response)
 		tripRender.accordion()
 		userHeader.render()
 		homeRender.nav()

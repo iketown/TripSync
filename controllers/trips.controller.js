@@ -12,21 +12,21 @@ exports.getMyTrips = async(req, res)=>{
 	res.json(trips)
 }
 exports.createTrip = async (req, res)=>{
-	trip = new Trip()
-	trip.adminId = ObjectId(req.user.id)
-	trip.name = req.body.tripName
-	await trip.save()
+	newTrip = new Trip()
+	newTrip.adminId = ObjectId(req.user.id)
+	newTrip.name = req.body.tripName
+	await newTrip.save()
 	const trips = await Trip.find( {adminId: req.user.id} )
 		.populate({path: 'tripLegs', populate: {path: 'travelers'}})
-	res.json(trips)
+	res.json({trips, newTrip})
 } 
 exports.updateTrip = async(req,res)=>{
-	const trip = await Trip.findById(req.params.id)
-	trip.name = req.body.tripName
-	await trip.save()
+	const newTrip = await Trip.findById(req.params.id)
+	newTrip.name = req.body.tripName
+	await newTrip.save()
 	const trips = await Trip.find( {adminId: req.user.id} )
 		.populate({path: 'tripLegs', populate: {path: 'travelers'}})
-	res.json(trips)
+	res.json({trips, newTrip})
 
 }
 exports.deleteTrip = async(req,res)=>{

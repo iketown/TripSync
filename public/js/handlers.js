@@ -80,6 +80,7 @@ const handlers = (()=>{
 				}
 				tripRender.accordion()
 				tripRender.allTrips()
+				toastr.success('Leg Updated 👍')
 			})
 			.catch(err=>console.error(err))
 	}
@@ -99,6 +100,7 @@ const handlers = (()=>{
 				console.log('response from new user', response.data)
 				store.users = response.data.travelers
 				userHeader.render()
+				toastr.success('New User created 👍')
 					
 				}
 			} )
@@ -142,9 +144,11 @@ const handlers = (()=>{
 		axios.post(`/admin/trips/${tripId}`, {tripName})
 			.then( myTrips => {
 				console.log('myTrips', myTrips.data)
-				store.trips = myTrips.data
+				store.trips = myTrips.data.trips
 				tripRender.accordion()
 				tripRender.viewTrip()
+				store.current = myTrips.data.newTrip
+				toastr.success(`Trip "${store.current.name}" ${tripId ? 'Updated' : 'Created'} 👍`)
 			}) 
 			.catch(err => console.error(err))
 	}
@@ -156,6 +160,7 @@ const handlers = (()=>{
 				store.trips = response.data
 				tripRender.accordion()
 				tripRender.allTrips()
+				toastr.success(`Trip ${store.current.name} Deleted`)
 			})
 	}
 
