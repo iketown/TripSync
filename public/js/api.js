@@ -45,7 +45,10 @@ const api = (function() {
 	const updateLegUsers = (legId, userIds) => {
 		return axios.post(`/admin/legs/updateUsers/${legId}`, userIds)
 	}
-
+	const removeUser = (userId) => {
+		return axios.delete(`/admin/users/${userId}`)
+			.then(res => res.data)
+	}
 
 
 	return {
@@ -60,5 +63,6 @@ const api = (function() {
 		addNewUser,
 		updateUser,
 		updateLegUsers,
+		removeUser,
 	}
 })()

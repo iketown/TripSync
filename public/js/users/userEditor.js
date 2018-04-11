@@ -39,7 +39,8 @@ const userEditor = (function() {
 			html += `
 			<hr>
 			<h2>${user.firstName} ${user.lastName}'s Travel:</h2>
-			${formatMyLegs()}`
+			${formatMyLegs()}
+			<button class='btn' id='removeUser' userId='${user._id}'> delete ${user.firstName} ${user.lastName}</button>`
 		}
 		return html
 	}

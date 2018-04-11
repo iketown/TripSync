@@ -12,6 +12,6 @@ const loginAuth = passport.authenticate('local', {})
 
 router.post('/', catchErrors(usersController.createUser))
 router.post('/:id', catchErrors(usersController.updateUser))
-
+router.delete('/:id', catchErrors(usersController.removeUser))
 
 module.exports = router

@@ -262,7 +262,16 @@ const handlers = (() => {
     tripRender.accordion()
     userHeader.render()
   }
-
+  function removeUser(){
+    let userId = store.currentUser._id
+    if(confirm(`are you sure you want to delete ${store.currentUser.firstName} ${store.currentUser.lastName}?  this cannot be undone`)) {
+      api.removeUser(userId)
+        .then(res=> {
+          store.users = res.travelers
+          userHeader.render()
+        } )
+    }
+  }
 
   return {
     signUpButton,
@@ -290,5 +299,6 @@ const handlers = (() => {
     fillInStartLoc,
     fillInEndLoc,
     linkLegFromUser,
+    removeUser,
   }
 })()

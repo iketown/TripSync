@@ -48,10 +48,10 @@ exports.editUser = async(req,res)=>{
 	const legs = await Leg.find({travelers: userId}).populate({path: 'travelers', select: 'firstName lastName _id'})
 	res.render('editUser', {title: `Edit ${user.firstName} ${user.lastName}`, user, users, legs})
 }
-exports.deleteUser = async (req,res)=>{
+exports.removeUser = async (req,res)=>{
 	await User.findByIdAndRemove(req.params.id)
-	const users = await User.find();
-	res.render('users', {users, title: 'Users'})
+	const myUsers = await User.findById(req.user.id).select('travelers').populate('travelers')
+	res.status(200).send(myUsers)
 }
 exports.fillStore = async function(req,res){
 	console.log('hi from fillStore')
