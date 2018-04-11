@@ -38,7 +38,7 @@ const tripRender = (function() {
 		const _tripSection = store.trips.map((trip, i) => `
 			<section data-accordion>
 				<button data-control class='expandTripButton' tripId="${trip._id}">
-					 <h5 class='tripName' style="color: ${store.colors[i]}">${trip.name.toUpperCase()}</h5> 
+					 <h5 class='tripName' style="color: ${store.colors[i]}">${trip.name.toUpperCase()} <i class=" legEditIcon far fa-edit"></i></h5> 
 					 <p class='tripDates'>${dateRange(trip)}</p>
 				</button>
 				<div data-content>

@@ -57,6 +57,11 @@ header.logo{
 	/*width: 90%;*/
     /*margin: 3px 1rem;*/
 }
+.legEditIcon{
+	font-size: 1.5rem;
+    position: absolute;
+    right: 2rem;
+}
 
 .legTravelerList{
 	list-style: none;
