@@ -1,6 +1,6 @@
 
 
-@media (max-width: 749px) {
+@media (max-width: 749px) {  /* smaller than iPad */
 	
 	.container {
 		width: 100%;
@@ -27,10 +27,34 @@
 		grid-column: 2 / 3;
 		grid-row: 3;
 	}
+	#addLegForm{
+	display: grid;
+	grid-template-columns: repeat(6, 6rem);
+	grid-row-gap: 1rem;
+	}
+	.arrivalDepartureDisplay{
+		text-align: center;
+	    font-weight: 700;
+	    color: #6ea8c2;
+	}
+	.span-3{
+		grid-column: span 3;
+	}
+	.span-2{
+		grid-column: span 2;
+	}
+	.span-6{
+		grid-column: span 6
+	}
+	hr{
+		border: 1px #6ea8c2 solid;
+	}
+	.mapHeader{
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	}
 }
-
-
-@media (min-width: 750px){
+@media only screen and (min-width: 750px)  { /* iPad and up */
 	.container {
 		width: 100%;
 		display: grid;
@@ -56,7 +80,41 @@
 		grid-column: 3 / 4;
 		grid-row: 3 / 4;
 	}
-	
+ 	.mapHeader{
+ 		grid-template-columns: 1fr;
+ 	}
+	hr{
+		border: 1px #6ea8c2 solid;
+	}
+	.arrivalDepartureDisplay{
+		text-align: center;
+	    font-weight: 700;
+	    color: #6ea8c2;
+	}
+ } 
+
+@media (min-width: 1024px){  /* full screen */
+
+	#addLegForm{
+		display: grid;
+		grid-template-columns: repeat(6, 6rem);
+		grid-row-gap: 1rem;
+	}
+	.mapHeader{
+		display: grid;
+		grid-template-columns: 2fr 1fr;
+	}
+	.span-3{
+		grid-column: span 3;
+	}
+	.span-2{
+		grid-column: span 2;
+	}
+	.span-6{
+		grid-column: span 6
+	}
+
+
 }
 
 

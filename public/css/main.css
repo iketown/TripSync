@@ -29,6 +29,13 @@ header.logo{
 	font-family: monospace;
 	font-size: 2rem;
 }
+.signUpButtonDiv{
+	text-align: center;
+    margin: 3em;
+}
+.signUpForm{
+	text-align: center;
+}
 #newTripForm, #updateTripForm{
 	align-items: center;
     display: flex;
@@ -47,9 +54,10 @@ header.logo{
     max-width: 45rem;
 }
 #addLegForm #startLoc, #addLegForm #endLoc {
-	width: 90%;
-    margin: 3px 1rem;
+	/*width: 90%;*/
+    /*margin: 3px 1rem;*/
 }
+
 .legTravelerList{
 	list-style: none;
 	margin: 1rem;
@@ -155,6 +163,9 @@ p.tripDates{
 	height: 250px;
 	box-shadow: 5px 5px 20px 2px #ddd;
 	margin: 2rem 0;
+}
+#googleAllTrips{
+	height: 350px;
 }
 .user-carousel .carousel-cell {
 /*	width: 175px;
@@ -296,8 +307,7 @@ nav li {
 	margin: 10px;
 }
 input, select {
-	font-size: 20px;
-	margin: 0 5px 5px 0;
+	font-size: 18px;
 }
 .form{
 	display: flex;
@@ -308,8 +318,14 @@ input, select {
 .form label {
 	margin: 5px;
 }
+.span-2{
+	grid-column: span 2;
+}
+.span-3{
+	grid-column: span 3;
+}
 label{
-	margin: 0 1rem;
+	display: block;
 }
 input{
 	/*margin-left: 5px;*/
@@ -348,37 +364,7 @@ input{
 	align-content: center;
 	align-self: center;
 }
-.mapHeader{
-	display: grid;
-	grid-template-columns: 2fr 1fr;
-}
-/*.userCard p {
-	margin: 0;
-}
-.userCard .photo {
-	grid-area: photo;
-	border-radius: 10px;
-	justify-self: center;
-}
-.userCard .fullName {
-	grid-area: fullName;
-}
-.userCard .email {
-	grid-area: email;
-}
-.userCard .phone {
-	grid-area: phone;
-}
-.userCard .userName {
-	grid-area: userName;
-}
-.userCard .homeAirport {
-	grid-area: homeAirport;
-}
-.legCompanyImage{
-	width: 30px;
-    margin-right: 10px;
-}*/
+
 .expandTripButton .tripName, .legListItem {
 	cursor: pointer;
 }
@@ -411,6 +397,7 @@ input{
 .form-control{
 	font-family: monospace;
 	font-size: 1.5rem;
+	width: 90%;
 }
 .updateUserButton{
 	margin: 10px 0;

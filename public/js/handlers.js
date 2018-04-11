@@ -1,6 +1,12 @@
 const handlers = (() => {
 
-  const signUp = (me) => {
+  const signUp = (e) => {
+    e.preventDefault()
+    const me = {}
+    me.firstName = $('#firstName').val()
+    me.lastName = $('#lastName').val()
+    me.email = $('#email').val()
+    me.password = $('#password').val()
     api.signUp(me)
       .then(data => {
         store.me = data
@@ -17,7 +23,11 @@ const handlers = (() => {
         homeRender.signInForm()
       })
   }
-  const signIn = (me) => {
+  const signIn = (e) => {
+    e.preventDefault()
+    const me = {}
+    me.email = $('#emailInput').val()
+    me.password = $('#passwordInput').val()
     api.signIn(me)
       .then(() => api.getEventsOnLoad())
       .then(data => {
@@ -34,6 +44,9 @@ const handlers = (() => {
         toastr.error('Email / Password not recognized')
         console.log('error from signin handler', err.response)
       })
+  }
+  const signUpButton = () => {
+    homeRender.signUpForm()
   }
   const selectTrip = function() {
     store.currentLeg = null
@@ -68,7 +81,7 @@ const handlers = (() => {
 
   const newLegForm = function() {
     let tripId = $(this).attr('tripId')
-    store.currentLeg = null
+    store.currentLeg = {travelers: []}
     $(this).closest('#tripFullList').find('.legListItem').removeClass('selectedLeg')
     $(this).addClass('selectedLeg')
     userHeader.render()
@@ -150,23 +163,30 @@ const handlers = (() => {
       .catch(err => console.log(err))
   }
   const updateLegUsers = () => {
-    const leg = store.currentLeg
-    let legId = leg._id
-    let userIds = leg.travelers.map(t => t._id)
-    api.updateLegUsers(legId, userIds)
-      .then(() => {
-        userHeader.render()
-        $('.legTravelerList').hide().html(legRender.travelerList()).fadeIn()
-      })
-      .catch(err => console.log(err))
-  }
-  const deleteLeg = () => {
+    if (store.currentLeg && store.currentLeg._id) {
+      const leg = store.currentLeg
+      let legId = leg._id
+      let userIds = leg.travelers.map(t => t._id)
+      api.updateLegUsers(legId, userIds)
+        .then(() => {
+          userHeader.render()
+          $('.legTravelerList').hide().html(legRender.travelerList()).fadeIn()
+        })
+        .catch(err => console.log(err))
+    } else {
+      userHeader.render()
+      $('.legTravelerList').hide().html(legRender.travelerList()).fadeIn()
+    }
+    }
+  const deleteLeg = (e) => {
+    e.preventDefault()
     let legId = store.currentLeg._id
     api.deleteLeg(legId)
       .then(res => {
         store.removeLeg()
         tripRender.viewTrip()
         tripRender.accordion()
+        toastr.success('leg deleted')
       })
   }
   const hoverLeg = function() {
@@ -217,9 +237,35 @@ const handlers = (() => {
       })
   }
 
+  function autoFillFirstName() {
+    $('#displayFirstName').text($(this).val())
+  }
+
+  function autoFillLastName() {
+    $('#displayLastName').text($(this).val())
+  }
+  const fillInStartLoc = (html) => {
+    $('.departureLocationDisplay').html(html)
+  }
+  const fillInEndLoc = (html) => {
+    $('.arrivalLocationDisplay').html(html)
+  }
+
+  function linkLegFromUser() {
+    let legId = $(this).attr('legId')
+    const tripId = $(this).attr('tripId')
+    const trip = store.trips.find(trip => trip.tripLegs.find(leg => leg._id === legId))
+    const leg = trip.tripLegs.find(leg => leg._id === legId)
+    store.current = trip;
+    store.currentLeg = leg;
+    legRender.edit()
+    tripRender.accordion()
+    userHeader.render()
+  }
 
 
   return {
+    signUpButton,
     signUp,
     signIn,
     updateLegUsers,
@@ -239,5 +285,10 @@ const handlers = (() => {
     hoverLeg,
     unhoverLeg,
     newTripForm,
+    autoFillFirstName,
+    autoFillLastName,
+    fillInStartLoc,
+    fillInEndLoc,
+    linkLegFromUser,
   }
 })()

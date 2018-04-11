@@ -9,7 +9,8 @@ const ObjectId = mongoose.Types.ObjectId
 exports.addLegToTrip =  async (req, res) => {
 	try {
 		const leg = new Leg()
-		const { company, flightNum, type, startMoment, endMoment, startLoc, endLoc } = req.body
+		const { company, flightNum, type, startMoment, endMoment, startLoc, endLoc, travelers } = req.body
+		leg.travelers = travelers.map(trav => ObjectId(trav._id))
 		leg._id = ObjectId()
 		leg.company = company
 		leg.type = type

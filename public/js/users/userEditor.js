@@ -1,14 +1,14 @@
-const userEditor = (function(){
+const userEditor = (function() {
 
-	const userForm = ()=> { 
-			const user = store.currentUser._id && store.currentUser
+	const userForm = () => {
+		const user = store.currentUser._id && store.currentUser
 
-			const userImageDisplay = title => {
-				return `<div class='carousel-cell' id="${title} "imgName='${title}'>
+		const userImageDisplay = title => {
+			return `<div class='carousel-cell' id="${title} "imgName='${title}'>
 							<img src='/people/${title}' >
 						</div>`
-			}
-			return `
+		}
+		let html = `
 			<form class="newUserForm">
 				<div class='form-group' style="grid-area: firstName;">
 					<label for='firstName'> First Name </label>
@@ -35,9 +35,34 @@ const userEditor = (function(){
 					<span id="displayLastName">${user?user.lastName:''}</span></p>
 				</div>
 			</form>`
+		if (user) {
+			html += `
+			<hr>
+			<h2>${user.firstName} ${user.lastName}'s Travel:</h2>
+			${formatMyLegs()}`
+		}
+		return html
 	}
-
-	const render = ()=>{
+	const myLegs = () => {
+		const myLegsObj = {}
+		store.trips.forEach(trip => {
+			myLegsObj[trip.name] = trip.tripLegs.filter(leg => leg.travelers.find(trav => trav._id === store.currentUser._id))
+		})
+		return myLegsObj;
+	}
+	const formatMyLegs = () => {
+		const keys = Object.keys(myLegs())
+		const html = keys.map(key => {
+			const tripName = key
+			let tripHtml = `<h3> ${ tripName.toUpperCase() } </h3>`
+			tripHtml += myLegs()[key].map(leg => `
+				<li><a href="#!" class='linkLegFromUser' legId="${leg._id}">${leg.company} ${leg.flightNum}  |  
+				${leg.startLoc.name} <i class="fas fa-arrow-right"></i> ${leg.endLoc.name} </a></li>`).join('')
+			return tripHtml;
+		}).join('')
+		return html
+	}
+	const render = () => {
 		$('#displayFirstName').text('')
 		$('#displayLastName').text('')
 		$('.rightSide').html(userForm())
@@ -45,25 +70,21 @@ const userEditor = (function(){
 			cellAlign: 'center',
 			pageDots: false,
 			wrapAround: true
-			});
-	const avatarIndex = store.peopleSVGs.indexOf(store.currentUser && store.currentUser.avatar)
-	$('#avatarChooser').flickity('selectCell', avatarIndex)
-	$('#firstName').on('keyup', function(){
-		$('#displayFirstName').text( $(this).val() )
-	})
-	$('#lastName').on('keyup', function(){
-		$('#displayLastName').text( $(this).val() )
-	})
+		});
+		const avatarIndex = store.peopleSVGs.indexOf(store.currentUser && store.currentUser.avatar)
+		$('#avatarChooser').flickity('selectCell', avatarIndex)
+		$('#firstName').on('keyup', handlers.autoFillFirstName)
+		$('#lastName').on('keyup', handlers.autoFillLastName)
 
 
-		function putUserInfoIntoStore(){
+		function putUserInfoIntoStore() {
 			store.currentUser.avatar = $('#avatarChooser .is-selected').attr('imgname')
 			store.currentUser.firstName = $('#firstName').val()
 			store.currentUser.lastName = $('#lastName').val()
 			store.currentUser.email = $('#email').val()
 
 		}
-		$('.submitNewUserButton').click(function(e){
+		$('.submitNewUserButton').click(function(e) {
 			e.preventDefault()
 			putUserInfoIntoStore()
 			$('#firstName').val('')
@@ -71,7 +92,7 @@ const userEditor = (function(){
 			$('#email').val('')
 			handlers.addNewUser()
 		})
-		$('.updateUserButton').click(function(e){
+		$('.updateUserButton').click(function(e) {
 			e.preventDefault()
 			putUserInfoIntoStore()
 			handlers.updateUser()
@@ -79,5 +100,6 @@ const userEditor = (function(){
 	}
 	return {
 		render,
+		formatMyLegs,
 	}
 })()

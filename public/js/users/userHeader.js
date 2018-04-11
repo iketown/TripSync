@@ -67,8 +67,8 @@ const userHeader = (function() {
 			userEditor.render()
 		})
 
-		this.highlight()
-		this.attachListeners()
+		highlight()
+		attachListeners()
 	}
 
 	highlight = () => {

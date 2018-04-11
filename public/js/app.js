@@ -10,13 +10,13 @@ $(function() {
 			userHeader.render()
 			homeRender.nav()
 			tripRender.allTrips()
-			listeners()
+			addListeners()
 		}).catch(err => {
 			// console.log('error', err)
 			homeRender.nav()
 			homeRender.intro()
 			homeRender.signInForm()
-			listeners()
+			addListeners()
 		})
 
 

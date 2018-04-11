@@ -1,4 +1,4 @@
-const tripRender = (function(){
+const tripRender = (function() {
 
 	const allTrips = () => {
 		html = `
@@ -8,30 +8,34 @@ const tripRender = (function(){
 	}
 
 	const accordion = () => {
-		const icons =  {"Flight": 'plane', "Ground": 'car', "Other": 'dot-circle'}
+		const icons = {
+			"Flight": 'plane',
+			"Ground": 'car',
+			"Other": 'dot-circle'
+		}
 		const dateRange = (trip) => {
-			return (trip.timeRange.startMoment !== Infinity) ? 
-			`${moment(trip.timeRange.startMoment).format('MMM D')} - ${moment(trip.timeRange.endMoment).format('MMM D')}` 
-			: 'no dates yet'
+			return (trip.timeRange.startMoment !== Infinity) ?
+				`${moment(trip.timeRange.startMoment).format('MMM D')} - ${moment(trip.timeRange.endMoment).format('MMM D')}` :
+				'no dates yet'
 		}
 		store.setTimeRanges()
 
 		// list of trip -> LEGS
-		const _legs = trip => { 
-				return trip.tripLegs.map( leg => {
-							return `<article class='legListItem' legId=${leg._id}>
-								<i class=" legLogo fas fa-${icons[leg.type]}"></i>
-								${ leg.startLoc.city ||  leg.startLoc.cityLong ||  leg.startLoc.state || 'origin' } 
-								<i class="fas fa-arrow-right"></i>
-								${ leg.endLoc.city ||  leg.endLoc.cityLong ||  leg.endLoc.state || 'destination'}
-								<small><span class='date font-weight-light'>${ moment(leg.startMoment).format('MMM Do')}</span></small>
-								</article>` }
-								).join('') 
-		} 
-	
+		const _legs = trip => {
+			return trip.tripLegs.map(leg => {
+				return `<article class='legListItem' legId=${leg._id}>
+						<i class=" legLogo fas fa-${icons[leg.type]}"></i>
+						${ leg.startLoc.city ||  leg.startLoc.cityLong ||  leg.startLoc.state || 'origin' } 
+						<i class="fas fa-arrow-right"></i>
+						${ leg.endLoc.city ||  leg.endLoc.cityLong ||  leg.endLoc.state || 'destination'}
+						<small><span class='date font-weight-light'>${ moment(leg.startMoment).format('MMM Do')}</span></small>
+						</article>`
+			}).join('')
+		}
+
 
 		// list of TRIPS
-		const _tripSection = store.trips.map( (trip, i) => `
+		const _tripSection = store.trips.map((trip, i) => `
 			<section data-accordion>
 				<button data-control class='expandTripButton' tripId="${trip._id}">
 					 <h5 class='tripName' style="color: ${store.colors[i]}">${trip.name.toUpperCase()}</h5> 
@@ -43,8 +47,7 @@ const tripRender = (function(){
 						<a href='#!' class='addLegToTrip' tripId=${trip._id}><p class="font-weight-bold"><i class="fas fa-plus"></i> Add Leg to <span class='font-weight-light'>(${trip.name})</span> Trip </p></a>
 					</article>
 				</div>
-			</section>  `
-		).join('');
+			</section>  `).join('');
 
 		// top level accordion
 		const html = `
@@ -57,12 +60,7 @@ const tripRender = (function(){
 
 		$('.leftSide').html(html)
 		$('#tripFullList [data-accordion]').accordion();
-
-		$('.addNewTrip').click( handlers.newTripForm )
-		$('.legListItem').click( handlers.selectLeg )
-		$('.addLegToTrip').click( handlers.newLegForm )
-		$('.expandTripButton').click( handlers.selectTrip )
-		$('.legListItem').hover( handlers.hoverLeg, handlers.unhoverLeg )
+		$('.legListItem').hover(handlers.hoverLeg, handlers.unhoverLeg)
 	} // end accordion
 
 	const viewTrip = () => {
@@ -77,16 +75,7 @@ const tripRender = (function(){
 			</div>
 		`
 		$('.rightSide').html(html)
-			mapRender.trip()
-		$('.renameTrip').click(function(){
-			tripRender.edit()
-		})
-		$('.deleteTrip').click(function(){
-			handlers.deleteTrip()
-		})
-		$('.addLegToTrip').click(function(){
-			handlers.newLegForm()
-		})
+		mapRender.trip()
 	}
 
 	const edit = () => {

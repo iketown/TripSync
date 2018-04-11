@@ -24,6 +24,7 @@ const LegSchema = Schema({
 		lng: Number,
 		googlePlaceId: String,
 		utcOffset: Number,
+		placeName: String
 	},
 	endLoc: {
 		address: String,
@@ -35,6 +36,7 @@ const LegSchema = Schema({
 		lng: Number,
 		googlePlaceId: String,
 		utcOffset: Number,
+		placeName: String,
 	},
 	startMoment: 'Moment',
 	endMoment: 'Moment',
