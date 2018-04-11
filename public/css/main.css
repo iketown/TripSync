@@ -86,6 +86,7 @@ header.logo{
     align-items: center;
     justify-content: space-between;
     padding: 3px 1rem;
+    width: 100vw;
 }
 .navDiv a, .navDiv p {
 	color: white;
