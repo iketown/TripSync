@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
+require('dotenv').config();
 const {
   localStrategy,
   jwtStrategy
@@ -29,15 +30,6 @@ const {
 } = require('./config')
 const flash = require('connect-flash')
 
-
-require('dotenv').config({
-  path: 'variables.env'
-});
-// set up view engine
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
-
-
 app.use(express.static('public'));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
@@ -48,16 +40,6 @@ app.use(expressValidator())
 app.use(cookieParser())
 
 app.use(passport.initialize())
-// app.use(passport.session())
-// app.use(flash());
-
-app.use((req, res, next) => {
-  res.locals.h = helpers;
-  // res.locals.flashes = req.flash();
-  res.locals.currentPath = req.path;
-  // res.locals.user = req.user
-  next();
-})
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);

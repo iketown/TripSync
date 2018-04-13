@@ -52,19 +52,31 @@ const userEditor = (function() {
 		return myLegsObj;
 	}
 	const formatMyLegs = () => {
+		const transport = {
+			Flight: `<i class="fas fa-plane"></i>`,
+			Ground: `<i class="fas fa-car"></i>`,
+			Other: `<i class="fas fa-arrow-right"></i>`
+		}
+
 		const keys = Object.keys(myLegs())
-		const html = keys.map(key => {
+		let html = '<div class="userLegsGrid">'
+		html += keys.map(key => {
 			const tripName = key
 			let tripHtml = `<h3 class="tripNameSmall"> ${ tripName.toUpperCase() } </h3>`
 			if (myLegs()[key].length) {
 				tripHtml += myLegs()[key].map(leg => `
-					<li><a href="#!" class='linkLegFromUser' legId="${leg._id}">${leg.company} ${leg.flightNum}  |  
-					${leg.startLoc.name} <i class="fas fa-arrow-right"></i> ${leg.endLoc.name} </a></li>`).join('')
+					${transport[leg.type]}
+					${moment(leg.startMoment).format('MMM Do h:mm a')}
+					<a href="#!" class='linkLegFromUser' legId="${leg._id}">
+					 ${leg.company} ${leg.flightNum} </a>
+					${leg.startLoc.name} <i class="fas fa-arrow-right"></i> ${leg.endLoc.name} 
+					`).join('')
 			} else {
-				tripHtml += '<li> no plans this trip </li>'
+				tripHtml += `<li class='legFromUser'> no plans this trip </li>`
 			}
 			return tripHtml;
 		}).join('')
+		html += '</div>'
 		return html
 	}
 	const render = () => {
