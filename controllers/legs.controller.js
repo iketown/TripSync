@@ -10,7 +10,7 @@ exports.addLegToTrip =  async (req, res) => {
 	try {
 		const leg = new Leg()
 		const { company, flightNum, type, startMoment, endMoment, startLoc, endLoc, travelers } = req.body
-		leg.travelers = travelers.map(trav => ObjectId(trav._id))
+		if (travelers.length) leg.travelers = travelers.map(trav => ObjectId(trav._id))
 		leg._id = ObjectId()
 		leg.company = company
 		leg.type = type

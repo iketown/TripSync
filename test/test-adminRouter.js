@@ -81,7 +81,7 @@ describe('TripSync API', function(){
 				})
 		})
 		it('should add a leg to trip', function(){
-			const newLeg = {company: 'Southwest', flightNum: '1234', type: 'Flight'};
+			const newLeg = {company: 'Southwest', flightNum: '1234', type: 'Flight', travelers: [] };
 			return agent.post(`/admin/legs/addLegToTrip/${trip._id}`)
 				.send(newLeg)
 				.then(function(res){
