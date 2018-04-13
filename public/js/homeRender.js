@@ -17,11 +17,17 @@ const homeRender = (function() {
 			<h2>group travel made simple</h2>
 			<br>
 			<div class='openingText'>
-			<p>Planning group travel can be complicated</p>
-			<p><span class='tripsync'>TripSync</span> makes it simple.</p>
-			<p><span class='introNumber'>1.</span> Create a Trip and enter itinerary info.</p>
-			<p><span class='introNumber'>2.</span> Add or remove travelers from individual legs </p>
-			<p><span class='introNumber'>3.</span> Each Traveler can sign in and view their personalized itinerary (coming soon)</p>
+				<p>Planning group travel can be complicated</p>
+				<p><span class='tripsync'>TripSync</span> makes it simple.</p>
+				<p><span class='introNumber'>1.</span> Create a Trip and enter itinerary info.</p>
+				<p><span class='introNumber'>2.</span> Add or remove travelers from individual legs </p>
+				<div class='comingSoon'>
+					<hr>
+					<p>(coming soon)</p>
+					<p><span class='introNumber'>3.</span> Travelers can sign in and view their personalized itinerary</p>
+					<p><span class='introNumber'>4.</span> Travelers can update plans (late flights, etc) and automatically update the group.</p>
+					<p><span class='introNumber'>5.</span> EVENTS! (dinners, concerts, meetings)</p>
+				</div>
 			</div>
 
 		`

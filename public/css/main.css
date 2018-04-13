@@ -50,6 +50,9 @@ header.logo{
 .signUpForm{
 	text-align: center;
 }
+.comingSoon{
+	opacity: .6;
+}
 #newTripForm, #updateTripForm{
 	align-items: center;
     display: flex;
