@@ -64,6 +64,7 @@ function runServer(dbURL, port = PORT) {
       if (err) {
         return reject(err);
       }
+      console.log('jwt_secret', process.env.JWT_SECRET)
       server = app.listen(port, () => {
         console.log(`app listening on port ${port} 😇`);
         resolve()
