@@ -17,11 +17,11 @@ const homeRender = (function() {
             <h2>group travel made simple</h2>
             <br>
             <div class='openingText'>
-            <p>Traveling in a group can be complicated</p>
-            <p>With TripSync, it's simple.</p>
-            <p>1. Create a Trip and enter itinerary info.</p>
-            <p>2. Add or remove travelers from individual legs </p>
-            <p>3. Each Traveler can sign in and view their personalized itinerary (coming soon)</p>
+            <p>Planning group travel can be complicated</p>
+            <p><span class='tripsync'>TripSync</span> makes it simple.</p>
+            <p><span class='introNumber'>1.</span> Create a Trip and enter itinerary info.</p>
+            <p><span class='introNumber'>2.</span> Add or remove travelers from individual legs </p>
+            <p><span class='introNumber'>3.</span> Each Traveler can sign in and view their personalized itinerary (coming soon)</p>
 			</div>
 
 		`
@@ -45,6 +45,9 @@ const homeRender = (function() {
 			<div class="signUpButtonDiv">
 				<p class='mb-0'>not yet registered?</p>
 				<button id="signUpButton" class='btn btn-sm btn-info'>SIGN UP HERE</button>
+				<p >or use test account:</p>
+				<p>email:  <strong>test@test.com</strong></p>
+				<p>password:  <strong>test</strong></p>
 			</div>
 		`
 		$('.rightSide').html(signInHtml)
