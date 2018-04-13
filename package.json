@@ -28,6 +28,7 @@
     "express-session": "^1.15.6",
     "express-validator": "^5.0.3",
     "faker": "^4.1.0",
+    "intro.js": "^2.8.0-alpha.1",
     "joi": "^13.1.2",
     "jquery": "^3.3.1",
     "jsonwebtoken": "^8.2.0",

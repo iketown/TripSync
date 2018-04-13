@@ -17,6 +17,7 @@ const handlers = (() => {
         userHeader.render()
         tripRender.allTrips()
         homeRender.nav()
+        $('.bottom').fadeOut()
       })
       .catch(err => {
         console.log('signup err', err)
@@ -39,6 +40,7 @@ const handlers = (() => {
         userHeader.render()
         tripRender.allTrips()
         homeRender.nav()
+        $('.bottom').fadeOut()
       })
       .catch(err => {
         toastr.error('Email / Password not recognized')
@@ -103,8 +105,8 @@ const handlers = (() => {
           if (store.trips[i]._id === updatedTrip._id) store.trips[i] = store.current = updatedTrip
         }
         tripRender.accordion()
-        tripRender.allTrips()
-        toastr.success('Leg Added 👍')
+        tripRender.viewTrip()
+        toastr.success('Travel Added 👍')
       })
       .catch(err => console.error(err))
   }
@@ -118,8 +120,8 @@ const handlers = (() => {
           if (store.trips[i]._id === newTrip._id) store.trips[i] = newTrip
         }
         tripRender.accordion()
-        tripRender.allTrips()
-        toastr.success('Leg Updated 👍')
+        tripRender.viewTrip()
+        toastr.success('Travel Updated 👍')
       })
       .catch(err => console.error(err))
   }

@@ -17,6 +17,8 @@ const addListeners = function() {
 	$('.leftSide').on('click', '.addLegToTrip', handlers.newLegForm)
 	$('.leftSide').on('click', '.expandTripButton', handlers.selectTrip)
 
+	
+
 
 
 }

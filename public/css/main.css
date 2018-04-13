@@ -1,18 +1,27 @@
 
 *{
-	box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 html{
 }
+
 .bg {
-    width: 100%;
+	width: 100%;
     height: 100%;
     position: fixed;
-    background-image: linear-gradient(#fffcf587, #e4e4e4ad), url(./images/bgmap.jpg);
+    background-image: linear-gradient(#ffffff94, #d7e2e97a), url(./images/bgmap.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     z-index: -1;
+}
+h2{
+	padding: 10px 20px;
+}
+h3{
+	font-family: 'Oswald', sans-serif;
 }
 body {
 	font-family: 'Roboto', sans-serif;
@@ -28,6 +37,10 @@ a {
 header.logo{
 	font-family: monospace;
 	font-size: 2rem;
+}
+.tripNameSmall{
+	margin: 1rem;
+    text-decoration: underline;
 }
 .signUpButtonDiv{
 	text-align: center;
@@ -49,7 +62,7 @@ header.logo{
 }
 .rightSide{
 	background-color: #ffffff5e;
-    padding: 0 1rem;
+    padding: 1rem;
     border-radius: 10px;
     max-width: 45rem;
 }
@@ -81,12 +94,11 @@ header.logo{
 	border: 1px solid #999;
 }
 .navDiv {
-	background-color: #70AB8F;
+	background-color: #1f4864;
 	display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 3px 1rem;
-    width: 100vw;
 }
 .navDiv a, .navDiv p {
 	color: white;
@@ -101,10 +113,16 @@ header.logo{
 .navBarMe .signOut, .navBarMe .me {
 	margin: 0 1rem;
 }
+@media (max-width: 450px){
+	.me{
+		display:none;
+	}
+}
 .navbar-brand{
 	font-family: monospace;
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
+
 .tripName{
 	font-family: 'Oswald', sans-serif;
 	font-size: 2rem;
@@ -121,7 +139,6 @@ header.logo{
 }
 .leftSide{
 	text-align: center;
-	max-width: 45rem;
 }
 .topRow{
 	margin-bottom: 30px;
@@ -136,7 +153,7 @@ header.logo{
 	margin: 0 5px;
 }
 .legListItem.selectedLeg{
-	background: #ffdcdc;	
+	background: #ffcb35;
 }
 .legListItem .date{
 	display: block;
@@ -185,13 +202,16 @@ p.tripDates{
     flex-direction: column;
     align-items: center;
     background-position: center;
-    background-size: 170px;
+    background-size: 115px;
     background-repeat: no-repeat;
-    background-position-y: -30px;
+    background-position-y: .5em;
 }
 .zoomOut{
 	zoom: .9;
 	-moz-transform: scale(0.9);
+}
+.openingText p{
+	margin: 5px 0;
 }
 
 .carousel-cell button.userOut{
@@ -206,7 +226,7 @@ p.tripDates{
 }*/
 .carousel-cell .userName{
     text-align: center;
-    background-color: #ffffffd4;
+    background-color: #ffffff;
     padding: 3px 10px;
     border-radius: 5px;
     border: 1px grey solid;
@@ -215,6 +235,7 @@ p.tripDates{
 	font-family: 'Oswald', sans-serif;
 	font-size: 18px;
 	margin: 0;
+	cursor: pointer;
 }
 .cityHeader{
 	font-family: 'Oswald', sans-serif;
@@ -324,12 +345,7 @@ input, select {
 .form label {
 	margin: 5px;
 }
-.span-2{
-	grid-column: span 2;
-}
-.span-3{
-	grid-column: span 3;
-}
+
 label{
 	display: block;
 }

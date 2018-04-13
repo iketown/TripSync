@@ -4,7 +4,7 @@ const homeRender = (function() {
 		const signedInHtml = `
                 <div class="navBarMe">
                     <p class='text-white me'>${store.me && store.me.email}</p>
-                    <p class='signOut btn'><strong><a href='/auth/signout'>SIGN OUT</a></strong></p>
+                    <p class='signOut'><strong><a href='/auth/signout'>SIGN OUT</a></strong></p>
                 </div>`
 		const navHtml = `
             <a class="navbar-brand" href="/">TripSync</a>
@@ -14,12 +14,23 @@ const homeRender = (function() {
 	const intro = () => {
 		const introHtml = `
             <header class='logo'><h1>TripSync</h1></header>
-            <h3>group travel made simple</h3>
+            <h2>group travel made simple</h2>
+            <br>
+            <div class='openingText'>
+            <p>Traveling in a group can be complicated</p>
+            <p>With TripSync, it's simple.</p>
+            <p>1. Create a Trip and enter itinerary info.</p>
+            <p>2. Add or remove travelers from individual legs </p>
+            <p>3. Each Traveler can sign in and view their personalized itinerary (coming soon)</p>
+			</div>
+
 		`
 		$('.leftSide').html(introHtml)
+		groupPicture()
 	}
 	const signInForm = () => {
 		const signInHtml = `
+		
 			<h2>Please Sign In</h2>
 			<form class="form-group signInForm" method="POST" action="">
 			    <label for="emailInput">Email</label>
@@ -37,6 +48,10 @@ const homeRender = (function() {
 			</div>
 		`
 		$('.rightSide').html(signInHtml)
+	}
+	const groupPicture = () => {
+		let html = `<img src='/css/images/tripsyncArt.png'>`
+		$('.bottom').html(html)
 	}
 	const signUpForm = () => {
 		const signUpHtml = `

@@ -6,18 +6,16 @@ const userHeader = (function() {
 			// first sort them by presence in current leg, if that exists
 			if (store.currentLeg) {
 				let legTravelers = store.currentLeg.travelers
-				console.log('leg Travelrs =', legTravelers)
 				store.users.sort((user, others) => {
 					return legTravelers.filter(t => t._id === others._id).length - legTravelers.filter(t => t._id === user._id).length
 				})
 			}
 
 			return store.users.map(user => {
-				// let inCurrentLeg = store.currentLeg && store.currentLeg.travelers.find(t=> t._id === user._id)
 				return `
-					<div class='carousel-cell' style="background-image: url('/people/${user.avatar}');">
-						<div class="addUserToLeg" userId="${user._id}" style="display:none;">ADD</div>
-						<div class="removeUserFromLeg" userId="${user._id}" style="display: none;"><i class="fas fa-ban delete removeUserFromLeg"></i></div>
+					<div class='carousel-cell' style="background-image: url('/avatars/${user.avatar}');">
+						<div class="addUserToLeg" userId="${user._id}" style="display:none;" title="ADD ${user.firstName} to this itinerary">ADD</div>
+						<div class="removeUserFromLeg" userId="${user._id}" style="display: none;" title="REMOVE ${user.firstName} from this itinerary"><i class="fas fa-ban delete removeUserFromLeg"></i></div>
 						<div class='emptyImageDiv'></div>
 						<div class='userName editUserLink' userId="${user._id}">
 							<p><a href="#" >${user.firstName}<br>${user.lastName}</a></p> 
@@ -55,7 +53,6 @@ const userHeader = (function() {
 			cellAlign: 'center',
 			contain: true
 		})
-
 		// edit a user profile
 		$('.topRow').on('click', '.addNewTraveler', function(e) {
 			store.currentUser = {};
@@ -69,6 +66,7 @@ const userHeader = (function() {
 
 		highlight()
 		attachListeners()
+		tippy('[title]')
 	}
 
 	highlight = () => {

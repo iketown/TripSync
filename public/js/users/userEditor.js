@@ -5,7 +5,7 @@ const userEditor = (function() {
 
 		const userImageDisplay = title => {
 			return `<div class='carousel-cell' id="${title} "imgName='${title}'>
-							<img src='/people/${title}' >
+							<img src='/avatars/${title}' >
 						</div>`
 		}
 		let html = `
@@ -27,7 +27,7 @@ const userEditor = (function() {
 				</div>
 				<div style="grid-area: avatar; width: 250px;">
 					<div id='avatarChooser' >
-						${store.peopleSVGs.map( title => userImageDisplay(title) ).join('') }
+						${store.avatars.map( title => userImageDisplay(title) ).join('') }
 					</div>
 				</div>
 				<div class="avatarNameDisplay">
@@ -55,10 +55,14 @@ const userEditor = (function() {
 		const keys = Object.keys(myLegs())
 		const html = keys.map(key => {
 			const tripName = key
-			let tripHtml = `<h3> ${ tripName.toUpperCase() } </h3>`
-			tripHtml += myLegs()[key].map(leg => `
-				<li><a href="#!" class='linkLegFromUser' legId="${leg._id}">${leg.company} ${leg.flightNum}  |  
-				${leg.startLoc.name} <i class="fas fa-arrow-right"></i> ${leg.endLoc.name} </a></li>`).join('')
+			let tripHtml = `<h3 class="tripNameSmall"> ${ tripName.toUpperCase() } </h3>`
+			if (myLegs()[key].length) {
+				tripHtml += myLegs()[key].map(leg => `
+					<li><a href="#!" class='linkLegFromUser' legId="${leg._id}">${leg.company} ${leg.flightNum}  |  
+					${leg.startLoc.name} <i class="fas fa-arrow-right"></i> ${leg.endLoc.name} </a></li>`).join('')
+			} else {
+				tripHtml += '<li> no plans this trip </li>'
+			}
 			return tripHtml;
 		}).join('')
 		return html
@@ -72,7 +76,7 @@ const userEditor = (function() {
 			pageDots: false,
 			wrapAround: true
 		});
-		const avatarIndex = store.peopleSVGs.indexOf(store.currentUser && store.currentUser.avatar)
+		const avatarIndex = store.avatars.indexOf(store.currentUser && store.currentUser.avatar)
 		$('#avatarChooser').flickity('selectCell', avatarIndex)
 		$('#firstName').on('keyup', handlers.autoFillFirstName)
 		$('#lastName').on('keyup', handlers.autoFillLastName)

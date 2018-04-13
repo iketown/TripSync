@@ -119,7 +119,8 @@ const store = (() => {
 			}]
 		}
 	}
-	const peopleSVGs = ["woman.svg", "man-1.svg", "woman-1.svg", "man-2.svg", "woman-2.svg", "man-3.svg", "woman-3.svg", "man-4.svg", "man-5.svg", "woman-4.svg", "man-6.svg", "woman-5.svg", "man-7.svg", "woman-6.svg", "punk.svg", "woman-7.svg"]
+	const avatars = ["023-man-3.svg", "015-man-11.svg", "020-man-6.svg", "024-man-2.svg", "014-man-12.svg", "022-man-4.svg", "031-boy-2.svg", "002-woman-14.svg", "003-woman-13.svg", "021-man-5.svg", "012-woman-4.svg", "030-boy-3.svg", "016-man-10.svg", "018-man-8.svg", "034-woman-2.svg", "028-boy-5.svg", "027-boy-6.svg", "007-woman-9.svg", "025-man-1.svg", "013-woman-3.svg", "033-boy.svg", "011-woman-5.svg", "026-man.svg", "001-man-13.svg", "036-woman.svg", "017-man-9.svg", "004-woman-12.svg", "019-man-7.svg", "008-woman-8.svg", "006-woman-10.svg", "029-boy-4.svg", "009-woman-7.svg", "032-boy-1.svg", "005-woman-11.svg", "010-woman-6.svg", "035-woman-1.svg"]
+ 	const peopleSVGs = ["woman.svg", "man-1.svg", "woman-1.svg", "man-2.svg", "woman-2.svg", "man-3.svg", "woman-3.svg", "man-4.svg", "man-5.svg", "woman-4.svg", "man-6.svg", "woman-5.svg", "man-7.svg", "woman-6.svg", "punk.svg", "woman-7.svg"]
 	const oldMapStyle = [{
 		"featureType": "water",
 		"elementType": "geometry",
@@ -354,6 +355,7 @@ const store = (() => {
 		mapArrowOptions,
 		mapStyle,
 		peopleSVGs,
+		avatars,
 		colors,
 		removeLeg,
 		updateTrip,

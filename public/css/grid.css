@@ -1,11 +1,13 @@
 
-
+*{
+	/*border: 1px solid lightgrey;*/
+}
 @media (max-width: 749px) {  /* smaller than iPad */
 	
 	.container {
 		width: 100%;
 		display: grid;
-		grid-template-columns: 25px 1fr 25px;
+		grid-template-columns: 10px 1fr 10px;
 		grid-template-rows: auto;
 		grid-gap: 15px;
 	}
@@ -27,9 +29,13 @@
 		grid-column: 2 / 3;
 		grid-row: 3;
 	}
+	.bottom{
+		grid-column: 1/4;
+		grid-row: 5;
+	}
 	#addLegForm{
 	display: grid;
-	grid-template-columns: repeat(6, 6rem);
+	grid-template-columns: repeat(6, 1fr);
 	grid-row-gap: 1rem;
 	}
 	.arrivalDepartureDisplay{
@@ -54,18 +60,17 @@
 	grid-template-columns: 2fr 1fr;
 	}
 }
-@media only screen and (min-width: 750px)  { /* iPad and up */
+@media only screen and (min-width: 750px) { /* iPad and up */
 	.container {
 		width: 100%;
 		display: grid;
-		grid-template-columns: 50px 1fr 1fr 50px;
+		grid-template-columns: minmax(15px, 1fr) minmax(20rem, 40rem) minmax(20rem, 40rem) minmax(15px, 1fr);
 		grid-template-rows: auto;
 		grid-gap: 15px;
 	}
 	.navDiv{
 		grid-column: 1 / -1;
 		grid-row: 1 / 2;
-
 	}
 	.topRow, .userBlock{
 		grid-column:2 / 4;
@@ -75,10 +80,18 @@
 	.leftSide{
 		grid-row: 3 / 4;
 		grid-column: 2 / 3;
+
 	}
 	.rightSide{
 		grid-column: 3 / 4;
 		grid-row: 3 / 4;
+	}
+	.bottom{
+		grid-column: 1/-1;
+		grid-row: 4 / 5;
+		display: flex;
+	    justify-content: center;
+	    margin-bottom: 5rem;
 	}
  	.mapHeader{
  		grid-template-columns: 1fr;
@@ -91,15 +104,24 @@
 	    font-weight: 700;
 	    color: #6ea8c2;
 	}
- } 
-
-@media (min-width: 1024px){  /* full screen */
-
 	#addLegForm{
 		display: grid;
-		grid-template-columns: repeat(6, 6rem);
+		grid-template-columns: repeat(6, 1fr);
 		grid-row-gap: 1rem;
 	}
+	.span-3{
+		grid-column: span 6;
+	}
+	.span-2{
+		grid-column: span 6;
+	}
+	.span-6{
+		grid-column: span 6
+	}
+ } 
+
+@media (min-width: 940px){  /* full screen */
+
 	.mapHeader{
 		display: grid;
 		grid-template-columns: 2fr 1fr;

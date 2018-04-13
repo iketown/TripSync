@@ -55,7 +55,7 @@ const tripRender = (function() {
 			<section id="tripFullList" data-accordion-group>
 					${_tripSection}
 			</section>
-			<buttton class='btn btn-success addNewTrip'>Create New Trip</button>
+			<buttton class='btn btn-success addNewTrip' data-intro="Click here to create a new trip" data-step="1">Create New Trip</button>
 		`
 
 		$('.leftSide').html(html)
@@ -80,7 +80,7 @@ const tripRender = (function() {
 
 	const edit = () => {
 		const trip = store.current
-		let html = `<div class=""><h2>${trip ? 'Edit Trip' : 'Add Trip'}</h2>`
+		let html = `<div class="" data-intro="Give it a Name (like 'California' or 'Italy'" data-step='2' "><h2>${trip ? 'Edit Trip' : 'Add Trip'}</h2>`
 		html += `
 			<form action="#" id="${trip ? 'updateTripForm' : 'newTripForm'}">
 			<div class='form-group'>
