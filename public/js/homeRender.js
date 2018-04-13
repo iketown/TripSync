@@ -13,15 +13,15 @@ const homeRender = (function() {
 	}
 	const intro = () => {
 		const introHtml = `
-            <header class='logo'><h1>TripSync</h1></header>
-            <h2>group travel made simple</h2>
-            <br>
-            <div class='openingText'>
-            <p>Planning group travel can be complicated</p>
-            <p><span class='tripsync'>TripSync</span> makes it simple.</p>
-            <p><span class='introNumber'>1.</span> Create a Trip and enter itinerary info.</p>
-            <p><span class='introNumber'>2.</span> Add or remove travelers from individual legs </p>
-            <p><span class='introNumber'>3.</span> Each Traveler can sign in and view their personalized itinerary (coming soon)</p>
+			<header class='logo'><h1>TripSync</h1></header>
+			<h2>group travel made simple</h2>
+			<br>
+			<div class='openingText'>
+			<p>Planning group travel can be complicated</p>
+			<p><span class='tripsync'>TripSync</span> makes it simple.</p>
+			<p><span class='introNumber'>1.</span> Create a Trip and enter itinerary info.</p>
+			<p><span class='introNumber'>2.</span> Add or remove travelers from individual legs </p>
+			<p><span class='introNumber'>3.</span> Each Traveler can sign in and view their personalized itinerary (coming soon)</p>
 			</div>
 
 		`
