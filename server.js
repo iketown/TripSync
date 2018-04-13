@@ -1,7 +1,7 @@
+require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
-require('dotenv').config();
 const {
   localStrategy,
   jwtStrategy
@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
+
 
 const path = require('path')
 
