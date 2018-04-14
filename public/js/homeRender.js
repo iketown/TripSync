@@ -19,8 +19,8 @@ const homeRender = (function() {
 			<div class='openingText'>
 				<p>Planning group travel can be complicated</p>
 				<p><span class='tripsync'>TripSync</span> makes it simple.</p>
-				<p><span class='introNumber'>1.</span> Create a Trip and enter itinerary info.</p>
-				<p><span class='introNumber'>2.</span> Add or remove travelers from individual legs </p>
+				<p><span class='introNumber'>1.</span> Create a Trip and enter Itinerary info.</p>
+				<p><span class='introNumber'>2.</span> Add or remove Travelers from Itineraries (flexible plans) </p>
 				<div class='comingSoon'>
 					<hr>
 					<p>(coming soon)</p>
