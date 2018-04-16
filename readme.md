@@ -23,5 +23,7 @@ Each **leg** can be assigned to whomever of your **travelers** you want.  This w
 * Compare Flights / Price Itineraries straight from app
 * upload actual photos of travelers instead of cartoon avatars.
 
+#### Live app
+Published at https://tripsync.herokuapp.com/
 #### Author
 Brian Eichenberger https://github.com/ike76/TripSync
