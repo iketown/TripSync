@@ -10,7 +10,7 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const MongoStore = require('connect-mongo')(session);
+// const MongoStore = require('connect-mongo')(session);
 
 
 const path = require('path')
@@ -19,7 +19,6 @@ const legsRouter = require('./routes/legs.router')
 const usersRouter = require('./routes/users.router')
 const tripsRouter = require('./routes/trips.router')
 const authRouter = require('./routes/auth.router')
-const homeRouter = require('./routes/home.router')
 const adminRouter = require('./routes/admin.router')
 
 const expressValidator = require('express-validator')
@@ -48,8 +47,6 @@ const jwtAuth = passport.authenticate('jwt', {
   session: false,
 })
 
-//
-app.use('/', homeRouter)
 app.use('/admin', adminRouter)
 app.use('/auth', authRouter)
 app.use('/admin/trips', jwtAuth, tripsRouter)

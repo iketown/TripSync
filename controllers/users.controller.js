@@ -54,7 +54,6 @@ exports.removeUser = async (req,res)=>{
 	res.status(200).send(myUsers)
 }
 exports.fillStore = async function(req,res){
-	console.log('hi from fillStore')
 	const meProm =  User.findById(req.user._id)
 		.populate('travelers')
 	const myTripsProm =  Trip.find({adminId: req.user._id})

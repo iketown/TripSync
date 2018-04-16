@@ -1,6 +1,5 @@
 const { Trip } = require('../models/trip.model')
 const { Leg } = require('../models/leg.model')
-const { getAll } = require('./home.controller')
 
 const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
@@ -38,35 +37,3 @@ exports.deleteTrip = async(req,res)=>{
 	res.json(trips)
 }
 
-
-
-// exports.fillStore = async(req, res)=>{
-// 	const trips = await Trip.find().populate('tripLegs').populate('tripEvents')
-// 	res.json(trips)
-// }
-
-// exports.getTrips = async(req, res)=> {
-// 	const trips = await Trip.find().populate('tripLegs')
-// 	res.render('trips', {trips, title: 'All Trips' })
-// }
-
-// exports.showTrip = async (req, res)=>{
-// 	const trip = await Trip.findById(req.params.id)
-// 		.populate({path: 'tripEvents', populate: {path: 'users'}})
-// 		.populate({path: 'tripLegs', populate: {path: 'travelers'}})
-// 		.populate({path: 'tripLegs', populate: {path: 'startLoc'}})
-// 		.populate({path: 'tripLegs', populate: {path: 'endLoc'}})
-// 	const s = await getAll()
-// 	res.render('showTrip', {trip, user: req.user, s})
-// }
-// exports.getTrip = async(req,res)=>{
-// 	const trip = await Trip.findById(req.params.id).populate('tripLegs')
-// 	console.log(trip)
-// 	res.json(trip)
-// }
-// exports.addLegToTrip = () => {
-
-// }
-// exports.editTrip = ()=>{
-
-// }

@@ -23,7 +23,7 @@ exports.addLegToTrip =  async (req, res) => {
 		leg.tripId = ObjectId(req.params.tripId)
 		await leg.save()
 		const updatedTrip = await Trip.findByIdAndUpdate(req.params.tripId, {$push: {tripLegs: leg._id}}, {new: true})
-				.populate({path: 'tripEvents', populate: {path: 'users'}})
+				// .populate({path: 'tripEvents', populate: {path: 'users'}})
 				.populate({path: 'tripLegs', populate: {path: 'travelers'}})
 		
 		res.status(200).json(updatedTrip)
