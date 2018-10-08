@@ -10,8 +10,6 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-// const MongoStore = require('connect-mongo')(session);
-
 
 const path = require('path')
 
@@ -61,7 +59,6 @@ function runServer(dbURL, port = PORT) {
       if (err) {
         return reject(err);
       }
-      console.log('jwt_secret', process.env.JWT_SECRET)
       server = app.listen(port, () => {
         console.log(`app listening on port ${port} 😇`);
         resolve()
